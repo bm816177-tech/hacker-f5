@@ -4,9 +4,188 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HACKER F5</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080808;
+      color: white;
+    }
+
+    header {
+      padding: 18px;
+      text-align: center;
+      background: #111;
+      border-bottom: 1px solid #e00000;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #ff2020;
+    }
+
+    #chat {
+      height: 65vh;
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    .message {
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      background: #222;
+      text-align: right;
+    }
+
+    .ai {
+      background: #351010;
+      border-left: 3px solid red;
+    }
+
+    .bottom {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      position: sticky;
+      bottom: 0;
+      background: #080808;
+    }
+
+    input {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #555;
+      border-radius: 8px;
+      background: #151515;
+      color: white;
+    }
+
+    button {
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: red;
+      color: white;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Bienvenue sur HACKER F5</h1>
-  <p>Ton application est bien connectée à Vercel.</p>
+  <header>
+    <h1>HACKER F5</h1>
+    <p>Assistant IA de cybersécurité responsable</p>
+  </header>
+
+  <main id="chat">
+    <div class="message ai">
+      Bonjour 👑 Je suis HACKER F5. Comment puis-je t’aider ?
+    </div>
+  </main>
+
+  <div class="bottom">
+    <input
+      id="messageInput"
+      type="text"
+      placeholder="Écris ton message..."
+    >
+
+    <button id="sendButton">Envoyer</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("messageInput");
+    const button = document.getElementById("sendButton");
+
+    const messages = [];
+
+    function addMessage(text, type) {
+      const div = document.createElement("div");
+      div.className = "message " + type;
+      div.textContent = text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div;
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+
+      if (!text || button.disabled) {
+        return;
+      }
+
+      input.value = "";
+      addMessage(text, "user");
+
+      messages.push({
+        role: "user",
+        content: text
+      });
+
+      button.disabled = true;
+      button.textContent = "Envoi...";
+
+      const loading = addMessage("HACKER F5 réfléchit...", "ai");
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            messages: messages
+          })
+        });
+
+        const data = await response.json();
+
+        loading.remove();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Erreur du serveur");
+        }
+
+        const answer =
+          data.output_text ||
+          data.content ||
+          data.answer ||
+          JSON.stringify(data);
+
+        addMessage(answer, "ai");
+
+        messages.push({
+          role: "assistant",
+          content: answer
+        });
+      } catch (error) {
+        loading.textContent =
+          "Erreur : " + error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Envoyer";
+      }
+    }
+
+    button.addEventListener("click", sendMessage);
+
+    input.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
 </body>
-</html>
+  </html>
