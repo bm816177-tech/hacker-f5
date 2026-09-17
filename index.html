@@ -169,10 +169,13 @@ try {
         }
 
         const answer =
-          data.output_text ||
-          data.content ||
-          data.answer ||
-          JSON.stringify(data);
+  data.outputs?.[0]?.content
+    ?.filter(item => item.type === "text")
+    ?.map(item => item.text)
+    ?.join("\n")
+  || data.output_text
+  || data.answer
+  || "HACKER F5 n'a pas renvoyé de réponse.";
 
         addMessage(answer, "ai");
 
