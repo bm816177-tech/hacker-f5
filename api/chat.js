@@ -1,5 +1,3 @@
-import { Mistral } from "@mistralai/mistralai";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -16,22 +14,36 @@ export default async function handler(req, res) {
       });
     }
 
-    const client = new Mistral({
-      apiKey: process.env.MISTRAL_API_KEY
-    });
+    const response = await fetch(
+      "https://api.mistral.ai/v1/conversations",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + process.env.MISTRAL_API_KEY
+        },
+        body: JSON.stringify({
+          agent_id: "ag_01a0a822d6bc75928c728edbb6bd6c94",
+          agent_version: 0,
+          inputs: messages
+        })
+      }
+    );
 
-    const response = await client.beta.conversations.start({
-      agentId: "ag_01a0a822d6bc75928c728edbb6bd6c94",
-      agentVersion: 0,
-      inputs: messages
-    });
+    const result = await response.json();
 
-    return res.status(200).json(response);
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: result
+      });
+    }
+
+    return res.status(200).json(result);
   } catch (error) {
-    console.error("Erreur Mistral :", error);
+    console.error("Erreur serveur :", error);
 
     return res.status(500).json({
-      error: "Impossible de contacter HACKER F5"
+      error: error.message || "Erreur serveur Vercel"
     });
   }
-}
+          }
