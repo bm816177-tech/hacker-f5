@@ -150,7 +150,17 @@
           })
         });
 
-        const data = await response.json();
+        const responseText = await response.text();
+
+let data;
+
+try {
+  data = JSON.parse(responseText);
+} catch {
+  throw new Error(
+    "Erreur serveur Vercel : " + responseText.slice(0, 300)
+  );
+    }
 
         loading.remove();
 
