@@ -36,7 +36,9 @@
       flex-direction: column;
     }
 
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       height: 65px;
@@ -79,6 +81,8 @@
       font-size: 20px;
       color: #b40000;
       letter-spacing: 1px;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-weight: 900;
     }
 
     .brand span {
@@ -86,7 +90,9 @@
       color: #666666;
     }
 
-    /* SIDEBAR */
+    /* =========================
+       SIDEBAR
+    ========================= */
 
     .sidebar {
       position: fixed;
@@ -116,6 +122,7 @@
     .sidebar-top h2 {
       color: #b40000;
       font-size: 20px;
+      font-weight: 900;
     }
 
     .close-sidebar {
@@ -156,14 +163,16 @@
       display: block;
     }
 
-    /* MAIN */
+    /* =========================
+       MAIN
+    ========================= */
 
     main {
       flex: 1;
       width: 100%;
       max-width: 950px;
       margin: auto;
-      padding: 20px 15px 120px;
+      padding: 20px 15px 150px;
     }
 
     .welcome {
@@ -179,6 +188,8 @@
       color: #b40000;
       margin-bottom: 10px;
       font-size: 24px;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-weight: 900;
     }
 
     .welcome p {
@@ -233,14 +244,21 @@
       font-style: italic;
     }
 
-    /* HACKER STYLE */
+    /* =========================
+       STYLE HACKER
+    ========================= */
+
+    .ai-response {
+      width: 100%;
+    }
 
     .hacker-title {
       color: #b40000;
-      font-weight: bold;
+      font-weight: 900;
       font-size: 17px;
       letter-spacing: 0.5px;
       margin: 10px 0;
+      font-family: "Trebuchet MS", Arial, sans-serif;
     }
 
     .hacker-line {
@@ -260,7 +278,13 @@
       overflow-wrap: anywhere;
     }
 
-    /* CODE BLOCK */
+    .styled-normal {
+      line-height: 1.7;
+    }
+
+    /* =========================
+       CODE
+    ========================= */
 
     .code-wrapper {
       width: 100%;
@@ -318,22 +342,125 @@
       margin-top: 12px;
     }
 
-    /* INPUT AREA */
+    /* =========================
+       TOOLBAR
+    ========================= */
+
+    .tools-panel {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 16px;
+      padding: 10px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .tools-panel.active {
+      display: block;
+    }
+
+    .tools-title {
+      color: #b40000;
+      font-weight: 900;
+      font-size: 13px;
+      margin-bottom: 9px;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .tool-button {
+      min-height: 48px;
+      border: none;
+      border-radius: 11px;
+      background: #f2f2f2;
+      color: #222222;
+      padding: 7px 4px;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .tool-button:hover {
+      background: #ffe1e1;
+      color: #b40000;
+    }
+
+    .tool-icon {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 3px;
+    }
+
+    /* =========================
+       FILE PREVIEW
+    ========================= */
+
+    .file-preview {
+      display: none;
+      background: #fff3f3;
+      border: 1px solid #f0caca;
+      border-radius: 12px;
+      padding: 9px;
+      margin-bottom: 8px;
+    }
+
+    .file-preview.active {
+      display: block;
+    }
+
+    .file-preview-title {
+      color: #b40000;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      padding: 5px 0;
+      border-bottom: 1px solid #f0dede;
+    }
+
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    .remove-file {
+      border: none;
+      background: transparent;
+      color: #b40000;
+      font-size: 16px;
+    }
+
+    /* =========================
+       INPUT
+    ========================= */
 
     .input-area {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.97);
+      background: rgba(255, 255, 255, 0.98);
       border-top: 1px solid #dddddd;
-      padding: 10px;
+      padding: 8px 10px;
       z-index: 15;
     }
 
     .input-container {
       max-width: 950px;
       margin: auto;
+    }
+
+    .input-row {
       display: flex;
       align-items: flex-end;
       gap: 8px;
@@ -347,7 +474,11 @@
       border-radius: 12px;
       background: #eeeeee;
       color: #b40000;
-      font-size: 22px;
+      font-size: 21px;
+    }
+
+    .small-button:hover {
+      background: #ffe1e1;
     }
 
     .message-input {
@@ -387,7 +518,9 @@
       display: none;
     }
 
-    /* SETTINGS */
+    /* =========================
+       SETTINGS
+    ========================= */
 
     .settings-box {
       background: #ffffff;
@@ -424,7 +557,9 @@
       font-size: 13px;
     }
 
-    /* RESPONSIVE */
+    /* =========================
+       RESPONSIVE
+    ========================= */
 
     @media (min-width: 700px) {
       .sidebar {
@@ -458,6 +593,20 @@
       }
     }
 
+    @media (max-width: 520px) {
+      .tools-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .tool-button {
+        font-size: 10px;
+      }
+
+      .tool-icon {
+        font-size: 18px;
+      }
+    }
+
     @media (max-width: 450px) {
       .brand h1 {
         font-size: 17px;
@@ -479,16 +628,32 @@
       .code-content {
         font-size: 12px;
       }
+
+      .tools-grid {
+        gap: 5px;
+      }
+
+      .small-button {
+        width: 40px;
+      }
+
+      .send-button {
+        width: 44px;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
     <aside class="sidebar" id="sidebar">
+
       <div class="sidebar-top">
         <h2>👑 HACKER F5</h2>
 
@@ -541,6 +706,7 @@
       >
         ⚙️ Paramètres
       </button>
+
     </aside>
 
     <div
@@ -549,9 +715,13 @@
       onclick="closeSidebar()"
     ></div>
 
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================== -->
 
     <header>
+
       <button
         class="menu-button"
         onclick="openSidebar()"
@@ -566,86 +736,215 @@
       />
 
       <div class="brand">
+
         <h1>HACKER F5</h1>
 
         <span>
           Assistant IA de cybersécurité responsable
         </span>
+
       </div>
+
     </header>
 
-    <!-- MAIN -->
+
+    <!-- =========================
+         MAIN
+    ========================== -->
 
     <main>
+
       <section
         class="welcome"
         id="welcome"
       >
+
         <h2>👑 Bonjour</h2>
 
         <p>
           Je suis <strong>HACKER F5</strong>.<br />
           Comment puis-je t’aider aujourd’hui ?
         </p>
+
       </section>
 
       <section
         class="messages"
         id="messages"
       ></section>
+
     </main>
 
-    <!-- INPUT -->
+
+    <!-- =========================
+         INPUT AREA
+    ========================== -->
 
     <div class="input-area">
+
       <div class="input-container">
 
-        <label for="fileInput">
-          <span
+        <!-- TOOLS -->
+
+        <div
+          class="tools-panel"
+          id="toolsPanel"
+        >
+
+          <div class="tools-title">
+            ⟐ OUTILS HACKER F5
+          </div>
+
+          <div class="tools-grid">
+
+            <button
+              class="tool-button"
+              onclick="openFiles()"
+            >
+              <span class="tool-icon">📎</span>
+              Fichiers
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="prepareImage()"
+            >
+              <span class="tool-icon">🖼️</span>
+              Image
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="startVoice()"
+            >
+              <span class="tool-icon">🎙️</span>
+              Voix
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="prepareDocument()"
+            >
+              <span class="tool-icon">📄</span>
+              Document
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="prepareImageGeneration()"
+            >
+              <span class="tool-icon">🎨</span>
+              Générer
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="preparePresentation()"
+            >
+              <span class="tool-icon">📊</span>
+              Présentation
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="prepareTable()"
+            >
+              <span class="tool-icon">📋</span>
+              Tableau
+            </button>
+
+            <button
+              class="tool-button"
+              onclick="prepareWebSearch()"
+            >
+              <span class="tool-icon">🌐</span>
+              Recherche
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- FILE PREVIEW -->
+
+        <div
+          class="file-preview"
+          id="filePreview"
+        >
+
+          <div class="file-preview-title">
+            📎 Fichiers sélectionnés
+          </div>
+
+          <div id="fileList"></div>
+
+        </div>
+
+
+        <!-- INPUT ROW -->
+
+        <div class="input-row">
+
+          <button
             class="small-button"
-            style="display:flex;align-items:center;justify-content:center;"
+            onclick="toggleTools()"
+            title="Outils"
           >
             ＋
-          </span>
-        </label>
+          </button>
 
-        <input
-          type="file"
-          id="fileInput"
-          multiple
-          accept="*/*"
-          onchange="handleFiles(event)"
-        />
+          <label for="fileInput">
 
-        <button
-          class="small-button"
-          onclick="prepareCreation()"
-          title="Créer"
-        >
-          ✨
-        </button>
+            <span
+              class="small-button"
+              style="display:flex;align-items:center;justify-content:center;"
+              title="Ajouter un fichier"
+            >
+              📎
+            </span>
 
-        <textarea
-          id="messageInput"
-          class="message-input"
-          placeholder="Écris ton message..."
-          rows="1"
-          onkeydown="handleEnter(event)"
-        ></textarea>
+          </label>
 
-        <button
-          id="sendButton"
-          class="send-button"
-          onclick="sendMessage()"
-        >
-          ➤
-        </button>
+          <input
+            type="file"
+            id="fileInput"
+            multiple
+            accept="*/*"
+            onchange="handleFiles(event)"
+          />
+
+          <textarea
+            id="messageInput"
+            class="message-input"
+            placeholder="Écris ton message..."
+            rows="1"
+            onkeydown="handleEnter(event)"
+          ></textarea>
+
+          <button
+            id="sendButton"
+            class="send-button"
+            onclick="sendMessage()"
+          >
+            ➤
+          </button>
+
+        </div>
 
       </div>
+
     </div>
+
   </div>
 
+
   <script>
+
+    /* =========================
+       VARIABLES
+    ========================== */
+
     const messagesContainer =
       document.getElementById("messages");
 
@@ -658,6 +957,15 @@
     const welcome =
       document.getElementById("welcome");
 
+    const toolsPanel =
+      document.getElementById("toolsPanel");
+
+    const filePreview =
+      document.getElementById("filePreview");
+
+    const fileList =
+      document.getElementById("fileList");
+
     let conversation = [];
 
     let selectedFiles = [];
@@ -665,6 +973,11 @@
     let selectedLanguage =
       localStorage.getItem("hackerF5Language") ||
       "Français";
+
+
+    /* =========================
+       LANGUES
+    ========================== */
 
     const languageList = [
       "Français",
@@ -689,7 +1002,13 @@
       "Ελληνικά"
     ];
 
+
+    /* =========================
+       SIDEBAR
+    ========================== */
+
     function openSidebar() {
+
       document
         .getElementById("sidebar")
         .classList.add("active");
@@ -698,8 +1017,10 @@
         .getElementById("overlay")
         .classList.add("active");
     }
+
 
     function closeSidebar() {
+
       document
         .getElementById("sidebar")
         .classList.remove("active");
@@ -709,7 +1030,32 @@
         .classList.remove("active");
     }
 
-    function addMessage(text, type = "ai") {
+
+    /* =========================
+       TOOLS
+    ========================== */
+
+    function toggleTools() {
+
+      toolsPanel.classList.toggle("active");
+    }
+
+
+    function closeTools() {
+
+      toolsPanel.classList.remove("active");
+    }
+
+
+    /* =========================
+       MESSAGES
+    ========================== */
+
+    function addMessage(
+      text,
+      type = "ai"
+    ) {
+
       const message =
         document.createElement("div");
 
@@ -728,357 +1074,37 @@
       return message;
     }
 
+
+    /* =========================
+       ENTER
+    ========================== */
+
     function handleEnter(event) {
+
       if (
         event.key === "Enter" &&
         !event.shiftKey
       ) {
+
         event.preventDefault();
+
         sendMessage();
       }
     }
 
-    function handleFiles(event) {
-      selectedFiles =
-        Array.from(event.target.files);
 
-      if (selectedFiles.length === 0) {
-        return;
-      }
+    /* =========================
+       FILES
+    ========================== */
 
-      const fileNames =
-        selectedFiles
-          .map(file => file.name)
-          .join(", ");
-
-      addMessage(
-        "📎 Fichier(s) sélectionné(s) : " +
-        fileNames,
-        "system"
-      );
-    }
-
-    function newConversation() {
-      conversation = [];
-      selectedFiles = [];
-
-      messagesContainer.innerHTML = "";
-
-      welcome.style.display = "block";
-
-      messageInput.value = "";
-
-      addMessage(
-        "🆕 Nouvelle conversation créée.",
-        "system"
-      );
-
-      closeSidebar();
-    }
-
-    function prepareCreation() {
-      messageInput.value =
-        "Je veux créer un contenu avec l’IA : ";
-
-      messageInput.focus();
-
-      addMessage(
-        "✨ Décris ce que tu veux créer : image, logo, vidéo, document, musique ou autre.",
-        "system"
-      );
-
-      closeSidebar();
-    }
-
-    function securityAnalysis() {
-      messageInput.value =
-        "Fais une analyse de sécurité responsable de : ";
-
-      messageInput.focus();
-
-      closeSidebar();
-    }
-
-    function codeAnalysis() {
-      messageInput.value =
-        "Analyse ce code et explique les erreurs ainsi que les corrections : ";
-
-      messageInput.focus();
-
-      closeSidebar();
-    }
-
-    function showHistory() {
-      closeSidebar();
-
-      const history =
-        JSON.parse(
-          localStorage.getItem("hackerF5History") ||
-          "[]"
-        );
-
-      if (history.length === 0) {
-        addMessage(
-          "🕘 Aucun historique disponible pour le moment.",
-          "system"
-        );
-
-        return;
-      }
-
-      let text =
-        "🕘 HISTORIQUE DES CONVERSATIONS\n\n";
-
-      history.forEach((item, index) => {
-        text +=
-          "⟐ " +
-          (index + 1) +
-          ". " +
-          item.title +
-          "\n";
-
-        text +=
-          "   🌐 Langue : " +
-          (item.language || "Français") +
-          "\n";
-
-        text +=
-          "   🕒 " +
-          (item.date || "") +
-          "\n\n";
-      });
-
-      addMessage(text, "system");
-    }
-
-    function showSettings() {
-      closeSidebar();
-
-      const currentLanguage =
-        localStorage.getItem("hackerF5Language") ||
-        "Français";
-
-      const settingsBox =
-        document.createElement("div");
-
-      settingsBox.className =
-        "settings-box";
-
-      settingsBox.innerHTML = `
-        <h3>⚙️ PARAMÈTRES HACKER F5</h3>
-
-        <button
-          class="settings-button"
-          id="languageButton"
-        >
-          🌐 Language / Langue
-        </button>
-
-        <p class="language-status">
-          Langue actuelle :
-          <strong id="currentLanguage"></strong>
-        </p>
-      `;
-
-      messagesContainer.appendChild(
-        settingsBox
-      );
-
-      document.getElementById(
-        "currentLanguage"
-      ).textContent = currentLanguage;
+    function openFiles() {
 
       document
-        .getElementById("languageButton")
-        .addEventListener(
-          "click",
-          chooseLanguage
-        );
+        .getElementById("fileInput")
+        .click();
     }
 
-    function chooseLanguage() {
-      const currentLanguage =
-        localStorage.getItem("hackerF5Language") ||
-        "Français";
 
-      let choiceText =
-        "🌐 CHOISIS LA LANGUE DE HACKER F5\n\n";
+    function handleFiles(event) {
 
-      languageList.forEach(
-        (language, index) => {
-          choiceText +=
-            index +
-            1 +
-            ". " +
-            language +
-            "\n";
-        }
-      );
-
-      choiceText +=
-        "\nLangue actuelle : " +
-        currentLanguage +
-        "\n\nEntre le numéro de ton choix :";
-
-      const choice =
-        prompt(choiceText);
-
-      if (choice === null) {
-        return;
-      }
-
-      const number =
-        Number(choice);
-
-      if (
-        !Number.isInteger(number) ||
-        number < 1 ||
-        number > languageList.length
-      ) {
-        alert(
-          "Choix invalide. Sélectionne un numéro entre 1 et 20."
-        );
-
-        return;
-      }
-
-      selectedLanguage =
-        languageList[number - 1];
-
-      localStorage.setItem(
-        "hackerF5Language",
-        selectedLanguage
-      );
-
-      addMessage(
-        "🌐 Langue sélectionnée : " +
-        selectedLanguage,
-        "system"
-      );
-
-      alert(
-        "La langue de HACKER F5 est maintenant : " +
-        selectedLanguage
-      );
-    }
-
-    function saveConversation() {
-      if (conversation.length === 0) {
-        return;
-      }
-
-      const firstUserMessage =
-        conversation.find(
-          message => message.role === "user"
-        );
-
-      const title =
-        firstUserMessage
-          ? firstUserMessage.content.substring(
-              0,
-              45
-            )
-          : "Nouvelle conversation";
-
-      const history =
-        JSON.parse(
-          localStorage.getItem("hackerF5History") ||
-          "[]"
-        );
-
-      history.unshift({
-        title: title,
-        language: selectedLanguage,
-        date: new Date().toLocaleString()
-      });
-
-      localStorage.setItem(
-        "hackerF5History",
-        JSON.stringify(
-          history.slice(0, 30)
-        )
-      );
-    }
-
-    function escapeHTML(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function createCopyButton(code) {
-      const button =
-        document.createElement("button");
-
-      button.className =
-        "copy-code-button";
-
-      button.textContent =
-        "📋 Copier le code";
-
-      button.addEventListener(
-        "click",
-        async () => {
-          try {
-            await navigator.clipboard.writeText(
-              code
-            );
-
-            button.textContent =
-              "✅ Copié";
-
-            setTimeout(() => {
-              button.textContent =
-                "📋 Copier le code";
-            }, 1500);
-
-          } catch (error) {
-            const area =
-              document.createElement("textarea");
-
-            area.value = code;
-
-            document.body.appendChild(area);
-
-            area.select();
-
-            document.execCommand("copy");
-
-            area.remove();
-
-            button.textContent =
-              "✅ Copié";
-          }
-        }
-      );
-
-      return button;
-    }
-
-    function formatAIResponse(text) {
-      const wrapper =
-        document.createElement("div");
-
-      wrapper.className =
-        "ai-response";
-
-      const copyAllArea =
-        document.createElement("div");
-
-      copyAllArea.className =
-        "response-actions";
-
-      const copyAllButton =
-        document.createElement("button");
-
-      copyAllButton.className =
-        "copy-all-button";
-
-      copyAllButton.textContent =
-        "📋 Copier toute la réponse";
-
-      copyAllButton.addEventListener(
-   
+      const files 
