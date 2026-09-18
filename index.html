@@ -58,9 +58,15 @@
       height: 42px;
       border: none;
       border-radius: 12px;
-      background: #f0f0f0;
-      font-size: 24px;
-      color: #b40000;
+      background: #000000;
+      color: #ffffff;
+      font-size: 27px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .menu-button:hover {
+      background: #222222;
     }
 
     .logo {
@@ -466,19 +472,22 @@
       gap: 8px;
     }
 
+    /* BOUTON + NOIR */
+
     .small-button {
       width: 43px;
       height: 43px;
       flex-shrink: 0;
       border: none;
       border-radius: 12px;
-      background: #eeeeee;
-      color: #b40000;
-      font-size: 21px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: bold;
     }
 
     .small-button:hover {
-      background: #ffe1e1;
+      background: #222222;
     }
 
     .message-input {
@@ -507,6 +516,10 @@
       background: #b40000;
       color: #ffffff;
       font-size: 20px;
+    }
+
+    .send-button:hover {
+      background: #e00000;
     }
 
     .send-button:disabled {
@@ -555,6 +568,19 @@
       margin-top: 10px;
       color: #666666;
       font-size: 13px;
+    }
+
+    .history-item {
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .history-item:hover {
+      background: #ffe3e3;
     }
 
     /* =========================
@@ -725,8 +751,9 @@
       <button
         class="menu-button"
         onclick="openSidebar()"
+        title="Menu"
       >
-        ☰
+        =
       </button>
 
       <img
@@ -886,25 +913,26 @@
 
         <div class="input-row">
 
+          <!-- BOUTON + -->
+
           <button
             class="small-button"
+            id="plusButton"
             onclick="toggleTools()"
             title="Outils"
           >
-            ＋
+            +
           </button>
 
-          <label for="fileInput">
+          <!-- FICHIER -->
 
-            <span
-              class="small-button"
-              style="display:flex;align-items:center;justify-content:center;"
-              title="Ajouter un fichier"
-            >
-              📎
-            </span>
-
-          </label>
+          <button
+            class="small-button"
+            onclick="openFiles()"
+            title="Ajouter un fichier"
+          >
+            📎
+          </button>
 
           <input
             type="file"
@@ -914,18 +942,22 @@
             onchange="handleFiles(event)"
           />
 
+          <!-- MESSAGE -->
+
           <textarea
             id="messageInput"
             class="message-input"
             placeholder="Écris ton message..."
             rows="1"
-            onkeydown="handleEnter(event)"
           ></textarea>
+
+          <!-- ENVOI -->
 
           <button
             id="sendButton"
             class="send-button"
             onclick="sendMessage()"
+            title="Envoyer"
           >
             ➤
           </button>
@@ -943,7 +975,7 @@
 
     /* =========================
        VARIABLES
-    ========================== */
+    ========================= */
 
     const messagesContainer =
       document.getElementById("messages");
@@ -1008,7 +1040,6 @@
     ========================== */
 
     function openSidebar() {
-
       document
         .getElementById("sidebar")
         .classList.add("active");
@@ -1020,7 +1051,6 @@
 
 
     function closeSidebar() {
-
       document
         .getElementById("sidebar")
         .classList.remove("active");
@@ -1038,12 +1068,14 @@
     function toggleTools() {
 
       toolsPanel.classList.toggle("active");
+
     }
 
 
     function closeTools() {
 
       toolsPanel.classList.remove("active");
+
     }
 
 
@@ -1051,10 +1083,7 @@
        MESSAGES
     ========================== */
 
-    function addMessage(
-      text,
-      type = "ai"
-    ) {
+    function addMessage(text, type = "ai") {
 
       const message =
         document.createElement("div");
@@ -1066,45 +1095,1268 @@
 
       messagesContainer.appendChild(message);
 
-      window.scrollTo(
-        0,
-        document.body.scrollHeight
-      );
+      scrollToBottom();
 
       return message;
     }
 
 
-    /* =========================
-       ENTER
-    ========================== */
+    function scrollToBottom() {
 
-    function handleEnter(event) {
+      setTimeout(() => {
 
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
+        window.scrollTo({
+                    top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
 
-        event.preventDefault();
-
-        sendMessage();
-      }
+      }, 50);
     }
 
 
     /* =========================
-       FILES
-    ========================== */
+       ENTRÉE CLAVIER
+    ========================= */
+
+    messageInput.addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter" && !event.shiftKey) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+      }
+
+    });
+
+
+    /* =========================
+       REDIMENSIONNEMENT DU TEXTE
+    ========================= */
+
+    messageInput.addEventListener("input", function() {
+
+      this.style.height = "auto";
+
+      this.style.height =
+        Math.min(this.scrollHeight, 130) + "px";
+
+    });
+
+
+    /* =========================
+       FICHIERS
+    ========================= */
 
     function openFiles() {
 
       document
         .getElementById("fileInput")
         .click();
+
     }
 
 
     function handleFiles(event) {
 
-      const files 
+      const files =
+        Array.from(event.target.files || []);
+
+      if (!files.length) {
+        return;
+      }
+
+      selectedFiles =
+        selectedFiles.concat(files);
+
+      renderFiles();
+
+      closeTools();
+
+    }
+
+
+    function renderFiles() {
+
+      fileList.innerHTML = "";
+
+      if (!selectedFiles.length) {
+
+        filePreview.classList.remove("active");
+
+        return;
+      }
+
+      filePreview.classList.add("active");
+
+      selectedFiles.forEach((file, index) => {
+
+        const item =
+          document.createElement("div");
+
+        item.className = "file-item";
+
+        const name =
+          document.createElement("span");
+
+        name.textContent =
+          "📎 " + file.name;
+
+        const remove =
+          document.createElement("button");
+
+        remove.className = "remove-file";
+
+        remove.textContent = "×";
+
+        remove.onclick = function() {
+
+          removeFile(index);
+
+        };
+
+        item.appendChild(name);
+        item.appendChild(remove);
+
+        fileList.appendChild(item);
+
+      });
+
+    }
+
+
+    function removeFile(index) {
+
+      selectedFiles.splice(index, 1);
+
+      renderFiles();
+
+    }
+
+
+    /* =========================
+       EXTRAIRE LA RÉPONSE DE L'IA
+    ========================= */
+
+    function extractAIText(result) {
+
+      if (!result) {
+        return "";
+      }
+
+
+      if (typeof result === "string") {
+        return result;
+      }
+
+
+      if (
+        result.outputs &&
+        Array.isArray(result.outputs)
+      ) {
+
+        for (const output of result.outputs) {
+
+          if (
+            typeof output === "string" &&
+            output.trim()
+          ) {
+
+            return output;
+
+          }
+
+          if (
+            output &&
+            typeof output.content === "string"
+          ) {
+
+            return output.content;
+
+          }
+
+          if (
+            output &&
+            Array.isArray(output.content)
+          ) {
+
+            const text =
+              output.content
+                .map(item => {
+
+                  if (typeof item === "string") {
+                    return item;
+                  }
+
+                  return item?.text || "";
+
+                })
+                .join("");
+
+            if (text.trim()) {
+              return text;
+            }
+
+          }
+
+        }
+
+      }
+
+
+      if (
+        result.output &&
+        Array.isArray(result.output)
+      ) {
+
+        for (const output of result.output) {
+
+          if (
+            typeof output?.content === "string"
+          ) {
+
+            return output.content;
+
+          }
+
+        }
+
+      }
+
+
+      if (
+        result.choices &&
+        Array.isArray(result.choices) &&
+        result.choices[0]
+      ) {
+
+        const choice =
+          result.choices[0];
+
+        if (
+          choice.message &&
+          typeof choice.message.content === "string"
+        ) {
+
+          return choice.message.content;
+
+        }
+
+        if (
+          typeof choice.text === "string"
+        ) {
+
+          return choice.text;
+
+        }
+
+      }
+
+
+      if (
+        typeof result.content === "string"
+      ) {
+
+        return result.content;
+
+      }
+
+
+      if (
+        typeof result.text === "string"
+      ) {
+
+        return result.text;
+
+      }
+
+
+      return "";
+
+    }
+
+
+    /* =========================
+       AFFICHAGE DE LA RÉPONSE IA
+    ========================= */
+
+    function renderAIResponse(text) {
+
+      const wrapper =
+        document.createElement("div");
+
+      wrapper.className =
+        "ai-response";
+
+
+      const copyAll =
+        document.createElement("button");
+
+      copyAll.className =
+        "copy-all-button";
+
+      copyAll.textContent =
+        "📋 Copier";
+
+      copyAll.onclick = function() {
+
+        copyText(text);
+
+      };
+
+
+      const actions =
+        document.createElement("div");
+
+      actions.className =
+        "response-actions";
+
+      actions.appendChild(copyAll);
+
+
+      const codeRegex =
+        /```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g;
+
+      let lastIndex = 0;
+
+      let match;
+
+
+      while (
+        (match = codeRegex.exec(text)) !== null
+      ) {
+
+        const normalText =
+          text.slice(
+            lastIndex,
+            match.index
+          );
+
+        if (normalText.trim()) {
+
+          const normal =
+            document.createElement("div");
+
+          normal.className =
+            "ai-text styled-normal";
+
+          normal.textContent =
+            normalText;
+
+          wrapper.appendChild(normal);
+
+        }
+
+
+        const language =
+          match[1] || "code";
+
+        const code =
+          match[2].replace(/^\n/, "").replace(/\n$/, "");
+
+
+        const codeWrapper =
+          document.createElement("div");
+
+        codeWrapper.className =
+          "code-wrapper";
+
+
+        const codeHeader =
+          document.createElement("div");
+
+        codeHeader.className =
+          "code-header";
+
+
+        const languageLabel =
+          document.createElement("span");
+
+        languageLabel.className =
+          "code-language";
+
+        languageLabel.textContent =
+          language;
+
+
+        const copyButton =
+          document.createElement("button");
+
+        copyButton.className =
+          "copy-code-button";
+
+        copyButton.textContent =
+          "Copier";
+
+        copyButton.onclick = function() {
+
+          copyText(code);
+
+        };
+
+
+        codeHeader.appendChild(
+          languageLabel
+        );
+
+        codeHeader.appendChild(
+          copyButton
+        );
+
+
+        const codeContent =
+          document.createElement("div");
+
+        codeContent.className =
+          "code-content";
+
+        codeContent.textContent =
+          code;
+
+
+        codeWrapper.appendChild(
+          codeHeader
+        );
+
+        codeWrapper.appendChild(
+          codeContent
+        );
+
+        wrapper.appendChild(
+          codeWrapper
+        );
+
+
+        lastIndex =
+          codeRegex.lastIndex;
+
+      }
+
+
+      const remaining =
+        text.slice(lastIndex);
+
+
+      if (remaining.trim()) {
+
+        const normal =
+          document.createElement("div");
+
+        normal.className =
+          "ai-text styled-normal";
+
+        normal.textContent =
+          remaining;
+
+        wrapper.appendChild(normal);
+
+      }
+
+
+      wrapper.appendChild(actions);
+
+
+      return wrapper;
+
+    }
+
+
+    /* =========================
+       COPIE
+    ========================= */
+
+    async function copyText(text) {
+
+      try {
+
+        await navigator.clipboard.writeText(text);
+
+        addMessage(
+          "📋 Texte copié dans le presse-papiers.",
+          "system"
+        );
+
+      } catch (error) {
+
+        addMessage(
+          "⚠️ Impossible de copier automatiquement le texte.",
+          "system"
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       ENVOYER LE MESSAGE
+    ========================= */
+
+    async function sendMessage() {
+
+      const text =
+        messageInput.value.trim();
+
+
+      if (!text && !selectedFiles.length) {
+
+        return;
+
+      }
+
+
+      let finalMessage = text;
+
+
+      if (selectedFiles.length) {
+
+        const fileNames =
+          selectedFiles
+            .map(file => file.name)
+            .join(", ");
+
+        finalMessage +=
+          (finalMessage ? "\n\n" : "") +
+          "📎 Fichiers sélectionnés : " +
+          fileNames;
+
+      }
+
+
+      addMessage(
+        finalMessage,
+        "user"
+      );
+
+
+      conversation.push({
+        role: "user",
+        content: finalMessage
+      });
+
+
+      messageInput.value = "";
+
+      messageInput.style.height = "auto";
+
+
+      const filesToReset =
+        selectedFiles.length;
+
+      selectedFiles = [];
+
+      renderFiles();
+
+
+      closeTools();
+
+
+      welcome.style.display = "none";
+
+
+      sendButton.disabled = true;
+
+      sendButton.textContent = "…";
+
+
+      const typing =
+        addMessage(
+          "⚡ HACKER F5 analyse votre demande...",
+          "ai"
+        );
+
+      typing.classList.add("typing");
+
+
+      try {
+
+        const response =
+          await fetch("/api/chat", {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+              messages: conversation,
+
+              language: selectedLanguage
+
+            })
+
+          });
+
+
+        let result;
+
+        try {
+
+          result =
+            await response.json();
+
+        } catch (jsonError) {
+
+          throw new Error(
+            "La réponse du serveur n'est pas un JSON valide."
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          const serverError =
+            result?.error;
+
+          let errorText =
+            "Une erreur est survenue avec le serveur.";
+
+          if (
+            typeof serverError === "string"
+          ) {
+
+            errorText =
+              serverError;
+
+          } else if (
+            serverError
+          ) {
+
+            errorText =
+              JSON.stringify(
+                serverError,
+                null,
+                2
+              );
+
+          }
+
+          throw new Error(errorText);
+
+        }
+
+
+        const aiText =
+          extractAIText(result);
+
+
+        if (!aiText.trim()) {
+
+          throw new Error(
+            "HACKER F5 n'a pas renvoyé de texte."
+          );
+
+        }
+
+
+        typing.remove();
+
+
+        const aiMessage =
+          document.createElement("div");
+
+        aiMessage.className =
+          "message ai";
+
+        aiMessage.appendChild(
+          renderAIResponse(aiText)
+        );
+
+        messagesContainer.appendChild(
+          aiMessage
+        );
+
+
+        conversation.push({
+          role: "assistant",
+          content: aiText
+        });
+
+
+        saveCurrentConversation();
+
+        scrollToBottom();
+
+
+      } catch (error) {
+
+        typing.remove();
+
+
+        addMessage(
+          "⚠️ " +
+          (error.message ||
+          "Impossible de contacter HACKER F5."),
+          "system"
+        );
+
+      } finally {
+
+        sendButton.disabled = false;
+
+        sendButton.textContent = "➤";
+
+      }
+
+    }
+
+
+    /* =========================
+       HISTORIQUE
+    ========================= */
+
+    function saveCurrentConversation() {
+
+      if (!conversation.length) {
+        return;
+      }
+
+
+      const history =
+        JSON.parse(
+          localStorage.getItem("hackerF5History") ||
+          "[]"
+        );
+
+
+      const firstUserMessage =
+        conversation.find(
+          message =>
+            message.role === "user"
+        );
+
+
+      const title =
+        firstUserMessage
+          ? firstUserMessage.content
+              .substring(0, 45)
+          : "Nouvelle conversation";
+
+
+      const item = {
+        id: Date.now(),
+        title: title,
+        messages: conversation
+      };
+
+
+      history.unshift(item);
+
+
+      const limitedHistory =
+        history.slice(0, 20);
+
+
+      localStorage.setItem(
+        "hackerF5History",
+        JSON.stringify(limitedHistory)
+      );
+
+    }
+
+
+    function showHistory() {
+
+      closeSidebar();
+
+
+      const history =
+        JSON.parse(
+          localStorage.getItem("hackerF5History") ||
+          "[]"
+        );
+
+
+      messagesContainer.innerHTML = "";
+
+
+      welcome.style.display = "none";
+
+
+      if (!history.length) {
+
+        addMessage(
+          "🕘 Aucun historique disponible pour le moment.",
+          "system"
+        );
+
+        return;
+
+      }
+
+
+      const title =
+        document.createElement("div");
+
+      title.className =
+        "message ai";
+
+
+      const heading =
+        document.createElement("div");
+
+      heading.className =
+        "hacker-title";
+
+      heading.textContent =
+        "🕘 HISTORIQUE HACKER F5";
+
+
+      title.appendChild(heading);
+
+
+      history.forEach(item => {
+
+        const historyItem =
+          document.createElement("div");
+
+        historyItem.className =
+          "history-item";
+
+        historyItem.textContent =
+          "➤ " + item.title;
+
+
+        historyItem.onclick =
+          function() {
+
+            loadConversation(item);
+
+          };
+
+
+        title.appendChild(historyItem);
+
+      });
+
+
+      messagesContainer.appendChild(title);
+
+      scrollToBottom();
+
+    }
+
+
+    function loadConversation(item) {
+
+      conversation =
+        Array.isArray(item.messages)
+          ? [...item.messages]
+          : [];
+
+
+      messagesContainer.innerHTML = "";
+
+      welcome.style.display = "none";
+
+
+      conversation.forEach(message => {
+
+        if (
+          message.role === "user"
+        ) {
+
+          addMessage(
+            message.content,
+            "user"
+          );
+
+        } else if (
+          message.role === "assistant"
+        ) {
+
+          const aiMessage =
+            document.createElement("div");
+
+          aiMessage.className =
+            "message ai";
+
+          aiMessage.appendChild(
+            renderAIResponse(
+              message.content
+            )
+          );
+
+          messagesContainer.appendChild(
+            aiMessage
+          );
+
+        }
+
+      });
+
+
+      closeSidebar();
+
+      scrollToBottom();
+
+    }
+
+
+    /* =========================
+       NOUVELLE CONVERSATION
+    ========================= */
+
+    function newConversation() {
+
+      conversation = [];
+
+      selectedFiles = [];
+
+      messagesContainer.innerHTML = "";
+
+      welcome.style.display = "block";
+
+      renderFiles();
+
+      closeTools();
+
+      closeSidebar();
+
+      messageInput.value = "";
+
+      messageInput.style.height = "auto";
+
+    }
+
+
+    /* =========================
+       ACTIONS DU MENU
+    ========================= */
+
+    function prepareCreation() {
+
+      closeSidebar();
+
+      messageInput.value =
+        "Je veux créer un projet avec l'aide de HACKER F5.";
+
+      messageInput.focus();
+
+    }
+
+
+    function securityAnalysis() {
+
+      closeSidebar();
+
+      messageInput.value =
+        "Analyse cette situation de cybersécurité et donne-moi des recommandations défensives.";
+
+      messageInput.focus();
+
+    }
+
+
+    function codeAnalysis() {
+
+      closeSidebar();
+
+      messageInput.value =
+        "Analyse ce code et explique-moi les erreurs et les améliorations possibles.";
+
+      messageInput.focus();
+
+    }
+
+
+    function showSettings() {
+
+      closeSidebar();
+
+      messagesContainer.innerHTML = "";
+
+      welcome.style.display = "none";
+
+
+      const box =
+        document.createElement("div");
+
+      box.className =
+        "settings-box";
+
+
+      const heading =
+        document.createElement("h3");
+
+      heading.textContent =
+        "⚙️ Paramètres HACKER F5";
+
+
+      box.appendChild(heading);
+
+
+      const label =
+        document.createElement("div");
+
+      label.textContent =
+        "🌐 Langue des réponses";
+
+
+      box.appendChild(label);
+
+
+      const select =
+        document.createElement("select");
+
+      select.style.width = "100%";
+
+      select.style.padding = "12px";
+
+      select.style.marginTop = "8px";
+
+      select.style.border =
+        "1px solid #cccccc";
+
+      select.style.borderRadius =
+        "10px";
+
+
+      languageList.forEach(language => {
+
+        const option =
+          document.createElement("option");
+
+        option.value = language;
+
+        option.textContent = language;
+
+        if (
+          language === selectedLanguage
+        ) {
+
+          option.selected = true;
+
+        }
+
+        select.appendChild(option);
+
+      });
+
+
+      select.onchange =
+        function() {
+
+          selectedLanguage =
+            this.value;
+
+          localStorage.setItem(
+            "hackerF5Language",
+            selectedLanguage
+          );
+
+          status.textContent =
+            "✓ Langue enregistrée : " +
+            selectedLanguage;
+
+        };
+
+
+      box.appendChild(select);
+
+
+      const status =
+        document.createElement("div");
+
+      status.className =
+        "language-status";
+
+      status.textContent =
+        "✓ Langue actuelle : " +
+        selectedLanguage;
+
+
+      box.appendChild(status);
+
+
+      const backButton =
+        document.createElement("button");
+
+      backButton.className =
+        "settings-button";
+
+      backButton.textContent =
+        "← Retour au chat";
+
+      backButton.onclick =
+        function() {
+
+          messagesContainer.innerHTML = "";
+
+          welcome.style.display =
+            conversation.length
+              ? "none"
+              : "block";
+
+          if (conversation.length) {
+
+            conversation.forEach(message => {
+
+              if (
+                message.role === "user"
+              ) {
+
+                addMessage(
+                  message.content,
+                  "user"
+                );
+
+              } else {
+
+                const aiMessage =
+                  document.createElement("div");
+
+                aiMessage.className =
+                  "message ai";
+
+                aiMessage.appendChild(
+                  renderAIResponse(
+                    message.content
+                  )
+                );
+
+                messagesContainer.appendChild(
+                  aiMessage
+                );
+
+              }
+
+            });
+
+          }
+
+          scrollToBottom();
+
+        };
+
+
+      box.appendChild(backButton);
+
+
+      messagesContainer.appendChild(box);
+
+      scrollToBottom();
+
+    }
+
+
+    /* =========================
+       OUTILS
+    ========================= */
+
+    function prepareImage() {
+
+      closeTools();
+
+      messageInput.value =
+        "Je veux travailler avec une image.";
+
+      messageInput.focus();
+
+    }
+
+
+    function startVoice() {
+
+      closeTools();
+
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+      if (!SpeechRecognition) {
+
+        addMessage(
+          "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur.",
+          "system"
+        );
+
+        return;
+
+      }
+
+
+      const recognition =
+        new SpeechRecognition();
+
+
+      recognition.lang =
+        selectedLanguage === "Français"
+          ? "fr-FR"
+          : "en-US";
+
+
+      recognition.interimResults =
+        false;
+
+      recognition.maxAlternatives =
+        1;
+
+
+      recognition.onstart =
+        function() {
+
+          addMessage(
+            "🎙️ Parle maintenant...",
+            "system"
+          );
+
+        };
+
+
+      recognition.onresult =
+        function(event) {
+
+          const transcript =
+            event.results[0][0].transcript;
+
+          messageInput.value =
+            transcript;
+
+          messageInput.focus();
+
+        };
+
+
+      recognition.onerror =
+        function() {
+
+          addMessage(
+            "⚠️ La reconnaissance vocale a rencontré un problème.",
+            "system"
+          );
+
+        };
+
+
+      recognition.start();
+
+    }
+
+
+    function prepareDocument() {
+
+      closeTools();
+
+      messageInput.value =
+        "Je veux analyser ou préparer un document.";
+
+      messageInput.focus();
+
+    }
+
+
+    function prepareImageGeneration() {
+
+      closeTools();
+
+      messageInput.value =
+        "Je veux créer une image avec l'aide de HACKER F5.";
+
+      mes
