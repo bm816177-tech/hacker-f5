@@ -19,6 +19,7 @@
       --text: #20232a;
       --muted: #777d87;
       --border: #e1e4ea;
+      --soft-red: #ffe5e5;
     }
 
     body {
@@ -32,27 +33,38 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 30;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.97);
+      gap: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.98);
       border-bottom: 1px solid var(--border);
       box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 13px;
+      background: var(--soft-red);
+      color: var(--red-dark);
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      flex-shrink: 0;
     }
 
     .logo {
       width: 48px;
       height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #e53935, #9b111e);
-      color: white;
-      font-size: 25px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 2px solid var(--red);
+      background: #111;
       box-shadow: 0 5px 14px rgba(229, 57, 53, 0.3);
+      flex-shrink: 0;
     }
 
     .header-title {
@@ -82,15 +94,16 @@
 
     .app-layout {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1150px;
       margin: auto;
       display: flex;
+      align-items: flex-start;
       gap: 18px;
       padding: 18px;
     }
 
     .side-card {
-      width: 230px;
+      width: 250px;
       flex-shrink: 0;
       background: var(--card);
       border: 1px solid var(--border);
@@ -107,27 +120,34 @@
 
     .side-button {
       width: 100%;
+      display: block;
       border: none;
       border-radius: 12px;
-      padding: 12px;
+      padding: 13px 12px;
       margin-bottom: 9px;
       background: #f2f3f6;
       color: var(--text);
       text-align: left;
       cursor: pointer;
       font-size: 13px;
+      transition: 0.2s ease;
     }
 
-    .side-button.active,
-    .side-button:hover {
-      background: #ffe5e5;
+    .side-button:hover,
+    .side-button.active {
+      background: var(--soft-red);
       color: var(--red-dark);
+      transform: translateX(2px);
+    }
+
+    .side-button:last-child {
+      margin-bottom: 0;
     }
 
     #chat {
       flex: 1;
       min-width: 0;
-      padding-bottom: 125px;
+      padding-bottom: 155px;
     }
 
     .welcome {
@@ -140,12 +160,17 @@
       box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
     }
 
-    .welcome-icon {
-      font-size: 42px;
+    .welcome-logo {
+      width: 105px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 25px;
+      border: 3px solid var(--red);
+      box-shadow: 0 8px 20px rgba(229, 57, 53, 0.25);
     }
 
     .welcome h2 {
-      margin: 10px 0;
+      margin: 14px 0 10px;
       font-size: 26px;
     }
 
@@ -192,23 +217,92 @@
       text-transform: uppercase;
     }
 
+    .file-preview {
+      display: none;
+      max-width: 850px;
+      margin: 0 auto 9px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #f8f9fb;
+      font-size: 12px;
+    }
+
+    .file-preview.show {
+      display: block;
+    }
+
+    .file-item {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    .remove-files {
+      margin-top: 8px;
+      border: none;
+      border-radius: 9px;
+      padding: 7px 10px;
+      background: var(--soft-red);
+      color: var(--red-dark);
+      cursor: pointer;
+      font-size: 11px;
+    }
+
     .bottom-area {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 20;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.97);
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.98);
       border-top: 1px solid var(--border);
       box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
     }
 
     .input-area {
       display: flex;
-      gap: 9px;
+      align-items: center;
+      gap: 8px;
       max-width: 850px;
       margin: auto;
+    }
+
+    .attach-button,
+    .create-button {
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-weight: bold;
+    }
+
+    .attach-button {
+      background: #f2f3f6;
+      color: var(--red-dark);
+      font-size: 27px;
+    }
+
+    .create-button {
+      background: var(--soft-red);
+      color: var(--red-dark);
+      font-size: 21px;
+    }
+
+    .attach-button:hover,
+    .create-button:hover {
+      transform: translateY(-2px);
+    }
+
+    #fileInput {
+      display: none;
     }
 
     #messageInput {
@@ -230,6 +324,7 @@
 
     #sendButton {
       width: 52px;
+      height: 48px;
       border: none;
       border-radius: 15px;
       background: linear-gradient(135deg, #e53935, #b71c1c);
@@ -237,7 +332,7 @@
       font-size: 20px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 5px 12px rgba(229, 57, 53, 0.25);
+      flex-shrink: 0;
     }
 
     #sendButton:disabled {
@@ -253,12 +348,74 @@
     }
 
     @media (max-width: 700px) {
+      header {
+        padding: 10px;
+        gap: 8px;
+      }
+
+      .menu-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 23px;
+      }
+
+      .logo {
+        width: 42px;
+        height: 42px;
+      }
+
+      .header-title h1 {
+        font-size: 17px;
+      }
+
+      .header-title p {
+        font-size: 10px;
+      }
+
+      .status {
+        display: none;
+      }
+
       .app-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
         padding: 12px;
       }
 
       .side-card {
         display: none;
+        width: 100%;
+        padding: 13px;
+        border-radius: 17px;
+      }
+
+      .side-card.open {
+        display: block;
+      }
+
+      .side-card h3 {
+        font-size: 14px;
+        margin-bottom: 11px;
+      }
+
+      .side-button {
+        padding: 13px;
+        font-size: 13px;
+      }
+
+      #chat {
+        width: 100%;
+        padding-bottom: 155px;
+      }
+
+      .welcome {
+        padding: 25px 15px;
+      }
+
+      .welcome-logo {
+        width: 85px;
+        height: 85px;
       }
 
       .welcome h2 {
@@ -269,12 +426,29 @@
         max-width: 94%;
       }
 
-      .header-title h1 {
-        font-size: 18px;
+      .bottom-area {
+        padding: 8px;
       }
 
-      .status {
-        font-size: 10px;
+      .input-area {
+        gap: 6px;
+      }
+
+      .attach-button,
+      .create-button {
+        width: 40px;
+        height: 46px;
+        font-size: 22px;
+      }
+
+      #messageInput {
+        padding: 14px 10px;
+        font-size: 13px;
+      }
+
+      #sendButton {
+        width: 45px;
+        height: 46px;
       }
     }
   </style>
@@ -283,7 +457,21 @@
 <body>
 
   <header>
-    <div class="logo">👑</div>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <img
+      src="logo.png"
+      class="logo"
+      alt="Logo HACKER F5"
+    >
 
     <div class="header-title">
       <h1>HACKER F5</h1>
@@ -291,11 +479,13 @@
     </div>
 
     <div class="status">● En ligne</div>
+
   </header>
 
   <div class="app-layout">
 
-    <aside class="side-card">
+    <aside class="side-card" id="sideCard">
+
       <h3>⚡ Menu HACKER F5</h3>
 
       <button class="side-button active" id="newChatButton">
@@ -304,6 +494,10 @@
 
       <button class="side-button" id="historyButton">
         💬 Historique
+      </button>
+
+      <button class="side-button" id="createMenuButton">
+        ✨ Créer
       </button>
 
       <button class="side-button" id="securityButton">
@@ -317,19 +511,26 @@
       <button class="side-button" id="settingsButton">
         ⚙️ Paramètres
       </button>
+
     </aside>
 
     <main id="chat">
 
       <section class="welcome">
-        <div class="welcome-icon">👑</div>
+
+        <img
+          src="logo.png"
+          class="welcome-logo"
+          alt="Logo HACKER F5"
+        >
 
         <h2>Bonjour, membre F5</h2>
 
         <p>
           Je suis <strong>HACKER F5</strong>.<br>
-          Ton assistant IA pour apprendre, analyser et protéger.
+          Ton assistant IA pour apprendre, analyser, créer et protéger.
         </p>
+
       </section>
 
       <div class="message ai">
@@ -338,30 +539,80 @@
       </div>
 
     </main>
+
   </div>
 
   <div class="bottom-area">
+
+    <div
+      class="file-preview"
+      id="filePreview"
+    ></div>
+
     <div class="input-area">
+
+      <button
+        class="attach-button"
+        id="attachButton"
+        title="Importer des fichiers"
+        aria-label="Importer des fichiers"
+      >
+        +
+      </button>
+
+      <input
+        type="file"
+        id="fileInput"
+        multiple
+        accept="*/*"
+      >
+
+      <button
+        class="create-button"
+        id="createButton"
+        title="Préparer une création"
+        aria-label="Préparer une création"
+      >
+        ✨
+      </button>
 
       <input
         id="messageInput"
         type="text"
-        placeholder="Écris ton message..."
+        placeholder="Écris ta demande à HACKER F5..."
         autocomplete="off"
       >
 
-      <button id="sendButton">➤</button>
+      <button
+        id="sendButton"
+        aria-label="Envoyer le message"
+      >
+        ➤
+      </button>
+
     </div>
 
     <div class="hint">
-      HACKER F5 peut faire des erreurs. Vérifie les informations importantes.
+      Écris directement : « Crée une image », « Fais un PDF », « Crée un Word », « Génère une vidéo ».
     </div>
+
   </div>
 
   <script>
     const chat = document.getElementById("chat");
     const input = document.getElementById("messageInput");
-    const button = document.getElementById("sendButton");
+    const sendButton = document.getElementById("sendButton");
+
+    const menuToggle = document.getElementById("menuToggle");
+    const sideCard = document.getElementById("sideCard");
+
+    const attachButton = document.getElementById("attachButton");
+    const fileInput = document.getElementById("fileInput");
+    const filePreview = document.getElementById("filePreview");
+
+    const createButton = document.getElementById("createButton");
+    const createMenuButton = document.getElementById("createMenuButton");
+
     const newChatButton = document.getElementById("newChatButton");
     const historyButton = document.getElementById("historyButton");
     const securityButton = document.getElementById("securityButton");
@@ -369,6 +620,7 @@
     const settingsButton = document.getElementById("settingsButton");
 
     let messages = [];
+    let selectedFiles = [];
 
     function addMessage(text, type) {
       const div = document.createElement("div");
@@ -376,14 +628,15 @@
 
       const label = document.createElement("span");
       label.className = "message-label";
-      label.textContent = type === "user" ? "Vous" : "HACKER F5";
+      label.textContent = type === "user"
+        ? "Vous"
+        : "HACKER F5";
 
       const content = document.createElement("span");
       content.textContent = text;
 
       div.appendChild(label);
       div.appendChild(content);
-
       chat.appendChild(div);
 
       window.scrollTo({
@@ -419,39 +672,212 @@
       }
 
       try {
-        messages = JSON.parse(saved);
+        const oldMessages = JSON.parse(saved);
+
+        if (!Array.isArray(oldMessages)) {
+          return;
+        }
+
+        messages = oldMessages;
 
         messages.forEach(message => {
           addMessage(
             message.content,
-            message.role === "user" ? "user" : "ai"
+            message.role === "user"
+              ? "user"
+              : "ai"
           );
         });
+
       } catch {
         messages = [];
       }
     }
 
+    function displaySelectedFiles() {
+      filePreview.innerHTML = "";
+
+      if (selectedFiles.length === 0) {
+        filePreview.classList.remove("show");
+        return;
+      }
+
+      selectedFiles.forEach(file => {
+        const item = document.createElement("div");
+        item.className = "file-item";
+
+        item.textContent =
+          "📎 " +
+          file.name +
+          " — " +
+          Math.round(file.size / 1024) +
+          " Ko";
+
+        filePreview.appendChild(item);
+      });
+
+      const removeButton = document.createElement("button");
+
+      removeButton.className = "remove-files";
+      removeButton.textContent = "Retirer les fichiers";
+
+      removeButton.addEventListener("click", function() {
+        selectedFiles = [];
+        fileInput.value = "";
+        displaySelectedFiles();
+      });
+
+      filePreview.appendChild(removeButton);
+      filePreview.classList.add("show");
+    }
+
+    function importFiles() {
+      fileInput.click();
+    }
+
+    fileInput.addEventListener("change", function() {
+      selectedFiles = Array.from(fileInput.files || []);
+
+      displaySelectedFiles();
+
+      if (selectedFiles.length > 0) {
+        input.value =
+          "Analyse les fichiers importés de manière responsable.";
+        input.focus();
+      }
+    });
+
+    function closeMobileMenu() {
+      if (window.innerWidth <= 700) {
+        sideCard.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    }
+
+    function toggleMenu() {
+      const isOpen = sideCard.classList.toggle("open");
+
+      menuToggle.textContent = isOpen ? "×" : "☰";
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+      );
+    }
+
+    function showNewConversation() {
+      messages = [];
+
+      localStorage.removeItem("hackerF5History");
+
+      chat.innerHTML = `
+        <section class="welcome">
+          <img
+            src="logo.png"
+            class="welcome-logo"
+            alt="Logo HACKER F5"
+          >
+
+          <h2>Nouvelle conversation</h2>
+
+          <p>
+            Pose une question à HACKER F5 pour commencer.
+          </p>
+        </section>
+
+        <div class="message ai">
+          <span class="message-label">HACKER F5</span>
+          Nouvelle conversation activée. Comment puis-je t’aider ?
+        </div>
+      `;
+
+      closeMobileMenu();
+    }
+
+    function showHistory() {
+      if (messages.length === 0) {
+        alert("Aucune conversation enregistrée.");
+        return;
+      }
+
+      alert(
+        "Historique disponible : " +
+        messages.length +
+        " message(s) dans cette conversation."
+      );
+
+      closeMobileMenu();
+    }
+
+    function showCreateMessage() {
+      input.value =
+        "Je veux créer un contenu ou un fichier. Comprends ma demande directement et demande-moi seulement les informations nécessaires.";
+      input.focus();
+
+      closeMobileMenu();
+    }
+
+    function useSecurityMode() {
+      input.value =
+        "Aide-moi à analyser un problème de cybersécurité de manière responsable.";
+      input.focus();
+
+      closeMobileMenu();
+    }
+
+    function useCodeMode() {
+      input.value =
+        "Aide-moi à analyser et corriger ce code :";
+      input.focus();
+
+      closeMobileMenu();
+    }
+
+    function showSettings() {
+      alert(
+        "Paramètres HACKER F5\n\n" +
+        "Thème : Gris clair et rouge\n" +
+        "Assistant : Mistral AI\n" +
+        "Mode : Cybersécurité responsable\n\n" +
+        "Les options avancées seront ajoutées plus tard."
+      );
+
+      closeMobileMenu();
+    }
+
     async function sendMessage() {
       const text = input.value.trim();
 
-      if (!text || button.disabled) {
+      if (!text || sendButton.disabled) {
         return;
       }
 
       input.value = "";
 
-      addMessage(text, "user");
+      let finalMessage = text;
+
+      if (selectedFiles.length > 0) {
+        const fileNames = selectedFiles
+          .map(file => file.name)
+          .join(", ");
+
+        finalMessage +=
+          "\n\nFichiers sélectionnés : " +
+          fileNames;
+      }
+
+      addMessage(finalMessage, "user");
 
       messages.push({
         role: "user",
-        content: text
+        content: finalMessage
       });
 
       saveHistory();
 
-      button.disabled = true;
-      button.textContent = "...";
+      sendButton.disabled = true;
+      sendButton.textContent = "...";
 
       const loading = addMessage(
         "HACKER F5 réfléchit...",
@@ -503,71 +929,41 @@
 
         saveHistory();
 
+        selectedFiles = [];
+        fileInput.value = "";
+        displaySelectedFiles();
+
       } catch (error) {
         loading.textContent =
-          "Une erreur est survenue : " + error.message;
+          "Une erreur est survenue : " +
+          error.message;
+
       } finally {
-        button.disabled = false;
-        button.textContent = "➤";
+        sendButton.disabled = false;
+        sendButton.textContent = "➤";
         input.focus();
       }
     }
 
-    function showNewConversation() {
-      messages = [];
-      localStorage.removeItem("hackerF5History");
+    menuToggle.addEventListener(
+      "click",
+      toggleMenu
+    );
 
-      chat.innerHTML = `
-        <section class="welcome">
-          <div class="welcome-icon">👑</div>
-          <h2>Nouvelle conversation</h2>
-          <p>
-            Pose une question à HACKER F5 pour commencer.
-          </p>
-        </section>
+    attachButton.addEventListener(
+      "click",
+      importFiles
+    );
 
-        <div class="message ai">
-          <span class="message-label">HACKER F5</span>
-          Nouvelle conversation activée. Comment puis-je t’aider ?
-        </div>
-      `;
-    }
+    createButton.addEventListener(
+      "click",
+      showCreateMessage
+    );
 
-    function showHistory() {
-      const saved = localStorage.getItem("hackerF5History");
-
-      if (!saved) {
-        alert("Aucune conversation enregistrée.");
-        return;
-      }
-
-      alert(
-        "Historique disponible : " +
-        messages.length +
-        " message(s) dans cette conversation."
-      );
-    }
-
-    function useSecurityMode() {
-      input.value =
-        "Aide-moi à analyser un problème de cybersécurité de manière responsable.";
-      input.focus();
-    }
-
-    function useCodeMode() {
-      input.value =
-        "Aide-moi à analyser et corriger ce code :";
-      input.focus();
-    }
-
-    function showSettings() {
-      alert(
-        "Paramètres HACKER F5\n\n" +
-        "Thème : Gris clair et rouge\n" +
-        "Assistant : Mistral AI\n" +
-        "Mode : Cybersécurité responsable"
-      );
-    }
+    createMenuButton.addEventListener(
+      "click",
+      showCreateMessage
+    );
 
     newChatButton.addEventListener(
       "click",
@@ -579,37 +975,4 @@
       showHistory
     );
 
-    securityButton.addEventListener(
-      "click",
-      useSecurityMode
-    );
-
-    codeButton.addEventListener(
-      "click",
-      useCodeMode
-    );
-
-    settingsButton.addEventListener(
-      "click",
-      showSettings
-    );
-
-    button.addEventListener(
-      "click",
-      sendMessage
-    );
-
-    input.addEventListener(
-      "keydown",
-      function(event) {
-        if (event.key === "Enter") {
-          sendMessage();
-        }
-      }
-    );
-
-    loadHistory();
-  </script>
-
-</body>
-    </html>
+    s
