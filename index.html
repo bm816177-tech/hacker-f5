@@ -1,978 +1,1084 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#e53935">
-  <title>HACKER F5</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>HACKER F5 AI</title>
 
   <style>
     * {
       box-sizing: border-box;
-    }
-
-    :root {
-      --red: #e53935;
-      --red-dark: #b71c1c;
-      --bg: #eef0f4;
-      --card: #ffffff;
-      --text: #20232a;
-      --muted: #777d87;
-      --border: #e1e4ea;
-      --soft-red: #ffe5e5;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: #eeeeee;
+      color: #171717;
       min-height: 100vh;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.98);
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    button,
+    input,
+    textarea {
+      font: inherit;
     }
 
-    .menu-toggle {
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: 13px;
-      background: var(--soft-red);
-      color: var(--red-dark);
-      font-size: 25px;
-      font-weight: bold;
+    button {
       cursor: pointer;
-      flex-shrink: 0;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+
+    header {
+      height: 65px;
+      background: #ffffff;
+      border-bottom: 1px solid #dddddd;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .menu-button {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 12px;
+      background: #f0f0f0;
+      font-size: 24px;
+      color: #b40000;
     }
 
     .logo {
-      width: 48px;
-      height: 48px;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
       object-fit: cover;
-      border-radius: 15px;
-      border: 2px solid var(--red);
-      background: #111;
-      box-shadow: 0 5px 14px rgba(229, 57, 53, 0.3);
-      flex-shrink: 0;
+      border: 2px solid #c40000;
     }
 
-    .header-title {
-      flex: 1;
+    .brand {
+      display: flex;
+      flex-direction: column;
       min-width: 0;
     }
 
-    .header-title h1 {
-      margin: 0;
+    .brand h1 {
       font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
+      color: #b40000;
+      letter-spacing: 1px;
     }
 
-    .header-title p {
-      margin: 4px 0 0;
-      color: var(--muted);
+    .brand span {
       font-size: 11px;
+      color: #666666;
     }
 
-    .status {
-      color: #16a34a;
-      font-size: 11px;
-      font-weight: bold;
-      white-space: nowrap;
+    /* SIDEBAR */
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -290px;
+      width: 280px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+      z-index: 30;
+      padding: 20px 15px;
+      transition: left 0.25s ease;
+      overflow-y: auto;
     }
 
-    .app-layout {
-      width: 100%;
-      max-width: 1150px;
-      margin: auto;
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar-top {
       display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      padding: 18px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
     }
 
-    .side-card {
-      width: 250px;
-      flex-shrink: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 16px;
-      height: fit-content;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    .sidebar-top h2 {
+      color: #b40000;
+      font-size: 20px;
     }
 
-    .side-card h3 {
-      margin: 0 0 14px;
-      font-size: 15px;
+    .close-sidebar {
+      border: none;
+      background: #eeeeee;
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      font-size: 20px;
     }
 
     .side-button {
       width: 100%;
-      display: block;
       border: none;
+      background: #f3f3f3;
+      color: #222222;
+      padding: 14px;
+      margin-bottom: 10px;
       border-radius: 12px;
-      padding: 13px 12px;
-      margin-bottom: 9px;
-      background: #f2f3f6;
-      color: var(--text);
       text-align: left;
-      cursor: pointer;
-      font-size: 13px;
-      transition: 0.2s ease;
+      font-size: 15px;
     }
 
-    .side-button:hover,
-    .side-button.active {
-      background: var(--soft-red);
-      color: var(--red-dark);
-      transform: translateX(2px);
+    .side-button:hover {
+      background: #ffe3e3;
+      color: #b40000;
     }
 
-    .side-button:last-child {
-      margin-bottom: 0;
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 20;
     }
 
-    #chat {
+    .overlay.active {
+      display: block;
+    }
+
+    /* MAIN */
+
+    main {
       flex: 1;
-      min-width: 0;
-      padding-bottom: 155px;
+      width: 100%;
+      max-width: 950px;
+      margin: auto;
+      padding: 20px 15px 120px;
     }
 
     .welcome {
-      background: linear-gradient(135deg, #ffffff, #f9dede);
-      border: 1px solid #f2c4c4;
-      border-radius: 22px;
-      padding: 28px 18px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 25px 20px;
       text-align: center;
-      margin-bottom: 18px;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
-    }
-
-    .welcome-logo {
-      width: 105px;
-      height: 105px;
-      object-fit: cover;
-      border-radius: 25px;
-      border: 3px solid var(--red);
-      box-shadow: 0 8px 20px rgba(229, 57, 53, 0.25);
+      border: 1px solid #dddddd;
+      margin-bottom: 20px;
     }
 
     .welcome h2 {
-      margin: 14px 0 10px;
-      font-size: 26px;
+      color: #b40000;
+      margin-bottom: 10px;
+      font-size: 24px;
     }
 
     .welcome p {
-      margin: 0;
-      color: #666b75;
-      line-height: 1.6;
+      color: #555555;
+      line-height: 1.5;
       font-size: 14px;
+    }
+
+    .messages {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
 
     .message {
-      max-width: 88%;
+      max-width: 94%;
       padding: 14px 16px;
-      margin: 13px 0;
-      border-radius: 18px;
+      border-radius: 16px;
       line-height: 1.6;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: #b40000;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background: #ffffff;
+      color: #202020;
+      border: 1px solid #dddddd;
+      border-bottom-left-radius: 4px;
+      width: 100%;
+    }
+
+    .message.system {
+      align-self: center;
+      background: #fff3f3;
+      color: #8d0000;
+      font-size: 13px;
+      text-align: center;
+      white-space: pre-wrap;
+    }
+
+    .typing {
+      color: #777777;
+      font-style: italic;
+    }
+
+    /* HACKER STYLE */
+
+    .hacker-title {
+      color: #b40000;
+      font-weight: bold;
+      font-size: 17px;
+      letter-spacing: 0.5px;
+      margin: 10px 0;
+    }
+
+    .hacker-line {
+      color: #b40000;
+      font-weight: bold;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .hacker-symbol {
+      color: #b40000;
+      font-weight: bold;
+    }
+
+    .ai-text {
       white-space: pre-wrap;
       overflow-wrap: anywhere;
-      font-size: 14px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
-    .user {
-      margin-left: auto;
-      background: var(--red);
-      color: white;
-      border-bottom-right-radius: 5px;
+    /* CODE BLOCK */
+
+    .code-wrapper {
+      width: 100%;
+      margin: 12px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #171717;
+      border: 1px solid #444444;
     }
 
-    .ai {
-      margin-right: auto;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-bottom-left-radius: 5px;
-      color: var(--text);
-    }
-
-    .message-label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 10px;
-      font-weight: bold;
-      opacity: 0.65;
-      text-transform: uppercase;
-    }
-
-    .file-preview {
-      display: none;
-      max-width: 850px;
-      margin: 0 auto 9px;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: #f8f9fb;
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 12px;
+      background: #292929;
+      color: #ffffff;
       font-size: 12px;
     }
 
-    .file-preview.show {
-      display: block;
+    .code-language {
+      color: #ff7777;
+      font-weight: bold;
     }
 
-    .file-item {
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      overflow-wrap: anywhere;
-    }
-
-    .file-item:last-child {
-      border-bottom: none;
-    }
-
-    .remove-files {
-      margin-top: 8px;
+    .copy-code-button,
+    .copy-all-button {
       border: none;
-      border-radius: 9px;
-      padding: 7px 10px;
-      background: var(--soft-red);
-      color: var(--red-dark);
-      cursor: pointer;
-      font-size: 11px;
+      border-radius: 8px;
+      background: #b40000;
+      color: #ffffff;
+      padding: 8px 10px;
+      font-size: 12px;
     }
 
-    .bottom-area {
+    .copy-code-button:hover,
+    .copy-all-button:hover {
+      background: #e00000;
+    }
+
+    .code-content {
+      padding: 14px;
+      overflow-x: auto;
+      color: #eeeeee;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .response-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    /* INPUT AREA */
+
+    .input-area {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 20;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.98);
-      border-top: 1px solid var(--border);
-      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid #dddddd;
+      padding: 10px;
+      z-index: 15;
     }
 
-    .input-area {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      max-width: 850px;
+    .input-container {
+      max-width: 950px;
       margin: auto;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
     }
 
-    .attach-button,
-    .create-button {
-      width: 48px;
-      height: 48px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
+    .small-button {
+      width: 43px;
+      height: 43px;
       flex-shrink: 0;
-      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background: #eeeeee;
+      color: #b40000;
+      font-size: 22px;
     }
 
-    .attach-button {
-      background: #f2f3f6;
-      color: var(--red-dark);
-      font-size: 27px;
-    }
-
-    .create-button {
-      background: var(--soft-red);
-      color: var(--red-dark);
-      font-size: 21px;
-    }
-
-    .attach-button:hover,
-    .create-button:hover {
-      transform: translateY(-2px);
-    }
-
-    #fileInput {
-      display: none;
-    }
-
-    #messageInput {
+    .message-input {
       flex: 1;
-      min-width: 0;
-      padding: 15px;
-      border: 1px solid #d5d9e1;
-      border-radius: 15px;
+      min-height: 43px;
+      max-height: 130px;
+      resize: none;
+      border: 1px solid #cccccc;
+      border-radius: 13px;
+      padding: 12px;
       outline: none;
-      background: #f7f8fa;
-      color: var(--text);
-      font-size: 14px;
+      background: #ffffff;
+      color: #111111;
     }
 
-    #messageInput:focus {
-      border-color: var(--red);
-      background: white;
+    .message-input:focus {
+      border-color: #b40000;
     }
 
-    #sendButton {
-      width: 52px;
-      height: 48px;
-      border: none;
-      border-radius: 15px;
-      background: linear-gradient(135deg, #e53935, #b71c1c);
-      color: white;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
+    .send-button {
+      width: 48px;
+      height: 43px;
       flex-shrink: 0;
+      border: none;
+      border-radius: 12px;
+      background: #b40000;
+      color: #ffffff;
+      font-size: 20px;
     }
 
-    #sendButton:disabled {
-      opacity: 0.5;
+    .send-button:disabled {
+      background: #999999;
       cursor: not-allowed;
     }
 
-    .hint {
-      text-align: center;
-      color: #9297a1;
-      font-size: 10px;
-      margin-top: 8px;
+    input[type="file"] {
+      display: none;
     }
 
-    @media (max-width: 700px) {
+    /* SETTINGS */
+
+    .settings-box {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 16px;
+      padding: 18px;
+      margin-top: 15px;
+    }
+
+    .settings-box h3 {
+      color: #b40000;
+      margin-bottom: 10px;
+    }
+
+    .settings-button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #f0f0f0;
+      text-align: left;
+      color: #222222;
+    }
+
+    .settings-button:hover {
+      background: #ffe1e1;
+      color: #b40000;
+    }
+
+    .language-status {
+      margin-top: 10px;
+      color: #666666;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (min-width: 700px) {
+      .sidebar {
+        left: 0;
+        position: fixed;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .overlay {
+        display: none !important;
+      }
+
+      main {
+        margin-left: 280px;
+        max-width: calc(100% - 280px);
+      }
+
       header {
-        padding: 10px;
-        gap: 8px;
-      }
-
-      .menu-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 23px;
-      }
-
-      .logo {
-        width: 42px;
-        height: 42px;
-      }
-
-      .header-title h1 {
-        font-size: 17px;
-      }
-
-      .header-title p {
-        font-size: 10px;
-      }
-
-      .status {
-        display: none;
-      }
-
-      .app-layout {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        padding: 12px;
-      }
-
-      .side-card {
-        display: none;
-        width: 100%;
-        padding: 13px;
-        border-radius: 17px;
-      }
-
-      .side-card.open {
-        display: block;
-      }
-
-      .side-card h3 {
-        font-size: 14px;
-        margin-bottom: 11px;
-      }
-
-      .side-button {
-        padding: 13px;
-        font-size: 13px;
-      }
-
-      #chat {
-        width: 100%;
-        padding-bottom: 155px;
-      }
-
-      .welcome {
-        padding: 25px 15px;
-      }
-
-      .welcome-logo {
-        width: 85px;
-        height: 85px;
-      }
-
-      .welcome h2 {
-        font-size: 23px;
-      }
-
-      .message {
-        max-width: 94%;
-      }
-
-      .bottom-area {
-        padding: 8px;
+        margin-left: 280px;
       }
 
       .input-area {
-        gap: 6px;
+        left: 280px;
       }
 
-      .attach-button,
-      .create-button {
-        width: 40px;
-        height: 46px;
-        font-size: 22px;
+      .menu-button {
+        display: none;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .brand h1 {
+        font-size: 17px;
       }
 
-      #messageInput {
-        padding: 14px 10px;
-        font-size: 13px;
+      .brand span {
+        font-size: 10px;
       }
 
-      #sendButton {
-        width: 45px;
-        height: 46px;
+      .message {
+        max-width: 100%;
+        font-size: 14px;
+      }
+
+      .welcome h2 {
+        font-size: 21px;
+      }
+
+      .code-content {
+        font-size: 12px;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="app">
 
-  <header>
+    <!-- SIDEBAR -->
 
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      aria-label="Ouvrir le menu"
-      aria-expanded="false"
-    >
-      ☰
-    </button>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <h2>👑 HACKER F5</h2>
 
-    <img
-      src="logo.png"
-      class="logo"
-      alt="Logo HACKER F5"
-    >
+        <button
+          class="close-sidebar"
+          onclick="closeSidebar()"
+        >
+          ×
+        </button>
+      </div>
 
-    <div class="header-title">
-      <h1>HACKER F5</h1>
-      <p>Assistant IA de cybersécurité responsable</p>
-    </div>
-
-    <div class="status">● En ligne</div>
-
-  </header>
-
-  <div class="app-layout">
-
-    <aside class="side-card" id="sideCard">
-
-      <h3>⚡ Menu HACKER F5</h3>
-
-      <button class="side-button active" id="newChatButton">
+      <button
+        class="side-button"
+        onclick="newConversation()"
+      >
         ➕ Nouvelle conversation
       </button>
 
-      <button class="side-button" id="historyButton">
-        💬 Historique
+      <button
+        class="side-button"
+        onclick="showHistory()"
+      >
+        🕘 Historique
       </button>
 
-      <button class="side-button" id="createMenuButton">
-        ✨ Créer
+      <button
+        class="side-button"
+        onclick="prepareCreation()"
+      >
+        ✨ Créer avec l’IA
       </button>
 
-      <button class="side-button" id="securityButton">
+      <button
+        class="side-button"
+        onclick="securityAnalysis()"
+      >
         🛡️ Analyse sécurité
       </button>
 
-      <button class="side-button" id="codeButton">
+      <button
+        class="side-button"
+        onclick="codeAnalysis()"
+      >
         💻 Analyse de code
       </button>
 
-      <button class="side-button" id="settingsButton">
+      <button
+        class="side-button"
+        onclick="showSettings()"
+      >
         ⚙️ Paramètres
       </button>
-
     </aside>
 
-    <main id="chat">
-
-      <section class="welcome">
-
-        <img
-          src="logo.png"
-          class="welcome-logo"
-          alt="Logo HACKER F5"
-        >
-
-        <h2>Bonjour, membre F5</h2>
-
-        <p>
-          Je suis <strong>HACKER F5</strong>.<br>
-          Ton assistant IA pour apprendre, analyser, créer et protéger.
-        </p>
-
-      </section>
-
-      <div class="message ai">
-        <span class="message-label">HACKER F5</span>
-        Bonjour 👑 Je suis HACKER F5. Comment puis-je t’aider ?
-      </div>
-
-    </main>
-
-  </div>
-
-  <div class="bottom-area">
-
     <div
-      class="file-preview"
-      id="filePreview"
+      class="overlay"
+      id="overlay"
+      onclick="closeSidebar()"
     ></div>
 
+    <!-- HEADER -->
+
+    <header>
+      <button
+        class="menu-button"
+        onclick="openSidebar()"
+      >
+        ☰
+      </button>
+
+      <img
+        src="logo.png"
+        alt="Logo HACKER F5"
+        class="logo"
+      />
+
+      <div class="brand">
+        <h1>HACKER F5</h1>
+
+        <span>
+          Assistant IA de cybersécurité responsable
+        </span>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+
+    <main>
+      <section
+        class="welcome"
+        id="welcome"
+      >
+        <h2>👑 Bonjour</h2>
+
+        <p>
+          Je suis <strong>HACKER F5</strong>.<br />
+          Comment puis-je t’aider aujourd’hui ?
+        </p>
+      </section>
+
+      <section
+        class="messages"
+        id="messages"
+      ></section>
+    </main>
+
+    <!-- INPUT -->
+
     <div class="input-area">
+      <div class="input-container">
 
-      <button
-        class="attach-button"
-        id="attachButton"
-        title="Importer des fichiers"
-        aria-label="Importer des fichiers"
-      >
-        +
-      </button>
+        <label for="fileInput">
+          <span
+            class="small-button"
+            style="display:flex;align-items:center;justify-content:center;"
+          >
+            ＋
+          </span>
+        </label>
 
-      <input
-        type="file"
-        id="fileInput"
-        multiple
-        accept="*/*"
-      >
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          accept="*/*"
+          onchange="handleFiles(event)"
+        />
 
-      <button
-        class="create-button"
-        id="createButton"
-        title="Préparer une création"
-        aria-label="Préparer une création"
-      >
-        ✨
-      </button>
+        <button
+          class="small-button"
+          onclick="prepareCreation()"
+          title="Créer"
+        >
+          ✨
+        </button>
 
-      <input
-        id="messageInput"
-        type="text"
-        placeholder="Écris ta demande à HACKER F5..."
-        autocomplete="off"
-      >
+        <textarea
+          id="messageInput"
+          class="message-input"
+          placeholder="Écris ton message..."
+          rows="1"
+          onkeydown="handleEnter(event)"
+        ></textarea>
 
-      <button
-        id="sendButton"
-        aria-label="Envoyer le message"
-      >
-        ➤
-      </button>
+        <button
+          id="sendButton"
+          class="send-button"
+          onclick="sendMessage()"
+        >
+          ➤
+        </button>
 
+      </div>
     </div>
-
-    <div class="hint">
-      Écris directement : « Crée une image », « Fais un PDF », « Crée un Word », « Génère une vidéo ».
-    </div>
-
   </div>
 
   <script>
-    const chat = document.getElementById("chat");
-    const input = document.getElementById("messageInput");
-    const sendButton = document.getElementById("sendButton");
+    const messagesContainer =
+      document.getElementById("messages");
 
-    const menuToggle = document.getElementById("menuToggle");
-    const sideCard = document.getElementById("sideCard");
+    const messageInput =
+      document.getElementById("messageInput");
 
-    const attachButton = document.getElementById("attachButton");
-    const fileInput = document.getElementById("fileInput");
-    const filePreview = document.getElementById("filePreview");
+    const sendButton =
+      document.getElementById("sendButton");
 
-    const createButton = document.getElementById("createButton");
-    const createMenuButton = document.getElementById("createMenuButton");
+    const welcome =
+      document.getElementById("welcome");
 
-    const newChatButton = document.getElementById("newChatButton");
-    const historyButton = document.getElementById("historyButton");
-    const securityButton = document.getElementById("securityButton");
-    const codeButton = document.getElementById("codeButton");
-    const settingsButton = document.getElementById("settingsButton");
+    let conversation = [];
 
-    let messages = [];
     let selectedFiles = [];
 
-    function addMessage(text, type) {
-      const div = document.createElement("div");
-      div.className = "message " + type;
+    let selectedLanguage =
+      localStorage.getItem("hackerF5Language") ||
+      "Français";
 
-      const label = document.createElement("span");
-      label.className = "message-label";
-      label.textContent = type === "user"
-        ? "Vous"
-        : "HACKER F5";
+    const languageList = [
+      "Français",
+      "English",
+      "Español",
+      "Português",
+      "Deutsch",
+      "Italiano",
+      "العربية",
+      "中文",
+      "日本語",
+      "Русский",
+      "Türkçe",
+      "한국어",
+      "हिन्दी",
+      "Nederlands",
+      "Polski",
+      "Svenska",
+      "Dansk",
+      "Norsk",
+      "Suomi",
+      "Ελληνικά"
+    ];
 
-      const content = document.createElement("span");
-      content.textContent = text;
+    function openSidebar() {
+      document
+        .getElementById("sidebar")
+        .classList.add("active");
 
-      div.appendChild(label);
-      div.appendChild(content);
-      chat.appendChild(div);
-
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth"
-      });
-
-      return div;
+      document
+        .getElementById("overlay")
+        .classList.add("active");
     }
 
-    function extractAnswer(data) {
-      return data.outputs?.[0]?.content
-        ?.filter(item => item.type === "text")
-        ?.map(item => item.text)
-        ?.join("\n")
-        || data.output_text
-        || data.answer
-        || "HACKER F5 n’a pas renvoyé de réponse.";
+    function closeSidebar() {
+      document
+        .getElementById("sidebar")
+        .classList.remove("active");
+
+      document
+        .getElementById("overlay")
+        .classList.remove("active");
     }
 
-    function saveHistory() {
-      localStorage.setItem(
-        "hackerF5History",
-        JSON.stringify(messages)
+    function addMessage(text, type = "ai") {
+      const message =
+        document.createElement("div");
+
+      message.className =
+        "message " + type;
+
+      message.textContent = text;
+
+      messagesContainer.appendChild(message);
+
+      window.scrollTo(
+        0,
+        document.body.scrollHeight
       );
+
+      return message;
     }
 
-    function loadHistory() {
-      const saved = localStorage.getItem("hackerF5History");
-
-      if (!saved) {
-        return;
-      }
-
-      try {
-        const oldMessages = JSON.parse(saved);
-
-        if (!Array.isArray(oldMessages)) {
-          return;
-        }
-
-        messages = oldMessages;
-
-        messages.forEach(message => {
-          addMessage(
-            message.content,
-            message.role === "user"
-              ? "user"
-              : "ai"
-          );
-        });
-
-      } catch {
-        messages = [];
+    function handleEnter(event) {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        sendMessage();
       }
     }
 
-    function displaySelectedFiles() {
-      filePreview.innerHTML = "";
+    function handleFiles(event) {
+      selectedFiles =
+        Array.from(event.target.files);
 
       if (selectedFiles.length === 0) {
-        filePreview.classList.remove("show");
         return;
       }
 
-      selectedFiles.forEach(file => {
-        const item = document.createElement("div");
-        item.className = "file-item";
-
-        item.textContent =
-          "📎 " +
-          file.name +
-          " — " +
-          Math.round(file.size / 1024) +
-          " Ko";
-
-        filePreview.appendChild(item);
-      });
-
-      const removeButton = document.createElement("button");
-
-      removeButton.className = "remove-files";
-      removeButton.textContent = "Retirer les fichiers";
-
-      removeButton.addEventListener("click", function() {
-        selectedFiles = [];
-        fileInput.value = "";
-        displaySelectedFiles();
-      });
-
-      filePreview.appendChild(removeButton);
-      filePreview.classList.add("show");
-    }
-
-    function importFiles() {
-      fileInput.click();
-    }
-
-    fileInput.addEventListener("change", function() {
-      selectedFiles = Array.from(fileInput.files || []);
-
-      displaySelectedFiles();
-
-      if (selectedFiles.length > 0) {
-        input.value =
-          "Analyse les fichiers importés de manière responsable.";
-        input.focus();
-      }
-    });
-
-    function closeMobileMenu() {
-      if (window.innerWidth <= 700) {
-        sideCard.classList.remove("open");
-        menuToggle.textContent = "☰";
-        menuToggle.setAttribute("aria-expanded", "false");
-      }
-    }
-
-    function toggleMenu() {
-      const isOpen = sideCard.classList.toggle("open");
-
-      menuToggle.textContent = isOpen ? "×" : "☰";
-
-      menuToggle.setAttribute(
-        "aria-expanded",
-        isOpen ? "true" : "false"
-      );
-    }
-
-    function showNewConversation() {
-      messages = [];
-
-      localStorage.removeItem("hackerF5History");
-
-      chat.innerHTML = `
-        <section class="welcome">
-          <img
-            src="logo.png"
-            class="welcome-logo"
-            alt="Logo HACKER F5"
-          >
-
-          <h2>Nouvelle conversation</h2>
-
-          <p>
-            Pose une question à HACKER F5 pour commencer.
-          </p>
-        </section>
-
-        <div class="message ai">
-          <span class="message-label">HACKER F5</span>
-          Nouvelle conversation activée. Comment puis-je t’aider ?
-        </div>
-      `;
-
-      closeMobileMenu();
-    }
-
-    function showHistory() {
-      if (messages.length === 0) {
-        alert("Aucune conversation enregistrée.");
-        return;
-      }
-
-      alert(
-        "Historique disponible : " +
-        messages.length +
-        " message(s) dans cette conversation."
-      );
-
-      closeMobileMenu();
-    }
-
-    function showCreateMessage() {
-      input.value =
-        "Je veux créer un contenu ou un fichier. Comprends ma demande directement et demande-moi seulement les informations nécessaires.";
-      input.focus();
-
-      closeMobileMenu();
-    }
-
-    function useSecurityMode() {
-      input.value =
-        "Aide-moi à analyser un problème de cybersécurité de manière responsable.";
-      input.focus();
-
-      closeMobileMenu();
-    }
-
-    function useCodeMode() {
-      input.value =
-        "Aide-moi à analyser et corriger ce code :";
-      input.focus();
-
-      closeMobileMenu();
-    }
-
-    function showSettings() {
-      alert(
-        "Paramètres HACKER F5\n\n" +
-        "Thème : Gris clair et rouge\n" +
-        "Assistant : Mistral AI\n" +
-        "Mode : Cybersécurité responsable\n\n" +
-        "Les options avancées seront ajoutées plus tard."
-      );
-
-      closeMobileMenu();
-    }
-
-    async function sendMessage() {
-      const text = input.value.trim();
-
-      if (!text || sendButton.disabled) {
-        return;
-      }
-
-      input.value = "";
-
-      let finalMessage = text;
-
-      if (selectedFiles.length > 0) {
-        const fileNames = selectedFiles
+      const fileNames =
+        selectedFiles
           .map(file => file.name)
           .join(", ");
 
-        finalMessage +=
-          "\n\nFichiers sélectionnés : " +
-          fileNames;
-      }
-
-      addMessage(finalMessage, "user");
-
-      messages.push({
-        role: "user",
-        content: finalMessage
-      });
-
-      saveHistory();
-
-      sendButton.disabled = true;
-      sendButton.textContent = "...";
-
-      const loading = addMessage(
-        "HACKER F5 réfléchit...",
-        "ai"
+      addMessage(
+        "📎 Fichier(s) sélectionné(s) : " +
+        fileNames,
+        "system"
       );
-
-      try {
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            messages: messages
-          })
-        });
-
-        const responseText = await response.text();
-
-        let data;
-
-        try {
-          data = JSON.parse(responseText);
-        } catch {
-          throw new Error(
-            "Réponse serveur invalide : " +
-            responseText.slice(0, 300)
-          );
-        }
-
-        if (!response.ok) {
-          throw new Error(
-            typeof data.error === "string"
-              ? data.error
-              : JSON.stringify(data.error)
-          );
-        }
-
-        loading.remove();
-
-        const answer = extractAnswer(data);
-
-        addMessage(answer, "ai");
-
-        messages.push({
-          role: "assistant",
-          content: answer
-        });
-
-        saveHistory();
-
-        selectedFiles = [];
-        fileInput.value = "";
-        displaySelectedFiles();
-
-      } catch (error) {
-        loading.textContent =
-          "Une erreur est survenue : " +
-          error.message;
-
-      } finally {
-        sendButton.disabled = false;
-        sendButton.textContent = "➤";
-        input.focus();
-      }
     }
 
-    menuToggle.addEventListener(
-      "click",
-      toggleMenu
-    );
+    function newConversation() {
+      conversation = [];
+      selectedFiles = [];
 
-    attachButton.addEventListener(
-      "click",
-      importFiles
-    );
+      messagesContainer.innerHTML = "";
 
-    createButton.addEventListener(
-      "click",
-      showCreateMessage
-    );
+      welcome.style.display = "block";
 
-    createMenuButton.addEventListener(
-      "click",
-      showCreateMessage
-    );
+      messageInput.value = "";
 
-    newChatButton.addEventListener(
-      "click",
-      showNewConversation
-    );
+      addMessage(
+        "🆕 Nouvelle conversation créée.",
+        "system"
+      );
 
-    historyButton.addEventListener(
-      "click",
-      showHistory
-    );
+      closeSidebar();
+    }
 
-    s
+    function prepareCreation() {
+      messageInput.value =
+        "Je veux créer un contenu avec l’IA : ";
+
+      messageInput.focus();
+
+      addMessage(
+        "✨ Décris ce que tu veux créer : image, logo, vidéo, document, musique ou autre.",
+        "system"
+      );
+
+      closeSidebar();
+    }
+
+    function securityAnalysis() {
+      messageInput.value =
+        "Fais une analyse de sécurité responsable de : ";
+
+      messageInput.focus();
+
+      closeSidebar();
+    }
+
+    function codeAnalysis() {
+      messageInput.value =
+        "Analyse ce code et explique les erreurs ainsi que les corrections : ";
+
+      messageInput.focus();
+
+      closeSidebar();
+    }
+
+    function showHistory() {
+      closeSidebar();
+
+      const history =
+        JSON.parse(
+          localStorage.getItem("hackerF5History") ||
+          "[]"
+        );
+
+      if (history.length === 0) {
+        addMessage(
+          "🕘 Aucun historique disponible pour le moment.",
+          "system"
+        );
+
+        return;
+      }
+
+      let text =
+        "🕘 HISTORIQUE DES CONVERSATIONS\n\n";
+
+      history.forEach((item, index) => {
+        text +=
+          "⟐ " +
+          (index + 1) +
+          ". " +
+          item.title +
+          "\n";
+
+        text +=
+          "   🌐 Langue : " +
+          (item.language || "Français") +
+          "\n";
+
+        text +=
+          "   🕒 " +
+          (item.date || "") +
+          "\n\n";
+      });
+
+      addMessage(text, "system");
+    }
+
+    function showSettings() {
+      closeSidebar();
+
+      const currentLanguage =
+        localStorage.getItem("hackerF5Language") ||
+        "Français";
+
+      const settingsBox =
+        document.createElement("div");
+
+      settingsBox.className =
+        "settings-box";
+
+      settingsBox.innerHTML = `
+        <h3>⚙️ PARAMÈTRES HACKER F5</h3>
+
+        <button
+          class="settings-button"
+          id="languageButton"
+        >
+          🌐 Language / Langue
+        </button>
+
+        <p class="language-status">
+          Langue actuelle :
+          <strong id="currentLanguage"></strong>
+        </p>
+      `;
+
+      messagesContainer.appendChild(
+        settingsBox
+      );
+
+      document.getElementById(
+        "currentLanguage"
+      ).textContent = currentLanguage;
+
+      document
+        .getElementById("languageButton")
+        .addEventListener(
+          "click",
+          chooseLanguage
+        );
+    }
+
+    function chooseLanguage() {
+      const currentLanguage =
+        localStorage.getItem("hackerF5Language") ||
+        "Français";
+
+      let choiceText =
+        "🌐 CHOISIS LA LANGUE DE HACKER F5\n\n";
+
+      languageList.forEach(
+        (language, index) => {
+          choiceText +=
+            index +
+            1 +
+            ". " +
+            language +
+            "\n";
+        }
+      );
+
+      choiceText +=
+        "\nLangue actuelle : " +
+        currentLanguage +
+        "\n\nEntre le numéro de ton choix :";
+
+      const choice =
+        prompt(choiceText);
+
+      if (choice === null) {
+        return;
+      }
+
+      const number =
+        Number(choice);
+
+      if (
+        !Number.isInteger(number) ||
+        number < 1 ||
+        number > languageList.length
+      ) {
+        alert(
+          "Choix invalide. Sélectionne un numéro entre 1 et 20."
+        );
+
+        return;
+      }
+
+      selectedLanguage =
+        languageList[number - 1];
+
+      localStorage.setItem(
+        "hackerF5Language",
+        selectedLanguage
+      );
+
+      addMessage(
+        "🌐 Langue sélectionnée : " +
+        selectedLanguage,
+        "system"
+      );
+
+      alert(
+        "La langue de HACKER F5 est maintenant : " +
+        selectedLanguage
+      );
+    }
+
+    function saveConversation() {
+      if (conversation.length === 0) {
+        return;
+      }
+
+      const firstUserMessage =
+        conversation.find(
+          message => message.role === "user"
+        );
+
+      const title =
+        firstUserMessage
+          ? firstUserMessage.content.substring(
+              0,
+              45
+            )
+          : "Nouvelle conversation";
+
+      const history =
+        JSON.parse(
+          localStorage.getItem("hackerF5History") ||
+          "[]"
+        );
+
+      history.unshift({
+        title: title,
+        language: selectedLanguage,
+        date: new Date().toLocaleString()
+      });
+
+      localStorage.setItem(
+        "hackerF5History",
+        JSON.stringify(
+          history.slice(0, 30)
+        )
+      );
+    }
+
+    function escapeHTML(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function createCopyButton(code) {
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "copy-code-button";
+
+      button.textContent =
+        "📋 Copier le code";
+
+      button.addEventListener(
+        "click",
+        async () => {
+          try {
+            await navigator.clipboard.writeText(
+              code
+            );
+
+            button.textContent =
+              "✅ Copié";
+
+            setTimeout(() => {
+              button.textContent =
+                "📋 Copier le code";
+            }, 1500);
+
+          } catch (error) {
+            const area =
+              document.createElement("textarea");
+
+            area.value = code;
+
+            document.body.appendChild(area);
+
+            area.select();
+
+            document.execCommand("copy");
+
+            area.remove();
+
+            button.textContent =
+              "✅ Copié";
+          }
+        }
+      );
+
+      return button;
+    }
+
+    function formatAIResponse(text) {
+      const wrapper =
+        document.createElement("div");
+
+      wrapper.className =
+        "ai-response";
+
+      const copyAllArea =
+        document.createElement("div");
+
+      copyAllArea.className =
+        "response-actions";
+
+      const copyAllButton =
+        document.createElement("button");
+
+      copyAllButton.className =
+        "copy-all-button";
+
+      copyAllButton.textContent =
+        "📋 Copier toute la réponse";
+
+      copyAllButton.addEventListener(
+   
