@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e53935">
   <title>HACKER F5</title>
 
   <style>
@@ -10,96 +11,185 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --red: #e53935;
+      --red-dark: #b71c1c;
+      --bg: #eef0f4;
+      --card: #ffffff;
+      --text: #20232a;
+      --muted: #777d87;
+      --border: #e1e4ea;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0b0b0f;
-      color: #ffffff;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
     }
 
     header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px;
-      background: #15151c;
-      border-bottom: 1px solid #292936;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
     }
 
     .logo {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
-      background: #e50914;
-      font-size: 23px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #e53935, #9b111e);
+      color: white;
+      font-size: 25px;
+      box-shadow: 0 5px 14px rgba(229, 57, 53, 0.3);
     }
 
     .header-title {
       flex: 1;
+      min-width: 0;
     }
 
     .header-title h1 {
       margin: 0;
       font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
     }
 
     .header-title p {
       margin: 4px 0 0;
-      color: #a6a6b2;
-      font-size: 12px;
+      color: var(--muted);
+      font-size: 11px;
     }
 
     .status {
-      color: #4ade80;
-      font-size: 12px;
+      color: #16a34a;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .app-layout {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .side-card {
+      width: 230px;
+      flex-shrink: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      height: fit-content;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .side-card h3 {
+      margin: 0 0 14px;
+      font-size: 15px;
+    }
+
+    .side-button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 9px;
+      background: #f2f3f6;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .side-button.active,
+    .side-button:hover {
+      background: #ffe5e5;
+      color: var(--red-dark);
     }
 
     #chat {
-      padding: 18px 14px 100px;
-      max-width: 850px;
-      margin: auto;
+      flex: 1;
+      min-width: 0;
+      padding-bottom: 125px;
     }
 
     .welcome {
+      background: linear-gradient(135deg, #ffffff, #f9dede);
+      border: 1px solid #f2c4c4;
+      border-radius: 22px;
+      padding: 28px 18px;
       text-align: center;
-      padding: 35px 10px 25px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .welcome-icon {
+      font-size: 42px;
     }
 
     .welcome h2 {
-      font-size: 27px;
       margin: 10px 0;
+      font-size: 26px;
     }
 
     .welcome p {
-      color: #a6a6b2;
-      line-height: 1.5;
+      margin: 0;
+      color: #666b75;
+      line-height: 1.6;
+      font-size: 14px;
     }
 
     .message {
-      max-width: 90%;
-      padding: 13px 15px;
+      max-width: 88%;
+      padding: 14px 16px;
       margin: 13px 0;
-      border-radius: 16px;
-      line-height: 1.5;
+      border-radius: 18px;
+      line-height: 1.6;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .user {
       margin-left: auto;
-      background: #e50914;
-      border-bottom-right-radius: 4px;
+      background: var(--red);
+      color: white;
+      border-bottom-right-radius: 5px;
     }
 
     .ai {
       margin-right: auto;
-      background: #1b1b25;
-      border: 1px solid #30303d;
-      border-bottom-left-radius: 4px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 5px;
+      color: var(--text);
+    }
+
+    .message-label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 10px;
+      font-weight: bold;
+      opacity: 0.65;
+      text-transform: uppercase;
     }
 
     .bottom-area {
@@ -107,14 +197,16 @@
       bottom: 0;
       left: 0;
       right: 0;
+      z-index: 20;
       padding: 12px;
-      background: rgba(11, 11, 15, 0.96);
-      border-top: 1px solid #292936;
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
     }
 
     .input-area {
       display: flex;
-      gap: 8px;
+      gap: 9px;
       max-width: 850px;
       margin: auto;
     }
@@ -122,41 +214,53 @@
     #messageInput {
       flex: 1;
       min-width: 0;
-      padding: 14px;
-      border: 1px solid #3a3a48;
-      border-radius: 14px;
+      padding: 15px;
+      border: 1px solid #d5d9e1;
+      border-radius: 15px;
       outline: none;
-      background: #171720;
-      color: white;
-      font-size: 15px;
+      background: #f7f8fa;
+      color: var(--text);
+      font-size: 14px;
     }
 
     #messageInput:focus {
-      border-color: #e50914;
+      border-color: var(--red);
+      background: white;
     }
 
     #sendButton {
+      width: 52px;
       border: none;
-      border-radius: 14px;
-      padding: 0 18px;
-      background: #e50914;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #e53935, #b71c1c);
       color: white;
+      font-size: 20px;
       font-weight: bold;
       cursor: pointer;
+      box-shadow: 0 5px 12px rgba(229, 57, 53, 0.25);
     }
 
     #sendButton:disabled {
       opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .hint {
       text-align: center;
-      color: #777784;
-      font-size: 11px;
-      margin-top: 7px;
+      color: #9297a1;
+      font-size: 10px;
+      margin-top: 8px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 700px) {
+      .app-layout {
+        padding: 12px;
+      }
+
+      .side-card {
+        display: none;
+      }
+
       .welcome h2 {
         font-size: 23px;
       }
@@ -165,14 +269,19 @@
         max-width: 94%;
       }
 
-      #sendButton {
-        padding: 0 14px;
+      .header-title h1 {
+        font-size: 18px;
+      }
+
+      .status {
+        font-size: 10px;
       }
     }
   </style>
 </head>
 
 <body>
+
   <header>
     <div class="logo">👑</div>
 
@@ -184,22 +293,56 @@
     <div class="status">● En ligne</div>
   </header>
 
-  <main id="chat">
-    <section class="welcome">
-      <h2>Bonjour 👑</h2>
-      <p>
-        Je suis HACKER F5.<br>
-        Pose-moi une question pour commencer.
-      </p>
-    </section>
+  <div class="app-layout">
 
-    <div class="message ai">
-      Bonjour 👑 Je suis HACKER F5. Comment puis-je t’aider ?
-    </div>
-  </main>
+    <aside class="side-card">
+      <h3>⚡ Menu HACKER F5</h3>
+
+      <button class="side-button active" id="newChatButton">
+        ➕ Nouvelle conversation
+      </button>
+
+      <button class="side-button" id="historyButton">
+        💬 Historique
+      </button>
+
+      <button class="side-button" id="securityButton">
+        🛡️ Analyse sécurité
+      </button>
+
+      <button class="side-button" id="codeButton">
+        💻 Analyse de code
+      </button>
+
+      <button class="side-button" id="settingsButton">
+        ⚙️ Paramètres
+      </button>
+    </aside>
+
+    <main id="chat">
+
+      <section class="welcome">
+        <div class="welcome-icon">👑</div>
+
+        <h2>Bonjour, membre F5</h2>
+
+        <p>
+          Je suis <strong>HACKER F5</strong>.<br>
+          Ton assistant IA pour apprendre, analyser et protéger.
+        </p>
+      </section>
+
+      <div class="message ai">
+        <span class="message-label">HACKER F5</span>
+        Bonjour 👑 Je suis HACKER F5. Comment puis-je t’aider ?
+      </div>
+
+    </main>
+  </div>
 
   <div class="bottom-area">
     <div class="input-area">
+
       <input
         id="messageInput"
         type="text"
@@ -219,16 +362,74 @@
     const chat = document.getElementById("chat");
     const input = document.getElementById("messageInput");
     const button = document.getElementById("sendButton");
+    const newChatButton = document.getElementById("newChatButton");
+    const historyButton = document.getElementById("historyButton");
+    const securityButton = document.getElementById("securityButton");
+    const codeButton = document.getElementById("codeButton");
+    const settingsButton = document.getElementById("settingsButton");
 
-    const messages = [];
+    let messages = [];
 
     function addMessage(text, type) {
       const div = document.createElement("div");
       div.className = "message " + type;
-      div.textContent = text;
+
+      const label = document.createElement("span");
+      label.className = "message-label";
+      label.textContent = type === "user" ? "Vous" : "HACKER F5";
+
+      const content = document.createElement("span");
+      content.textContent = text;
+
+      div.appendChild(label);
+      div.appendChild(content);
+
       chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
       return div;
+    }
+
+    function extractAnswer(data) {
+      return data.outputs?.[0]?.content
+        ?.filter(item => item.type === "text")
+        ?.map(item => item.text)
+        ?.join("\n")
+        || data.output_text
+        || data.answer
+        || "HACKER F5 n’a pas renvoyé de réponse.";
+    }
+
+    function saveHistory() {
+      localStorage.setItem(
+        "hackerF5History",
+        JSON.stringify(messages)
+      );
+    }
+
+    function loadHistory() {
+      const saved = localStorage.getItem("hackerF5History");
+
+      if (!saved) {
+        return;
+      }
+
+      try {
+        messages = JSON.parse(saved);
+
+        messages.forEach(message => {
+          addMessage(
+            message.content,
+            message.role === "user" ? "user" : "ai"
+          );
+        });
+      } catch {
+        messages = [];
+      }
     }
 
     async function sendMessage() {
@@ -239,6 +440,7 @@
       }
 
       input.value = "";
+
       addMessage(text, "user");
 
       messages.push({
@@ -246,10 +448,15 @@
         content: text
       });
 
+      saveHistory();
+
       button.disabled = true;
       button.textContent = "...";
 
-      const loading = addMessage("HACKER F5 réfléchit...", "ai");
+      const loading = addMessage(
+        "HACKER F5 réfléchit...",
+        "ai"
+      );
 
       try {
         const response = await fetch("/api/chat", {
@@ -270,7 +477,8 @@
           data = JSON.parse(responseText);
         } catch {
           throw new Error(
-            "Erreur serveur Vercel : " + responseText.slice(0, 300)
+            "Réponse serveur invalide : " +
+            responseText.slice(0, 300)
           );
         }
 
@@ -284,14 +492,7 @@
 
         loading.remove();
 
-        const answer =
-          data.outputs?.[0]?.content
-            ?.filter(item => item.type === "text")
-            ?.map(item => item.text)
-            ?.join("\n")
-          || data.output_text
-          || data.answer
-          || "HACKER F5 n’a pas renvoyé de réponse.";
+        const answer = extractAnswer(data);
 
         addMessage(answer, "ai");
 
@@ -299,8 +500,12 @@
           role: "assistant",
           content: answer
         });
+
+        saveHistory();
+
       } catch (error) {
-        loading.textContent = "Erreur : " + error.message;
+        loading.textContent =
+          "Une erreur est survenue : " + error.message;
       } finally {
         button.disabled = false;
         button.textContent = "➤";
@@ -308,13 +513,103 @@
       }
     }
 
-    button.addEventListener("click", sendMessage);
+    function showNewConversation() {
+      messages = [];
+      localStorage.removeItem("hackerF5History");
 
-    input.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
+      chat.innerHTML = `
+        <section class="welcome">
+          <div class="welcome-icon">👑</div>
+          <h2>Nouvelle conversation</h2>
+          <p>
+            Pose une question à HACKER F5 pour commencer.
+          </p>
+        </section>
+
+        <div class="message ai">
+          <span class="message-label">HACKER F5</span>
+          Nouvelle conversation activée. Comment puis-je t’aider ?
+        </div>
+      `;
+    }
+
+    function showHistory() {
+      const saved = localStorage.getItem("hackerF5History");
+
+      if (!saved) {
+        alert("Aucune conversation enregistrée.");
+        return;
       }
-    });
+
+      alert(
+        "Historique disponible : " +
+        messages.length +
+        " message(s) dans cette conversation."
+      );
+    }
+
+    function useSecurityMode() {
+      input.value =
+        "Aide-moi à analyser un problème de cybersécurité de manière responsable.";
+      input.focus();
+    }
+
+    function useCodeMode() {
+      input.value =
+        "Aide-moi à analyser et corriger ce code :";
+      input.focus();
+    }
+
+    function showSettings() {
+      alert(
+        "Paramètres HACKER F5\n\n" +
+        "Thème : Gris clair et rouge\n" +
+        "Assistant : Mistral AI\n" +
+        "Mode : Cybersécurité responsable"
+      );
+    }
+
+    newChatButton.addEventListener(
+      "click",
+      showNewConversation
+    );
+
+    historyButton.addEventListener(
+      "click",
+      showHistory
+    );
+
+    securityButton.addEventListener(
+      "click",
+      useSecurityMode
+    );
+
+    codeButton.addEventListener(
+      "click",
+      useCodeMode
+    );
+
+    settingsButton.addEventListener(
+      "click",
+      showSettings
+    );
+
+    button.addEventListener(
+      "click",
+      sendMessage
+    );
+
+    input.addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+    );
+
+    loadHistory();
   </script>
+
 </body>
-</html>
+    </html>
