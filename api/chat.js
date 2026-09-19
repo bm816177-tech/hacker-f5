@@ -148,17 +148,6 @@ HACKF5 — by King Franck
 
           instructions: instructions,
 
-          tools: [
-            {
-              type: "web_search"
-            },
-            {
-              type: "code_interpreter"
-            },
-            {
-              type: "image_generation"
-            }
-          ],
 
           inputs: messages
         })
