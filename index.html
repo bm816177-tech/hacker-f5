@@ -22,13 +22,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  width: 100%;
   min-height: 100%;
-
-  font-family: Arial, sans-serif;
 
   background: #07090d;
   color: #f5f5f5;
+
+  font-family: Arial, sans-serif;
 }
 
 body {
@@ -44,13 +43,14 @@ header {
 
   position: sticky;
   top: 0;
+
   z-index: 100;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 14px 16px;
+  padding: 13px 15px;
 
   background: #0b0e14;
 
@@ -59,83 +59,64 @@ header {
 
 .logo {
 
-  color: #f1f5f9;
+  font-size: 19px;
 
   font-weight: 900;
 
   letter-spacing: 1px;
-
-  font-size: 19px;
 }
-
-.logo::first-letter {
-  color: #ff2020;
-}
-
-
-/* =========================
-   MENU BUTTON
-========================= */
 
 .menu-button {
 
-  width: 48px;
-  height: 48px;
-
-  border: 1px solid #3b4655;
+  width: 46px;
+  height: 46px;
 
   border-radius: 12px;
+
+  border: 1px solid #3b4655;
 
   background: #17202b;
 
   color: #38d9ff;
 
-  font-size: 23px;
-
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 22px;
 }
 
 
 /* =========================
-   EMPEROR CORE
+   CORE
 ========================= */
 
 .emperor-core {
-
-  margin: 18px auto 9px;
 
   width: calc(100% - 24px);
 
   max-width: 700px;
 
-  padding: 15px;
+  margin: 16px auto 7px;
+
+  padding: 14px;
 
   background: #0a0e13;
 
   border: 1px solid #303d4b;
 
-  font-family: monospace;
+  border-radius: 11px;
 
   overflow-x: auto;
-
-  border-radius: 11px;
 }
 
 .emperor-core pre {
 
   margin: 0;
 
-  white-space: pre;
-
-  color: #dbeafe;
+  font-family: monospace;
 
   font-size: 12px;
 
   line-height: 1.5;
+
+  color: #dbeafe;
 }
 
 
@@ -147,13 +128,13 @@ header {
 
   text-align: center;
 
-  padding: 4px;
+  padding: 5px;
 
   color: #38d9ff;
 
   font-size: 10px;
 
-  letter-spacing: 0.7px;
+  letter-spacing: .7px;
 }
 
 
@@ -167,23 +148,25 @@ header {
 
   max-width: 760px;
 
-  margin: 0 auto;
+  margin: auto;
 
   padding: 8px 14px 180px;
 }
 
 .message {
 
-  margin: 12px 0;
-
   display: flex;
+
+  margin: 12px 0;
 }
 
 .message.user {
+
   justify-content: flex-end;
 }
 
 .message.ai {
+
   justify-content: flex-start;
 }
 
@@ -197,8 +180,6 @@ header {
 
   line-height: 1.55;
 
-  white-space: normal;
-
   overflow-wrap: anywhere;
 
   font-size: 14px;
@@ -207,8 +188,6 @@ header {
 .user .bubble {
 
   background: #151d28;
-
-  color: #f8fafc;
 
   border: 1px solid #3b4a5c;
 
@@ -263,19 +242,15 @@ header {
 
 .copy-code {
 
-  border: 1px solid #3b82f6;
-
-  padding: 8px 12px;
+  padding: 7px 11px;
 
   border-radius: 8px;
+
+  border: 1px solid #3b82f6;
 
   background: #10233b;
 
   color: #60a5fa;
-
-  font-size: 12px;
-
-  cursor: pointer;
 }
 
 .code-container pre {
@@ -286,7 +261,9 @@ header {
 
   overflow-x: auto;
 
-  font-family: "Courier New", monospace;
+  font-family:
+    "Courier New",
+    monospace;
 
   font-size: 12px;
 
@@ -297,12 +274,14 @@ header {
 
 
 /* =========================
-   GENERATION TOOLS
+   OUTILS
 ========================= */
 
 .tools {
 
   display: none;
+
+  width: 100%;
 
   max-width: 760px;
 
@@ -317,12 +296,13 @@ header {
 }
 
 .tools.active {
+
   display: grid;
 }
 
 .tool-button {
 
-  min-height: 54px;
+  min-height: 56px;
 
   padding: 7px 4px;
 
@@ -334,69 +314,50 @@ header {
 
   color: #e2e8f0;
 
-  font-size: 11px;
+  font-size: 10px;
 
   font-weight: 700;
-
-  cursor: pointer;
-
-  transition:
-    transform .15s ease,
-    background .2s ease;
-}
-
-.tool-button:active {
-  transform: scale(.95);
 }
 
 .tool-image {
   border-color: #6d4aff;
-  color: #b9a7ff;
 }
 
 .tool-video {
   border-color: #e43cff;
-  color: #ef8cff;
 }
 
 .tool-pdf {
   border-color: #ff5b5b;
-  color: #ff9999;
 }
 
 .tool-ppt {
   border-color: #ff9f43;
-  color: #ffc078;
 }
 
 .tool-file {
   border-color: #3b82f6;
-  color: #70a7ff;
 }
 
 .tool-voice {
   border-color: #22c55e;
-  color: #6ee7a1;
 }
 
 .tool-music {
   border-color: #ec4899;
-  color: #f472b6;
 }
 
 .tool-web {
   border-color: #06b6d4;
-  color: #67e8f9;
 }
 
 .tool-code {
   border-color: #a855f7;
-  color: #c084fc;
 }
 
 
 /* =========================
-   INPUT AREA
+   INPUT
 ========================= */
 
 .input-area {
@@ -417,7 +378,7 @@ header {
     linear-gradient(
       to top,
       #07090d 82%,
-      rgba(7, 9, 13, 0)
+      rgba(7,9,13,0)
     );
 }
 
@@ -466,37 +427,30 @@ header {
 }
 
 #messageInput::placeholder {
+
   color: #64748b;
 }
 
+.input-button {
 
-/* =========================
-   MICRO
-========================= */
+  width: 46px;
 
-#micButton,
-#voiceButton,
-#sendButton {
-
-  width: 48px;
-
-  height: 48px;
+  height: 46px;
 
   flex-shrink: 0;
 
-  border-radius: 12px;
+  border-radius: 11px;
 
-  color: white;
+  font-size: 19px;
+}
 
-  font-size: 20px;
+#toolsButton {
 
-  cursor: pointer;
+  background: #102b3d;
 
-  display: flex;
+  border: 1px solid #38d9ff;
 
-  align-items: center;
-
-  justify-content: center;
+  color: #38d9ff;
 }
 
 #micButton {
@@ -506,20 +460,13 @@ header {
   border: 1px solid #22c55e;
 }
 
-#micButton.recording {
-
-  background: #7f1d1d;
-
-  border-color: #ff4d4d;
-
-  animation: pulse 1s infinite;
-}
-
 #voiceButton {
 
   background: #27213d;
 
   border: 1px solid #a855f7;
+
+  color: white;
 }
 
 #sendButton {
@@ -527,52 +474,13 @@ header {
   background: #b91414;
 
   border: 1px solid #ff3838;
+
+  color: white;
 }
 
 #sendButton:disabled {
+
   opacity: .45;
-}
-
-@keyframes pulse {
-
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.07);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-
-}
-
-
-/* =========================
-   TOOLS BUTTON
-========================= */
-
-#toolsButton {
-
-  width: 48px;
-
-  height: 48px;
-
-  flex-shrink: 0;
-
-  border-radius: 12px;
-
-  background: #102b3d;
-
-  border: 1px solid #38d9ff;
-
-  color: #38d9ff;
-
-  font-size: 20px;
-
-  cursor: pointer;
 }
 
 
@@ -592,7 +500,7 @@ header {
 
   z-index: 200;
 
-  width: 250px;
+  width: 260px;
 
   padding: 9px;
 
@@ -606,43 +514,102 @@ header {
     0 12px 35px rgba(0,0,0,.65);
 }
 
-#menu button {
+.menu-item {
 
   display: block;
 
   width: 100%;
 
-  min-height: 50px;
-
-  padding: 12px 14px;
+  min-height: 48px;
 
   margin: 5px 0;
 
-  border: 1px solid transparent;
+  padding: 11px 13px;
 
-  border-radius: 11px;
+  border-radius: 10px;
+
+  border: 1px solid #273442;
+
+  background: #151d26;
 
   color: #e2e8f0;
 
-  font-size: 14px;
+  text-align: left;
 
-  font-weight: 600;
+  font-size: 13px;
+}
+
+
+/* =========================
+   PANELS
+========================= */
+
+.panel {
+
+  display: none;
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 300;
+
+  padding: 70px 14px 20px;
+
+  background:
+    rgba(0,0,0,.86);
+
+  overflow-y: auto;
+}
+
+.panel-box {
+
+  max-width: 650px;
+
+  margin: auto;
+
+  padding: 18px;
+
+  background: #0d141b;
+
+  border: 1px solid #334155;
+
+  border-radius: 15px;
+}
+
+.panel-title {
+
+  margin-bottom: 15px;
+
+  color: #38d9ff;
+
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+.panel-button {
+
+  width: 100%;
+
+  min-height: 48px;
+
+  margin: 6px 0;
+
+  border-radius: 10px;
+
+  border: 1px solid #334155;
+
+  background: #111820;
+
+  color: white;
 
   text-align: left;
 
-  cursor: pointer;
+  padding: 11px;
 }
 
-#menu button:nth-child(1) {
-
-  background: #102b3d;
-
-  border-color: #1e6688;
-
-  color: #38d9ff;
-}
-
-#menu button:nth-child(2) {
+.close-panel {
 
   background: #351719;
 
@@ -651,13 +618,28 @@ header {
   color: #ff7070;
 }
 
-#menu button:nth-child(3) {
 
-  background: #281b3d;
+/* =========================
+   HISTORIQUE
+========================= */
 
-  border-color: #60429a;
+.history-item {
 
-  color: #c084fc;
+  width: 100%;
+
+  padding: 11px;
+
+  margin: 6px 0;
+
+  border-radius: 10px;
+
+  border: 1px solid #293846;
+
+  background: #111820;
+
+  color: #e2e8f0;
+
+  text-align: left;
 }
 
 
@@ -667,27 +649,15 @@ header {
 
 @media (max-width: 480px) {
 
-  .tools {
-
-    grid-template-columns:
-      repeat(3, 1fr);
-
-  }
-
   .tool-button {
 
-    font-size: 10px;
-
+    font-size: 9px;
   }
 
-  #micButton,
-  #voiceButton,
-  #sendButton,
-  #toolsButton {
+  .input-button {
 
-    width: 44px;
-    height: 44px;
-
+    width: 43px;
+    height: 43px;
   }
 
 }
@@ -717,22 +687,62 @@ header {
 </header>
 
 
-<div id="menu">
+<!-- =========================
+     MENU
+========================= -->
 
-  <button onclick="newConversation()">
+<div
+  id="menu"
+>
+
+  <button
+    class="menu-item"
+    onclick="newConversation()"
+  >
     🆕 Nouvelle conversation
   </button>
 
-  <button onclick="clearChat()">
+  <button
+    class="menu-item"
+    onclick="openHistory()"
+  >
+    🕘 Historique
+  </button>
+
+  <button
+    class="menu-item"
+    onclick="openLanguage()"
+  >
+    🌐 Langue
+  </button>
+
+  <button
+    class="menu-item"
+    onclick="openSettings()"
+  >
+    ⚙️ Paramètres
+  </button>
+
+  <button
+    class="menu-item"
+    onclick="clearChat()"
+  >
     🗑️ Effacer la conversation
   </button>
 
-  <button onclick="showAbout()">
+  <button
+    class="menu-item"
+    onclick="showAbout()"
+  >
     👑 À propos
   </button>
 
 </div>
 
+
+<!-- =========================
+     CORE
+========================= -->
 
 <div class="emperor-core">
 
@@ -755,11 +765,15 @@ header {
 </div>
 
 
+<!-- =========================
+     CHAT
+========================= -->
+
 <main id="chat"></main>
 
 
 <!-- =========================
-     OUTILS DE GENERATION
+     OUTILS
 ========================= -->
 
 <div
@@ -771,72 +785,63 @@ header {
     class="tool-button tool-image"
     onclick="useTool('image')"
   >
-    🖼️<br>
-    Image
+    🖼️<br>Image
   </button>
 
   <button
     class="tool-button tool-video"
     onclick="useTool('video')"
   >
-    🎬<br>
-    Vidéo
+    🎬<br>Vidéo
   </button>
 
   <button
     class="tool-button tool-pdf"
     onclick="useTool('pdf')"
   >
-    📄<br>
-    PDF
+    📄<br>PDF
   </button>
 
   <button
     class="tool-button tool-ppt"
     onclick="useTool('ppt')"
   >
-    📊<br>
-    PowerPoint
+    📊<br>PowerPoint
   </button>
 
   <button
     class="tool-button tool-file"
     onclick="useTool('file')"
   >
-    📁<br>
-    Fichier / ZIP
+    📁<br>Fichier / ZIP
   </button>
 
   <button
     class="tool-button tool-voice"
     onclick="useTool('voice')"
   >
-    🎙️<br>
-    Voix IA
+    🎙️<br>Voix IA
   </button>
 
   <button
     class="tool-button tool-music"
     onclick="useTool('music')"
   >
-    🎵<br>
-    Musique
+    🎵<br>Musique
   </button>
 
   <button
     class="tool-button tool-web"
     onclick="useTool('web')"
   >
-    🌐<br>
-    Recherche
+    🌐<br>Recherche
   </button>
 
   <button
     class="tool-button tool-code"
     onclick="useTool('code')"
   >
-    💻<br>
-    Code
+    💻<br>Code
   </button>
 
 </div>
@@ -851,17 +856,17 @@ header {
   <div class="input-box">
 
     <button
+      class="input-button"
       id="toolsButton"
       type="button"
-      title="Outils"
     >
       ＋
     </button>
 
     <button
+      class="input-button"
       id="micButton"
       type="button"
-      title="Micro"
     >
       🎤
     </button>
@@ -873,18 +878,144 @@ header {
     ></textarea>
 
     <button
+      class="input-button"
       id="voiceButton"
       type="button"
-      title="Voix IA"
     >
       🔊
     </button>
 
     <button
+      class="input-button"
       id="sendButton"
       type="button"
     >
       ➤
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     HISTORIQUE
+========================= -->
+
+<div
+  class="panel"
+  id="historyPanel"
+>
+
+  <div class="panel-box">
+
+    <div class="panel-title">
+      🕘 Historique
+    </div>
+
+    <div id="historyList"></div>
+
+    <button
+      class="panel-button close-panel"
+      onclick="closePanels()"
+    >
+      Fermer
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     LANGUE
+========================= -->
+
+<div
+  class="panel"
+  id="languagePanel"
+>
+
+  <div class="panel-box">
+
+    <div class="panel-title">
+      🌐 Langue
+    </div>
+
+    <button
+      class="panel-button"
+      onclick="setLanguage('Français')"
+    >
+      🇫🇷 Français
+    </button>
+
+    <button
+      class="panel-button"
+      onclick="setLanguage('English')"
+    >
+      🇬🇧 English
+    </button>
+
+    <button
+      class="panel-button"
+      onclick="setLanguage('Español')"
+    >
+      🇪🇸 Español
+    </button>
+
+    <button
+      class="panel-button close-panel"
+      onclick="closePanels()"
+    >
+      Fermer
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PARAMETRES
+========================= -->
+
+<div
+  class="panel"
+  id="settingsPanel"
+>
+
+  <div class="panel-box">
+
+    <div class="panel-title">
+      ⚙️ Paramètres
+    </div>
+
+    <button
+      class="panel-button"
+      onclick="toggleStatus()"
+    >
+      Afficher / masquer le statut
+    </button>
+
+    <button
+      class="panel-button"
+      onclick="saveConversation()"
+    >
+      💾 Sauvegarder la conversation
+    </button>
+
+    <button
+      class="panel-button"
+      onclick="clearChat()"
+    >
+      🗑️ Effacer la conversation
+    </button>
+
+    <button
+      class="panel-button close-panel"
+      onclick="closePanels()"
+    >
+      Fermer
     </button>
 
   </div>
@@ -928,7 +1059,24 @@ const menu =
 const status =
   document.getElementById("status");
 
+const historyPanel =
+  document.getElementById("historyPanel");
+
+const languagePanel =
+  document.getElementById("languagePanel");
+
+const settingsPanel =
+  document.getElementById("settingsPanel");
+
+const historyList =
+  document.getElementById("historyList");
+
 let messages = [];
+
+let currentLanguage =
+  localStorage.getItem(
+    "hacker_f5_language"
+  ) || "Français";
 
 
 /* =========================
@@ -946,32 +1094,34 @@ function useTool(type) {
       "Je veux générer une vidéo : ",
 
     pdf:
-      "Je veux générer un PDF : ",
+      "Je veux créer un PDF : ",
 
     ppt:
-      "Je veux générer une présentation PowerPoint : ",
+      "Je veux créer une présentation PowerPoint : ",
 
     file:
-      "Je veux générer un fichier ou un ZIP : ",
+      "Je veux créer un fichier ou un ZIP : ",
 
     voice:
-      "Je veux générer une voix IA : ",
+      "Je veux utiliser la voix IA : ",
 
     music:
-      "Je veux générer une musique : ",
+      "Je veux créer une musique : ",
 
     web:
-      "Recherche sur le web des informations récentes sur : ",
+      "Recherche sur le web : ",
 
     code:
-      "Je veux générer ou analyser du code : "
+      "Aide-moi avec du code : "
 
   };
 
   messageInput.value =
     prompts[type] || "";
 
-  tools.classList.remove("active");
+  tools.classList.remove(
+    "active"
+  );
 
   messageInput.focus();
 
@@ -979,7 +1129,7 @@ function useTool(type) {
 
 
 /* =========================
-   UTILITAIRES
+   ESCAPE HTML
 ========================= */
 
 function escapeHTML(text) {
@@ -1004,7 +1154,9 @@ function renderAIText(text) {
     escapeHTML(text);
 
   const parts =
-    escaped.split(/(```[\s\S]*?```)/g);
+    escaped.split(
+      /(```[\s\S]*?```)/g
+    );
 
   return parts.map(part => {
 
@@ -1063,13 +1215,10 @@ function renderAIText(text) {
 
 
 /* =========================
-   AJOUT MESSAGE
+   MESSAGE
 ========================= */
 
-function addMessage(
-  text,
-  type
-) {
+function addMessage(text, type) {
 
   const wrapper =
     document.createElement("div");
@@ -1153,9 +1302,6 @@ async function sendMessage() {
 
   messageInput.value = "";
 
-  messageInput.style.height =
-    "auto";
-
   addMessage(
     text,
     "user"
@@ -1190,56 +1336,82 @@ async function sendMessage() {
               messages,
 
             language:
-              "Français"
+              currentLanguage
 
           })
         }
       );
 
-    const data =
-      await response.json();
+    const raw =
+      await response.text();
+
+    let data;
+
+    try {
+
+      data =
+        JSON.parse(raw);
+
+    } catch {
+
+      throw new Error(
+        "Réponse serveur invalide."
+      );
+
+    }
 
     if (!response.ok) {
 
       throw new Error(
         data.error ||
-        "Erreur serveur"
+        "Erreur serveur."
       );
 
     }
 
-    const aiText =
+    const answer =
       extractAIText(data);
 
-    if (!aiText) {
+    if (!answer) {
+
+      console.log(
+        "Réponse Mistral :",
+        data
+      );
 
       throw new Error(
-        "Réponse IA vide"
+        "Mistral a répondu sans texte exploitable."
       );
 
     }
 
     addMessage(
-      aiText,
+      answer,
       "ai"
     );
 
     messages.push({
       role: "assistant",
-      content: aiText
+      content: answer
     });
+
+    saveConversation();
+
+    updateHistory();
 
     status.textContent =
       "F5 CORE • ONLINE";
 
-    saveConversation();
-
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "HACKER F5 :",
+      error
+    );
 
     addMessage(
-      "⚠️ HACKER F5 n'a pas pu répondre. Vérifie la configuration de Vercel.",
+      "⚠️ Erreur HACKER F5 :\n\n" +
+      error.message,
       "ai"
     );
 
@@ -1291,8 +1463,11 @@ function extractAIText(data) {
       const output of data.outputs
     ) {
 
+      if (!output) {
+        continue;
+      }
+
       if (
-        output &&
         typeof output.content ===
         "string"
       ) {
@@ -1302,11 +1477,10 @@ function extractAIText(data) {
       }
 
       if (
-        output &&
         Array.isArray(output.content)
       ) {
 
-        const text =
+        const result =
           output.content
             .map(item => {
 
@@ -1319,13 +1493,17 @@ function extractAIText(data) {
 
               }
 
-              return item?.text || "";
+              return (
+                item?.text ||
+                item?.content ||
+                ""
+              );
 
             })
             .join("");
 
-        if (text) {
-          return text;
+        if (result) {
+          return result;
         }
 
       }
@@ -1340,246 +1518,7 @@ function extractAIText(data) {
 
 
 /* =========================
-   MICROPHONE
-========================= */
-
-let recognition = null;
-
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-if (SpeechRecognition) {
-
-  recognition =
-    new SpeechRecognition();
-
-  recognition.lang =
-    "fr-FR";
-
-  recognition.continuous =
-    false;
-
-  recognition.interimResults =
-    true;
-
-  recognition.onstart =
-    function() {
-
-      micButton.classList.add(
-        "recording"
-      );
-
-      status.textContent =
-        "F5 CORE • LISTENING...";
-
-    };
-
-  recognition.onresult =
-    function(event) {
-
-      let transcript = "";
-
-      for (
-        let i =
-          event.resultIndex;
-        i <
-          event.results.length;
-        i++
-      ) {
-
-        transcript +=
-          event.results[i][0].transcript;
-
-      }
-
-      messageInput.value =
-        transcript;
-
-      messageInput.dispatchEvent(
-        new Event("input")
-      );
-
-    };
-
-  recognition.onend =
-    function() {
-
-      micButton.classList.remove(
-        "recording"
-      );
-
-      status.textContent =
-        "F5 CORE • ONLINE";
-
-      messageInput.focus();
-
-    };
-
-  recognition.onerror =
-    function(event) {
-
-      console.error(
-        "Microphone :",
-        event.error
-      );
-
-      micButton.classList.remove(
-        "recording"
-      );
-
-      status.textContent =
-        "F5 CORE • MIC ERROR";
-
-    };
-
-}
-
-
-/* =========================
-   BOUTON MICRO
-========================= */
-
-micButton.addEventListener(
-  "click",
-  function() {
-
-    if (!recognition) {
-
-      addMessage(
-        "🎤 La reconnaissance vocale n'est pas disponible dans ce navigateur.",
-        "ai"
-      );
-
-      return;
-
-    }
-
-    try {
-
-      recognition.start();
-
-    } catch (error) {
-
-      recognition.stop();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   VOIX IA
-========================= */
-
-voiceButton.addEventListener(
-  "click",
-  async function() {
-
-    const lastAIMessage =
-      [...messages]
-        .reverse()
-        .find(
-          message =>
-            message.role ===
-            "assistant"
-        );
-
-    if (
-      !lastAIMessage ||
-      !lastAIMessage.content
-    ) {
-
-      addMessage(
-        "🔊 Il n'y a pas encore de réponse à lire.",
-        "ai"
-      );
-
-      return;
-
-    }
-
-    status.textContent =
-      "F5 CORE • VOICE PROCESSING...";
-
-    try {
-
-      const response =
-        await fetch(
-          "/api/voice",
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-
-              text:
-                lastAIMessage.content,
-
-              language:
-                "fr"
-
-            })
-
-          }
-        );
-
-      if (!response.ok) {
-        throw new Error(
-          "Erreur voix IA"
-        );
-      }
-
-      const audioBlob =
-        await response.blob();
-
-      const audioURL =
-        URL.createObjectURL(
-          audioBlob
-        );
-
-      const audio =
-        new Audio(audioURL);
-
-      await audio.play();
-
-      audio.onended =
-        function() {
-
-          URL.revokeObjectURL(
-            audioURL
-          );
-
-        };
-
-      status.textContent =
-        "F5 CORE • ONLINE";
-
-    } catch (error) {
-
-      console.error(error);
-
-      status.textContent =
-        "F5 CORE • VOICE ERROR";
-
-      addMessage(
-        "🔊 La voix IA n'est pas encore connectée. Elle sera activée dans api/chat.js.",
-        "ai"
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================
-   OUTILS
+   OUTILS BUTTON
 ========================= */
 
 toolsButton.addEventListener(
@@ -1607,7 +1546,8 @@ menuButton.addEventListener(
       "block"
     ) {
 
-      closeMenu();
+      menu.style.display =
+        "none";
 
     } else {
 
@@ -1618,13 +1558,6 @@ menuButton.addEventListener(
 
   }
 );
-
-function closeMenu() {
-
-  menu.style.display =
-    "none";
-
-}
 
 
 /* =========================
@@ -1641,10 +1574,11 @@ function newConversation() {
     "hacker_f5_messages"
   );
 
+  menu.style.display =
+    "none";
+
   status.textContent =
     "F5 CORE • READY";
-
-  closeMenu();
 
   messageInput.focus();
 
@@ -1663,34 +1597,528 @@ function clearChat() {
 
 
 /* =========================
-   A PROPOS
+   HISTORIQUE
 ========================= */
 
-function showAbout() {
+let conversations = JSON.parse(
+  localStorage.getItem("hackerF5_history") || "[]"
+);
 
-  closeMenu();
+function saveHistory() {
+  localStorage.setItem(
+    "hackerF5_history",
+    JSON.stringify(conversations)
+  );
+}
 
-  addMessage(
-`╔══════════════════════╗
-║     ♛ HΛ₵ҠΞЯ F5 ♛    ║
-╠══════════════════════╣
-║  CORE      : ONLINE  ║
-║  NETWORK   : READY   ║
-║  DEFENSE   : ACTIVE  ║
-╚══════════════════════╝
+function saveCurrentConversation() {
 
-👑 HACKF5 — by King Franck
+  if (messages.length === 0) {
+    return;
+  }
 
-Assistant IA orienté programmation,
-cybersécurité responsable et assistance numérique.`,
-    "ai"
+  const firstMessage =
+    messages.find(
+      message => message.role === "user"
+    );
+
+  const title =
+    firstMessage
+      ? firstMessage.content.slice(0, 40)
+      : "Nouvelle conversation";
+
+  const conversation = {
+    id: Date.now(),
+    title: title,
+    messages: [...messages],
+    date: new Date().toLocaleString("fr-FR")
+  };
+
+  conversations.unshift(
+    conversation
+  );
+
+  if (conversations.length > 30) {
+    conversations =
+      conversations.slice(0, 30);
+  }
+
+  saveHistory();
+}
+
+
+/* =========================
+   SAUVEGARDER
+========================= */
+
+function saveConversation() {
+
+  saveCurrentConversation();
+
+  updateHistory();
+
+  status.textContent =
+    "F5 CORE • SAVED";
+
+  setTimeout(() => {
+
+    status.textContent =
+      "F5 CORE • ONLINE";
+
+  }, 1500);
+
+}
+
+
+/* =========================
+   HISTORIQUE
+========================= */
+
+function updateHistory() {
+
+  historyList.innerHTML = "";
+
+  if (conversations.length === 0) {
+
+    historyList.innerHTML = `
+      <p style="
+        color:#94a3b8;
+        text-align:center;
+        padding:20px;
+      ">
+        Aucun historique.
+      </p>
+    `;
+
+    return;
+  }
+
+  conversations.forEach(
+    conversation => {
+
+      const item =
+        document.createElement("button");
+
+      item.className =
+        "history-item";
+
+      item.innerHTML = `
+        <strong>
+          ${escapeHTML(
+            conversation.title
+          )}
+        </strong>
+
+        <br>
+
+        <small style="
+          color:#64748b;
+        ">
+          ${conversation.date}
+        </small>
+      `;
+
+      item.onclick = () => {
+
+        loadConversation(
+          conversation.id
+        );
+
+      };
+
+      historyList.appendChild(
+        item
+      );
+
+    }
   );
 
 }
 
 
 /* =========================
-   CLAVIER
+   OUVRIR HISTORIQUE
+========================= */
+
+function openHistory() {
+
+  menu.style.display =
+    "none";
+
+  updateHistory();
+
+  historyPanel.style.display =
+    "block";
+
+}
+
+
+/* =========================
+   CHARGER CONVERSATION
+========================= */
+
+function loadConversation(id) {
+
+  const conversation =
+    conversations.find(
+      item => item.id === id
+    );
+
+  if (!conversation) {
+    return;
+  }
+
+  messages =
+    [...conversation.messages];
+
+  chat.innerHTML = "";
+
+  messages.forEach(
+    message => {
+
+      addMessage(
+        message.content,
+        message.role === "user"
+          ? "user"
+          : "ai"
+      );
+
+    }
+  );
+
+  historyPanel.style.display =
+    "none";
+
+  status.textContent =
+    "F5 CORE • ONLINE";
+
+  messageInput.focus();
+
+}
+
+
+/* =========================
+   LANGUE
+========================= */
+
+function setLanguage(language) {
+
+  currentLanguage =
+    language;
+
+  localStorage.setItem(
+    "hacker_f5_language",
+    language
+  );
+
+  languagePanel.style.display =
+    "none";
+
+  menu.style.display =
+    "none";
+
+  status.textContent =
+    "LANGUE : " + language;
+
+  setTimeout(() => {
+
+    status.textContent =
+      "F5 CORE • ONLINE";
+
+  }, 1500);
+
+}
+
+
+/* =========================
+   OUVRIR LANGUE
+========================= */
+
+function openLanguage() {
+
+  menu.style.display =
+    "none";
+
+  languagePanel.style.display =
+    "block";
+
+}
+
+
+/* =========================
+   PARAMÈTRES
+========================= */
+
+function openSettings() {
+
+  menu.style.display =
+    "none";
+
+  settingsPanel.style.display =
+    "block";
+
+}
+
+
+/* =========================
+   STATUT
+========================= */
+
+function toggleStatus() {
+
+  if (
+    status.style.display ===
+    "none"
+  ) {
+
+    status.style.display =
+      "block";
+
+  } else {
+
+    status.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =========================
+   FERMER LES PANNEAUX
+========================= */
+
+function closePanels() {
+
+  historyPanel.style.display =
+    "none";
+
+  languagePanel.style.display =
+    "none";
+
+  settingsPanel.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   À PROPOS
+========================= */
+
+function showAbout() {
+
+  menu.style.display =
+    "none";
+
+  chat.innerHTML += `
+
+    <div class="message ai">
+
+      <div class="bubble">
+
+        <strong>
+          ♛ HACKER F5
+        </strong>
+
+        <br><br>
+
+        Assistant IA de cybersécurité
+        responsable.
+
+        <br><br>
+
+        Programmation •
+        Cybersécurité •
+        Analyse •
+        IA
+
+        <br><br>
+
+        <strong>
+          HACKF5 — by King Franck
+        </strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================
+   MICROPHONE
+========================= */
+
+let recognition = null;
+
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+  recognition =
+    new SpeechRecognition();
+
+  recognition.lang =
+    currentLanguage === "English"
+      ? "en-US"
+      : currentLanguage === "Español"
+        ? "es-ES"
+        : "fr-FR";
+
+  recognition.continuous =
+    false;
+
+  recognition.interimResults =
+    false;
+
+  recognition.onstart =
+    function() {
+
+      status.textContent =
+        "🎤 ÉCOUTE...";
+
+      micButton.style.opacity =
+        "0.6";
+
+    };
+
+  recognition.onresult =
+    function(event) {
+
+      const result =
+        event.results[0][0].transcript;
+
+      messageInput.value =
+        result;
+
+      messageInput.dispatchEvent(
+        new Event("input")
+      );
+
+    };
+
+  recognition.onerror =
+    function() {
+
+      status.textContent =
+        "F5 CORE • MICRO ERROR";
+
+    };
+
+  recognition.onend =
+    function() {
+
+      micButton.style.opacity =
+        "1";
+
+      status.textContent =
+        "F5 CORE • ONLINE";
+
+    };
+
+}
+
+
+/* =========================
+   BOUTON MICRO
+========================= */
+
+micButton.addEventListener(
+  "click",
+  function() {
+
+    if (!recognition) {
+
+      status.textContent =
+        "Micro non disponible";
+
+      return;
+
+    }
+
+    try {
+
+      recognition.start();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
+);
+
+
+/* =========================
+   VOIX IA
+========================= */
+
+voiceButton.addEventListener(
+  "click",
+  function() {
+
+    if (
+      !("speechSynthesis" in window)
+    ) {
+
+      return;
+
+    }
+
+    const lastMessage =
+      [...messages]
+        .reverse()
+        .find(
+          message =>
+            message.role ===
+            "assistant"
+        );
+
+    if (!lastMessage) {
+
+      return;
+
+    }
+
+    speechSynthesis.cancel();
+
+    const speech =
+      new SpeechSynthesisUtterance(
+        lastMessage.content
+      );
+
+    speech.lang =
+      currentLanguage === "English"
+        ? "en-US"
+        : currentLanguage === "Español"
+          ? "es-ES"
+          : "fr-FR";
+
+    speech.rate = 1;
+
+    speech.pitch = 1;
+
+    speechSynthesis.speak(
+      speech
+    );
+
+  }
+);
+
+
+/* =========================
+   ENTRÉE CLAVIER
 ========================= */
 
 messageInput.addEventListener(
@@ -1734,7 +2162,7 @@ messageInput.addEventListener(
 
 
 /* =========================
-   ENVOYER
+   ENVOI
 ========================= */
 
 sendButton.addEventListener(
@@ -1744,75 +2172,91 @@ sendButton.addEventListener(
 
 
 /* =========================
-   SAUVEGARDE
+   FERMETURE MENU
 ========================= */
 
-function saveConversation() {
+document.addEventListener(
+  "click",
+  function(event) {
 
-  try {
+    if (
+      !event.target.closest(
+        "#menu"
+      ) &&
+      !event.target.closest(
+        "#menuButton"
+      )
+    ) {
 
-    localStorage.setItem(
-      "hacker_f5_messages",
-      JSON.stringify(messages)
-    );
+      menu.style.display =
+        "none";
 
-  } catch (error) {
-
-    console.log(
-      "Sauvegarde locale indisponible"
-    );
+    }
 
   }
+);
 
-}
 
-function loadConversation() {
+/* =========================
+   CHARGER MESSAGES
+========================= */
+
+function loadMessages() {
+
+  const saved =
+    localStorage.getItem(
+      "hacker_f5_messages"
+    );
+
+  if (!saved) {
+
+    chat.innerHTML = `
+      <div class="message ai">
+
+        <div class="bubble">
+
+          Bonjour 👑
+
+          <br><br>
+
+          Je suis
+          <strong>HACKER F5</strong>.
+
+          <br><br>
+
+          Comment puis-je t'aider ?
+
+        </div>
+
+      </div>
+    `;
+
+    return;
+  }
 
   try {
-
-    const saved =
-      localStorage.getItem(
-        "hacker_f5_messages"
-      );
-
-    if (!saved) {
-      return;
-    }
 
     messages =
       JSON.parse(saved);
 
+    chat.innerHTML = "";
+
     messages.forEach(
       message => {
 
-        if (
-          message.role ===
-          "user"
-        ) {
-
-          addMessage(
-            message.content,
-            "user"
-          );
-
-        }
-
-        if (
-          message.role ===
-          "assistant"
-        ) {
-
-          addMessage(
-            message.content,
-            "ai"
-          );
-
-        }
+        addMessage(
+          message.content,
+          message.role === "user"
+            ? "user"
+            : "ai"
+        );
 
       }
     );
 
   } catch (error) {
+
+    console.error(error);
 
     messages = [];
 
@@ -1822,21 +2266,41 @@ function loadConversation() {
 
 
 /* =========================
+   SAUVEGARDE AUTOMATIQUE
+========================= */
+
+setInterval(
+  function() {
+
+    if (messages.length > 0) {
+
+      localStorage.setItem(
+        "hacker_f5_messages",
+        JSON.stringify(messages)
+      );
+
+    }
+
+  },
+  1000
+);
+
+
+/* =========================
    INITIALISATION
 ========================= */
 
-window.addEventListener(
-  "load",
-  function() {
+updateHistory();
 
-    loadConversation();
+loadMessages();
 
-    messageInput.focus();
+status.textContent =
+  "F5 CORE • ONLINE";
 
-  }
-);
+messageInput.focus();
 
 </script>
 
 </body>
+
 </html>
