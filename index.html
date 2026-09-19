@@ -1,2419 +1,1587 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>HACKER F5 AI</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      background: #eeeeee;
-      color: #171717;
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      height: 65px;
-      background: #ffffff;
-      border-bottom: 1px solid #dddddd;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 15px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .menu-button {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 12px;
-      background: #000000;
-      color: #ffffff;
-      font-size: 27px;
-      font-weight: bold;
-      line-height: 1;
-    }
-
-    .menu-button:hover {
-      background: #222222;
-    }
-
-    .logo {
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #c40000;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .brand h1 {
-      font-size: 20px;
-      color: #b40000;
-      letter-spacing: 1px;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      font-weight: 900;
-    }
-
-    .brand span {
-      font-size: 11px;
-      color: #666666;
-    }
-
-    /* =========================
-       SIDEBAR
-    ========================= */
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -290px;
-      width: 280px;
-      height: 100vh;
-      background: #ffffff;
-      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
-      z-index: 30;
-      padding: 20px 15px;
-      transition: left 0.25s ease;
-      overflow-y: auto;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .sidebar-top h2 {
-      color: #b40000;
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .close-sidebar {
-      border: none;
-      background: #eeeeee;
-      width: 35px;
-      height: 35px;
-      border-radius: 10px;
-      font-size: 20px;
-    }
-
-    .side-button {
-      width: 100%;
-      border: none;
-      background: #f3f3f3;
-      color: #222222;
-      padding: 14px;
-      margin-bottom: 10px;
-      border-radius: 12px;
-      text-align: left;
-      font-size: 15px;
-    }
-
-    .side-button:hover {
-      background: #ffe3e3;
-      color: #b40000;
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 20;
-    }
-
-    .overlay.active {
-      display: block;
-    }
-
-    /* =========================
-       MAIN
-    ========================= */
-
-    main {
-      flex: 1;
-      width: 100%;
-      max-width: 950px;
-      margin: auto;
-      padding: 20px 15px 150px;
-    }
-
-    .welcome {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 25px 20px;
-      text-align: center;
-      border: 1px solid #dddddd;
-      margin-bottom: 20px;
-    }
-
-    .welcome h2 {
-      color: #b40000;
-      margin-bottom: 10px;
-      font-size: 24px;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      font-weight: 900;
-    }
-
-    .welcome p {
-      color: #555555;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .messages {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .message {
-      max-width: 94%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      line-height: 1.6;
-      font-size: 15px;
-      overflow-wrap: anywhere;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      background: #b40000;
-      color: #ffffff;
-      border-bottom-right-radius: 4px;
-      white-space: pre-wrap;
-    }
-
-    .message.ai {
-      align-self: flex-start;
-      background: #ffffff;
-      color: #202020;
-      border: 1px solid #dddddd;
-      border-bottom-left-radius: 4px;
-      width: 100%;
-    }
-
-    .message.system {
-      align-self: center;
-      background: #fff3f3;
-      color: #8d0000;
-      font-size: 13px;
-      text-align: center;
-      white-space: pre-wrap;
-    }
-
-    .typing {
-      color: #777777;
-      font-style: italic;
-    }
-
-    /* =========================
-       STYLE HACKER
-    ========================= */
-
-    .ai-response {
-      width: 100%;
-    }
-
-    .hacker-title {
-      color: #b40000;
-      font-weight: 900;
-      font-size: 17px;
-      letter-spacing: 0.5px;
-      margin: 10px 0;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-    }
-
-    .hacker-line {
-      color: #b40000;
-      font-weight: bold;
-      margin: 8px 0;
-      overflow-wrap: anywhere;
-    }
-
-    .hacker-symbol {
-      color: #b40000;
-      font-weight: bold;
-    }
-
-    .ai-text {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .styled-normal {
-      line-height: 1.7;
-    }
-
-    /* =========================
-       CODE
-    ========================= */
-
-    .code-wrapper {
-      width: 100%;
-      margin: 12px 0;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #171717;
-      border: 1px solid #444444;
-    }
-
-    .code-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 9px 12px;
-      background: #292929;
-      color: #ffffff;
-      font-size: 12px;
-    }
-
-    .code-language {
-      color: #ff7777;
-      font-weight: bold;
-    }
-
-    .copy-code-button,
-    .copy-all-button {
-      border: none;
-      border-radius: 8px;
-      background: #b40000;
-      color: #ffffff;
-      padding: 8px 10px;
-      font-size: 12px;
-    }
-
-    .copy-code-button:hover,
-    .copy-all-button:hover {
-      background: #e00000;
-    }
-
-    .code-content {
-      padding: 14px;
-      overflow-x: auto;
-      color: #eeeeee;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      white-space: pre;
-    }
-
-    .response-actions {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 12px;
-    }
-
-    /* =========================
-       TOOLBAR
-    ========================= */
-
-    .tools-panel {
-      background: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 16px;
-      padding: 10px;
-      margin-bottom: 12px;
-      display: none;
-    }
-
-    .tools-panel.active {
-      display: block;
-    }
-
-    .tools-title {
-      color: #b40000;
-      font-weight: 900;
-      font-size: 13px;
-      margin-bottom: 9px;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-    }
-
-    .tool-button {
-      min-height: 48px;
-      border: none;
-      border-radius: 11px;
-      background: #f2f2f2;
-      color: #222222;
-      padding: 7px 4px;
-      font-size: 11px;
-      line-height: 1.2;
-    }
-
-    .tool-button:hover {
-      background: #ffe1e1;
-      color: #b40000;
-    }
-
-    .tool-icon {
-      display: block;
-      font-size: 19px;
-      margin-bottom: 3px;
-    }
-
-    /* =========================
-       FILE PREVIEW
-    ========================= */
-
-    .file-preview {
-      display: none;
-      background: #fff3f3;
-      border: 1px solid #f0caca;
-      border-radius: 12px;
-      padding: 9px;
-      margin-bottom: 8px;
-    }
-
-    .file-preview.active {
-      display: block;
-    }
-
-    .file-preview-title {
-      color: #b40000;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .file-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 12px;
-      padding: 5px 0;
-      border-bottom: 1px solid #f0dede;
-    }
-
-    .file-item:last-child {
-      border-bottom: none;
-    }
-
-    .remove-file {
-      border: none;
-      background: transparent;
-      color: #b40000;
-      font-size: 16px;
-    }
-
-    /* =========================
-       INPUT
-    ========================= */
-
-    .input-area {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      border-top: 1px solid #dddddd;
-      padding: 8px 10px;
-      z-index: 15;
-    }
-
-    .input-container {
-      max-width: 950px;
-      margin: auto;
-    }
-
-    .input-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-    }
-
-    /* BOUTON + NOIR */
-
-    .small-button {
-      width: 43px;
-      height: 43px;
-      flex-shrink: 0;
-      border: none;
-      border-radius: 12px;
-      background: #000000;
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .small-button:hover {
-      background: #222222;
-    }
-
-    .message-input {
-      flex: 1;
-      min-height: 43px;
-      max-height: 130px;
-      resize: none;
-      border: 1px solid #cccccc;
-      border-radius: 13px;
-      padding: 12px;
-      outline: none;
-      background: #ffffff;
-      color: #111111;
-    }
-
-    .message-input:focus {
-      border-color: #b40000;
-    }
-
-    .send-button {
-      width: 48px;
-      height: 43px;
-      flex-shrink: 0;
-      border: none;
-      border-radius: 12px;
-      background: #b40000;
-      color: #ffffff;
-      font-size: 20px;
-    }
-
-    .send-button:hover {
-      background: #e00000;
-    }
-
-    .send-button:disabled {
-      background: #999999;
-      cursor: not-allowed;
-    }
-
-    input[type="file"] {
-      display: none;
-    }
-
-    /* =========================
-       SETTINGS
-    ========================= */
-
-    .settings-box {
-      background: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 16px;
-      padding: 18px;
-      margin-top: 15px;
-    }
-
-    .settings-box h3 {
-      color: #b40000;
-      margin-bottom: 10px;
-    }
-
-    .settings-button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 12px;
-      background: #f0f0f0;
-      text-align: left;
-      color: #222222;
-    }
-
-    .settings-button:hover {
-      background: #ffe1e1;
-      color: #b40000;
-    }
-
-    .language-status {
-      margin-top: 10px;
-      color: #666666;
-      font-size: 13px;
-    }
-
-    .history-item {
-      background: #f5f5f5;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 8px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .history-item:hover {
-      background: #ffe3e3;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (min-width: 700px) {
-      .sidebar {
-        left: 0;
-        position: fixed;
-      }
-
-      .sidebar.active {
-        left: 0;
-      }
-
-      .overlay {
-        display: none !important;
-      }
-
-      main {
-        margin-left: 280px;
-        max-width: calc(100% - 280px);
-      }
-
-      header {
-        margin-left: 280px;
-      }
-
-      .input-area {
-        left: 280px;
-      }
-
-      .menu-button {
-        display: none;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .tools-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      .tool-button {
-        font-size: 10px;
-      }
-
-      .tool-icon {
-        font-size: 18px;
-      }
-    }
-
-    @media (max-width: 450px) {
-      .brand h1 {
-        font-size: 17px;
-      }
-
-      .brand span {
-        font-size: 10px;
-      }
-
-      .message {
-        max-width: 100%;
-        font-size: 14px;
-      }
-
-      .welcome h2 {
-        font-size: 21px;
-      }
-
-      .code-content {
-        font-size: 12px;
-      }
-
-      .tools-grid {
-        gap: 5px;
-      }
-
-      .small-button {
-        width: 40px;
-      }
-
-      .send-button {
-        width: 44px;
-      }
-    }
-  </style>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>HACKER F5</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+
+  font-family: Arial, sans-serif;
+
+  background: #07090d;
+  color: #f5f5f5;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 16px;
+
+  background: #0b0e14;
+
+  border-bottom: 1px solid #26303d;
+}
+
+.logo {
+
+  color: #f1f5f9;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  font-size: 19px;
+}
+
+.logo::first-letter {
+  color: #ff2020;
+}
+
+
+/* =========================
+   MENU BUTTON
+========================= */
+
+.menu-button {
+
+  width: 48px;
+  height: 48px;
+
+  border: 1px solid #3b4655;
+
+  border-radius: 12px;
+
+  background: #17202b;
+
+  color: #38d9ff;
+
+  font-size: 23px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================
+   EMPEROR CORE
+========================= */
+
+.emperor-core {
+
+  margin: 18px auto 9px;
+
+  width: calc(100% - 24px);
+
+  max-width: 700px;
+
+  padding: 15px;
+
+  background: #0a0e13;
+
+  border: 1px solid #303d4b;
+
+  font-family: monospace;
+
+  overflow-x: auto;
+
+  border-radius: 11px;
+}
+
+.emperor-core pre {
+
+  margin: 0;
+
+  white-space: pre;
+
+  color: #dbeafe;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+
+  text-align: center;
+
+  padding: 4px;
+
+  color: #38d9ff;
+
+  font-size: 10px;
+
+  letter-spacing: 0.7px;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+#chat {
+
+  width: 100%;
+
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  padding: 8px 14px 180px;
+}
+
+.message {
+
+  margin: 12px 0;
+
+  display: flex;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message.ai {
+  justify-content: flex-start;
+}
+
+.bubble {
+
+  max-width: 90%;
+
+  padding: 13px 15px;
+
+  border-radius: 15px;
+
+  line-height: 1.55;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+
+  font-size: 14px;
+}
+
+.user .bubble {
+
+  background: #151d28;
+
+  color: #f8fafc;
+
+  border: 1px solid #3b4a5c;
+
+  border-bottom-right-radius: 5px;
+}
+
+.ai .bubble {
+
+  background: #0d141b;
+
+  border: 1px solid #293846;
+
+  border-bottom-left-radius: 5px;
+}
+
+
+/* =========================
+   CODE
+========================= */
+
+.code-container {
+
+  margin: 12px 0;
+
+  background: #05070a;
+
+  border: 1px solid #334155;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.code-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 9px 11px;
+
+  background: #111820;
+
+  border-bottom: 1px solid #293542;
+
+  font-size: 11px;
+
+  color: #94a3b8;
+}
+
+.copy-code {
+
+  border: 1px solid #3b82f6;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  background: #10233b;
+
+  color: #60a5fa;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.code-container pre {
+
+  margin: 0;
+
+  padding: 13px;
+
+  overflow-x: auto;
+
+  font-family: "Courier New", monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  color: #eeeeee;
+}
+
+
+/* =========================
+   GENERATION TOOLS
+========================= */
+
+.tools {
+
+  display: none;
+
+  max-width: 760px;
+
+  margin: 0 auto 8px;
+
+  padding: 8px;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 7px;
+}
+
+.tools.active {
+  display: grid;
+}
+
+.tool-button {
+
+  min-height: 54px;
+
+  padding: 7px 4px;
+
+  border-radius: 11px;
+
+  border: 1px solid #354252;
+
+  background: #111820;
+
+  color: #e2e8f0;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .15s ease,
+    background .2s ease;
+}
+
+.tool-button:active {
+  transform: scale(.95);
+}
+
+.tool-image {
+  border-color: #6d4aff;
+  color: #b9a7ff;
+}
+
+.tool-video {
+  border-color: #e43cff;
+  color: #ef8cff;
+}
+
+.tool-pdf {
+  border-color: #ff5b5b;
+  color: #ff9999;
+}
+
+.tool-ppt {
+  border-color: #ff9f43;
+  color: #ffc078;
+}
+
+.tool-file {
+  border-color: #3b82f6;
+  color: #70a7ff;
+}
+
+.tool-voice {
+  border-color: #22c55e;
+  color: #6ee7a1;
+}
+
+.tool-music {
+  border-color: #ec4899;
+  color: #f472b6;
+}
+
+.tool-web {
+  border-color: #06b6d4;
+  color: #67e8f9;
+}
+
+.tool-code {
+  border-color: #a855f7;
+  color: #c084fc;
+}
+
+
+/* =========================
+   INPUT AREA
+========================= */
+
+.input-area {
+
+  position: fixed;
+
+  bottom: 0;
+
+  left: 0;
+
+  right: 0;
+
+  z-index: 90;
+
+  padding: 8px;
+
+  background:
+    linear-gradient(
+      to top,
+      #07090d 82%,
+      rgba(7, 9, 13, 0)
+    );
+}
+
+.input-box {
+
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 7px;
+
+  max-width: 760px;
+
+  margin: auto;
+
+  padding: 7px;
+
+  background: #10151c;
+
+  border: 1px solid #354252;
+
+  border-radius: 14px;
+}
+
+#messageInput {
+
+  flex: 1;
+
+  min-height: 46px;
+
+  max-height: 120px;
+
+  resize: none;
+
+  border: 0;
+
+  outline: 0;
+
+  background: transparent;
+
+  color: white;
+
+  font-size: 15px;
+
+  padding: 11px;
+}
+
+#messageInput::placeholder {
+  color: #64748b;
+}
+
+
+/* =========================
+   MICRO
+========================= */
+
+#micButton,
+#voiceButton,
+#sendButton {
+
+  width: 48px;
+
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+#micButton {
+
+  background: #12352a;
+
+  border: 1px solid #22c55e;
+}
+
+#micButton.recording {
+
+  background: #7f1d1d;
+
+  border-color: #ff4d4d;
+
+  animation: pulse 1s infinite;
+}
+
+#voiceButton {
+
+  background: #27213d;
+
+  border: 1px solid #a855f7;
+}
+
+#sendButton {
+
+  background: #b91414;
+
+  border: 1px solid #ff3838;
+}
+
+#sendButton:disabled {
+  opacity: .45;
+}
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.07);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+
+/* =========================
+   TOOLS BUTTON
+========================= */
+
+#toolsButton {
+
+  width: 48px;
+
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #102b3d;
+
+  border: 1px solid #38d9ff;
+
+  color: #38d9ff;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+#menu {
+
+  display: none;
+
+  position: fixed;
+
+  top: 70px;
+
+  right: 10px;
+
+  z-index: 200;
+
+  width: 250px;
+
+  padding: 9px;
+
+  background: #10151c;
+
+  border: 1px solid #3a4655;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.65);
+}
+
+#menu button {
+
+  display: block;
+
+  width: 100%;
+
+  min-height: 50px;
+
+  padding: 12px 14px;
+
+  margin: 5px 0;
+
+  border: 1px solid transparent;
+
+  border-radius: 11px;
+
+  color: #e2e8f0;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+#menu button:nth-child(1) {
+
+  background: #102b3d;
+
+  border-color: #1e6688;
+
+  color: #38d9ff;
+}
+
+#menu button:nth-child(2) {
+
+  background: #351719;
+
+  border-color: #702a2d;
+
+  color: #ff7070;
+}
+
+#menu button:nth-child(3) {
+
+  background: #281b3d;
+
+  border-color: #60429a;
+
+  color: #c084fc;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 480px) {
+
+  .tools {
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+  }
+
+  .tool-button {
+
+    font-size: 10px;
+
+  }
+
+  #micButton,
+  #voiceButton,
+  #sendButton,
+  #toolsButton {
+
+    width: 44px;
+    height: 44px;
+
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <div class="app">
-
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
-    <aside class="sidebar" id="sidebar">
-
-      <div class="sidebar-top">
-        <h2>👑 HACKER F5</h2>
-
-        <button
-          class="close-sidebar"
-          onclick="closeSidebar()"
-        >
-          ×
-        </button>
-      </div>
-
-      <button
-        class="side-button"
-        onclick="newConversation()"
-      >
-        ➕ Nouvelle conversation
-      </button>
-
-      <button
-        class="side-button"
-        onclick="showHistory()"
-      >
-        🕘 Historique
-      </button>
 
-      <button
-        class="side-button"
-        onclick="prepareCreation()"
-      >
-        ✨ Créer avec l’IA
-      </button>
+<header>
 
-      <button
-        class="side-button"
-        onclick="securityAnalysis()"
-      >
-        🛡️ Analyse sécurité
-      </button>
-
-      <button
-        class="side-button"
-        onclick="codeAnalysis()"
-      >
-        💻 Analyse de code
-      </button>
-
-      <button
-        class="side-button"
-        onclick="showSettings()"
-      >
-        ⚙️ Paramètres
-      </button>
-
-    </aside>
-
-    <div
-      class="overlay"
-      id="overlay"
-      onclick="closeSidebar()"
-    ></div>
-
-
-    <!-- =========================
-         HEADER
-    ========================== -->
-
-    <header>
-
-      <button
-        class="menu-button"
-        onclick="openSidebar()"
-        title="Menu"
-      >
-        =
-      </button>
-
-      <img
-        src="logo.png"
-        alt="Logo HACKER F5"
-        class="logo"
-      />
-
-      <div class="brand">
-
-        <h1>HACKER F5</h1>
-
-        <span>
-          Assistant IA de cybersécurité responsable
-        </span>
-
-      </div>
-
-    </header>
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
-    <main>
-
-      <section
-        class="welcome"
-        id="welcome"
-      >
-
-        <h2>👑 Bonjour</h2>
-
-        <p>
-          Je suis <strong>HACKER F5</strong>.<br />
-          Comment puis-je t’aider aujourd’hui ?
-        </p>
-
-      </section>
-
-      <section
-        class="messages"
-        id="messages"
-      ></section>
-
-    </main>
-
-
-    <!-- =========================
-         INPUT AREA
-    ========================== -->
-
-    <div class="input-area">
-
-      <div class="input-container">
-
-        <!-- TOOLS -->
-
-        <div
-          class="tools-panel"
-          id="toolsPanel"
-        >
-
-          <div class="tools-title">
-            ⟐ OUTILS HACKER F5
-          </div>
-
-          <div class="tools-grid">
-
-            <button
-              class="tool-button"
-              onclick="openFiles()"
-            >
-              <span class="tool-icon">📎</span>
-              Fichiers
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="prepareImage()"
-            >
-              <span class="tool-icon">🖼️</span>
-              Image
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="startVoice()"
-            >
-              <span class="tool-icon">🎙️</span>
-              Voix
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="prepareDocument()"
-            >
-              <span class="tool-icon">📄</span>
-              Document
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="prepareImageGeneration()"
-            >
-              <span class="tool-icon">🎨</span>
-              Générer
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="preparePresentation()"
-            >
-              <span class="tool-icon">📊</span>
-              Présentation
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="prepareTable()"
-            >
-              <span class="tool-icon">📋</span>
-              Tableau
-            </button>
-
-            <button
-              class="tool-button"
-              onclick="prepareWebSearch()"
-            >
-              <span class="tool-icon">🌐</span>
-              Recherche
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- FILE PREVIEW -->
-
-        <div
-          class="file-preview"
-          id="filePreview"
-        >
-
-          <div class="file-preview-title">
-            📎 Fichiers sélectionnés
-          </div>
-
-          <div id="fileList"></div>
-
-        </div>
-
-
-        <!-- INPUT ROW -->
-
-        <div class="input-row">
-
-          <!-- BOUTON + -->
-
-          <button
-            class="small-button"
-            id="plusButton"
-            onclick="toggleTools()"
-            title="Outils"
-          >
-            +
-          </button>
-
-          <!-- FICHIER -->
-
-          <button
-            class="small-button"
-            onclick="openFiles()"
-            title="Ajouter un fichier"
-          >
-            📎
-          </button>
-
-          <input
-            type="file"
-            id="fileInput"
-            multiple
-            accept="*/*"
-            onchange="handleFiles(event)"
-          />
-
-          <!-- MESSAGE -->
-
-          <textarea
-            id="messageInput"
-            class="message-input"
-            placeholder="Écris ton message..."
-            rows="1"
-          ></textarea>
-
-          <!-- ENVOI -->
-
-          <button
-            id="sendButton"
-            class="send-button"
-            onclick="sendMessage()"
-            title="Envoyer"
-          >
-            ➤
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
+  <div class="logo">
+    ♛ HΛ₵ҠΞЯ F5
+  </div>
+
+  <button
+    class="menu-button"
+    id="menuButton"
+    type="button"
+  >
+    ☰
+  </button>
+
+</header>
+
+
+<div id="menu">
+
+  <button onclick="newConversation()">
+    🆕 Nouvelle conversation
+  </button>
+
+  <button onclick="clearChat()">
+    🗑️ Effacer la conversation
+  </button>
+
+  <button onclick="showAbout()">
+    👑 À propos
+  </button>
+
+</div>
+
+
+<div class="emperor-core">
+
+<pre>╔══════════════════════╗
+║     ♛ HΛ₵ҠΞЯ F5 ♛    ║
+╠══════════════════════╣
+║  CORE      : ONLINE  ║
+║  NETWORK   : READY   ║
+║  DEFENSE   : ACTIVE  ║
+╚══════════════════════╝</pre>
+
+</div>
+
+
+<div
+  class="status"
+  id="status"
+>
+  F5 CORE • READY
+</div>
+
+
+<main id="chat"></main>
+
+
+<!-- =========================
+     OUTILS DE GENERATION
+========================= -->
+
+<div
+  class="tools"
+  id="tools"
+>
+
+  <button
+    class="tool-button tool-image"
+    onclick="useTool('image')"
+  >
+    🖼️<br>
+    Image
+  </button>
+
+  <button
+    class="tool-button tool-video"
+    onclick="useTool('video')"
+  >
+    🎬<br>
+    Vidéo
+  </button>
+
+  <button
+    class="tool-button tool-pdf"
+    onclick="useTool('pdf')"
+  >
+    📄<br>
+    PDF
+  </button>
+
+  <button
+    class="tool-button tool-ppt"
+    onclick="useTool('ppt')"
+  >
+    📊<br>
+    PowerPoint
+  </button>
+
+  <button
+    class="tool-button tool-file"
+    onclick="useTool('file')"
+  >
+    📁<br>
+    Fichier / ZIP
+  </button>
+
+  <button
+    class="tool-button tool-voice"
+    onclick="useTool('voice')"
+  >
+    🎙️<br>
+    Voix IA
+  </button>
+
+  <button
+    class="tool-button tool-music"
+    onclick="useTool('music')"
+  >
+    🎵<br>
+    Musique
+  </button>
+
+  <button
+    class="tool-button tool-web"
+    onclick="useTool('web')"
+  >
+    🌐<br>
+    Recherche
+  </button>
+
+  <button
+    class="tool-button tool-code"
+    onclick="useTool('code')"
+  >
+    💻<br>
+    Code
+  </button>
+
+</div>
+
+
+<!-- =========================
+     INPUT
+========================= -->
+
+<div class="input-area">
+
+  <div class="input-box">
+
+    <button
+      id="toolsButton"
+      type="button"
+      title="Outils"
+    >
+      ＋
+    </button>
+
+    <button
+      id="micButton"
+      type="button"
+      title="Micro"
+    >
+      🎤
+    </button>
+
+    <textarea
+      id="messageInput"
+      placeholder="Écris ton message..."
+      rows="1"
+    ></textarea>
+
+    <button
+      id="voiceButton"
+      type="button"
+      title="Voix IA"
+    >
+      🔊
+    </button>
+
+    <button
+      id="sendButton"
+      type="button"
+    >
+      ➤
+    </button>
 
   </div>
 
-
-  <script>
-
-    /* =========================
-       VARIABLES
-    ========================= */
-
-    const messagesContainer =
-      document.getElementById("messages");
-
-    const messageInput =
-      document.getElementById("messageInput");
-
-    const sendButton =
-      document.getElementById("sendButton");
-
-    const welcome =
-      document.getElementById("welcome");
-
-    const toolsPanel =
-      document.getElementById("toolsPanel");
-
-    const filePreview =
-      document.getElementById("filePreview");
-
-    const fileList =
-      document.getElementById("fileList");
-
-    let conversation = [];
-
-    let selectedFiles = [];
-
-    let selectedLanguage =
-      localStorage.getItem("hackerF5Language") ||
-      "Français";
+</div>
 
 
-    /* =========================
-       LANGUES
-    ========================== */
+<script>
 
-    const languageList = [
-      "Français",
-      "English",
-      "Español",
-      "Português",
-      "Deutsch",
-      "Italiano",
-      "العربية",
-      "中文",
-      "日本語",
-      "Русский",
-      "Türkçe",
-      "한국어",
-      "हिन्दी",
-      "Nederlands",
-      "Polski",
-      "Svenska",
-      "Dansk",
-      "Norsk",
-      "Suomi",
-      "Ελληνικά"
-    ];
+/* =========================
+   VARIABLES
+========================= */
+
+const chat =
+  document.getElementById("chat");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendButton =
+  document.getElementById("sendButton");
+
+const micButton =
+  document.getElementById("micButton");
+
+const voiceButton =
+  document.getElementById("voiceButton");
+
+const toolsButton =
+  document.getElementById("toolsButton");
+
+const tools =
+  document.getElementById("tools");
+
+const menuButton =
+  document.getElementById("menuButton");
+
+const menu =
+  document.getElementById("menu");
+
+const status =
+  document.getElementById("status");
+
+let messages = [];
 
 
-    /* =========================
-       SIDEBAR
-    ========================== */
+/* =========================
+   OUTILS
+========================= */
 
-    function openSidebar() {
-      document
-        .getElementById("sidebar")
-        .classList.add("active");
+function useTool(type) {
 
-      document
-        .getElementById("overlay")
-        .classList.add("active");
+  const prompts = {
+
+    image:
+      "Je veux générer une image : ",
+
+    video:
+      "Je veux générer une vidéo : ",
+
+    pdf:
+      "Je veux générer un PDF : ",
+
+    ppt:
+      "Je veux générer une présentation PowerPoint : ",
+
+    file:
+      "Je veux générer un fichier ou un ZIP : ",
+
+    voice:
+      "Je veux générer une voix IA : ",
+
+    music:
+      "Je veux générer une musique : ",
+
+    web:
+      "Recherche sur le web des informations récentes sur : ",
+
+    code:
+      "Je veux générer ou analyser du code : "
+
+  };
+
+  messageInput.value =
+    prompts[type] || "";
+
+  tools.classList.remove("active");
+
+  messageInput.focus();
+
+}
+
+
+/* =========================
+   UTILITAIRES
+========================= */
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   FORMATAGE IA
+========================= */
+
+function renderAIText(text) {
+
+  const escaped =
+    escapeHTML(text);
+
+  const parts =
+    escaped.split(/(```[\s\S]*?```)/g);
+
+  return parts.map(part => {
+
+    if (
+      part.startsWith("```") &&
+      part.endsWith("```")
+    ) {
+
+      const lines =
+        part
+          .slice(3, -3)
+          .split("\n");
+
+      const language =
+        lines.shift() || "code";
+
+      const code =
+        lines.join("\n");
+
+      return `
+        <div class="code-container">
+
+          <div class="code-header">
+
+            <span>${language}</span>
+
+            <button
+              class="copy-code"
+              onclick="copyCode(this)"
+            >
+              Copier
+            </button>
+
+          </div>
+
+          <pre>${code}</pre>
+
+        </div>
+      `;
+
     }
 
+    return part
+      .replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      )
+      .replace(
+        /\n/g,
+        "<br>"
+      );
 
-    function closeSidebar() {
-      document
-        .getElementById("sidebar")
-        .classList.remove("active");
+  }).join("");
 
-      document
-        .getElementById("overlay")
-        .classList.remove("active");
-    }
-
-
-    /* =========================
-       TOOLS
-    ========================== */
-
-    function toggleTools() {
-
-      toolsPanel.classList.toggle("active");
-
-    }
+}
 
 
-    function closeTools() {
+/* =========================
+   AJOUT MESSAGE
+========================= */
 
-      toolsPanel.classList.remove("active");
+function addMessage(
+  text,
+  type
+) {
 
-    }
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.className =
+    "message " + type;
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "bubble";
+
+  if (type === "ai") {
+
+    bubble.innerHTML =
+      renderAIText(text);
+
+  } else {
+
+    bubble.textContent =
+      text;
+
+  }
+
+  wrapper.appendChild(bubble);
+
+  chat.appendChild(wrapper);
+
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+
+}
 
 
-    /* =========================
-       MESSAGES
-    ========================== */
+/* =========================
+   COPIER CODE
+========================= */
 
-    function addMessage(text, type = "ai") {
+function copyCode(button) {
 
-      const message =
-        document.createElement("div");
+  const code =
+    button
+      .closest(".code-container")
+      .querySelector("pre")
+      .innerText;
 
-      message.className =
-        "message " + type;
+  navigator.clipboard
+    .writeText(code)
+    .then(() => {
 
-      message.textContent = text;
-
-      messagesContainer.appendChild(message);
-
-      scrollToBottom();
-
-      return message;
-    }
-
-
-    function scrollToBottom() {
+      button.textContent =
+        "Copié";
 
       setTimeout(() => {
 
-        window.scrollTo({
-                    top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-
-      }, 50);
-    }
-
-
-    /* =========================
-       ENTRÉE CLAVIER
-    ========================= */
-
-    messageInput.addEventListener("keydown", function(event) {
-
-      if (event.key === "Enter" && !event.shiftKey) {
-
-        event.preventDefault();
-
-        sendMessage();
-
-      }
-
-    });
-
-
-    /* =========================
-       REDIMENSIONNEMENT DU TEXTE
-    ========================= */
-
-    messageInput.addEventListener("input", function() {
-
-      this.style.height = "auto";
-
-      this.style.height =
-        Math.min(this.scrollHeight, 130) + "px";
-
-    });
-
-
-    /* =========================
-       FICHIERS
-    ========================= */
-
-    function openFiles() {
-
-      document
-        .getElementById("fileInput")
-        .click();
-
-    }
-
-
-    function handleFiles(event) {
-
-      const files =
-        Array.from(event.target.files || []);
-
-      if (!files.length) {
-        return;
-      }
-
-      selectedFiles =
-        selectedFiles.concat(files);
-
-      renderFiles();
-
-      closeTools();
-
-    }
-
-
-    function renderFiles() {
-
-      fileList.innerHTML = "";
-
-      if (!selectedFiles.length) {
-
-        filePreview.classList.remove("active");
-
-        return;
-      }
-
-      filePreview.classList.add("active");
-
-      selectedFiles.forEach((file, index) => {
-
-        const item =
-          document.createElement("div");
-
-        item.className = "file-item";
-
-        const name =
-          document.createElement("span");
-
-        name.textContent =
-          "📎 " + file.name;
-
-        const remove =
-          document.createElement("button");
-
-        remove.className = "remove-file";
-
-        remove.textContent = "×";
-
-        remove.onclick = function() {
-
-          removeFile(index);
-
-        };
-
-        item.appendChild(name);
-        item.appendChild(remove);
-
-        fileList.appendChild(item);
-
-      });
-
-    }
-
-
-    function removeFile(index) {
-
-      selectedFiles.splice(index, 1);
-
-      renderFiles();
-
-    }
-
-
-    /* =========================
-       EXTRAIRE LA RÉPONSE DE L'IA
-    ========================= */
-
-    function extractAIText(result) {
-
-      if (!result) {
-        return "";
-      }
-
-
-      if (typeof result === "string") {
-        return result;
-      }
-
-
-      if (
-        result.outputs &&
-        Array.isArray(result.outputs)
-      ) {
-
-        for (const output of result.outputs) {
-
-          if (
-            typeof output === "string" &&
-            output.trim()
-          ) {
-
-            return output;
-
-          }
-
-          if (
-            output &&
-            typeof output.content === "string"
-          ) {
-
-            return output.content;
-
-          }
-
-          if (
-            output &&
-            Array.isArray(output.content)
-          ) {
-
-            const text =
-              output.content
-                .map(item => {
-
-                  if (typeof item === "string") {
-                    return item;
-                  }
-
-                  return item?.text || "";
-
-                })
-                .join("");
-
-            if (text.trim()) {
-              return text;
-            }
-
-          }
-
-        }
-
-      }
-
-
-      if (
-        result.output &&
-        Array.isArray(result.output)
-      ) {
-
-        for (const output of result.output) {
-
-          if (
-            typeof output?.content === "string"
-          ) {
-
-            return output.content;
-
-          }
-
-        }
-
-      }
-
-
-      if (
-        result.choices &&
-        Array.isArray(result.choices) &&
-        result.choices[0]
-      ) {
-
-        const choice =
-          result.choices[0];
-
-        if (
-          choice.message &&
-          typeof choice.message.content === "string"
-        ) {
-
-          return choice.message.content;
-
-        }
-
-        if (
-          typeof choice.text === "string"
-        ) {
-
-          return choice.text;
-
-        }
-
-      }
-
-
-      if (
-        typeof result.content === "string"
-      ) {
-
-        return result.content;
-
-      }
-
-
-      if (
-        typeof result.text === "string"
-      ) {
-
-        return result.text;
-
-      }
-
-
-      return "";
-
-    }
-
-
-    /* =========================
-       AFFICHAGE DE LA RÉPONSE IA
-    ========================= */
-
-    function renderAIResponse(text) {
-
-      const wrapper =
-        document.createElement("div");
-
-      wrapper.className =
-        "ai-response";
-
-
-      const copyAll =
-        document.createElement("button");
-
-      copyAll.className =
-        "copy-all-button";
-
-      copyAll.textContent =
-        "📋 Copier";
-
-      copyAll.onclick = function() {
-
-        copyText(text);
-
-      };
-
-
-      const actions =
-        document.createElement("div");
-
-      actions.className =
-        "response-actions";
-
-      actions.appendChild(copyAll);
-
-
-      const codeRegex =
-        /```([a-zA-Z0-9_+-]*)\n?([\s\S]*?)```/g;
-
-      let lastIndex = 0;
-
-      let match;
-
-
-      while (
-        (match = codeRegex.exec(text)) !== null
-      ) {
-
-        const normalText =
-          text.slice(
-            lastIndex,
-            match.index
-          );
-
-        if (normalText.trim()) {
-
-          const normal =
-            document.createElement("div");
-
-          normal.className =
-            "ai-text styled-normal";
-
-          normal.textContent =
-            normalText;
-
-          wrapper.appendChild(normal);
-
-        }
-
-
-        const language =
-          match[1] || "code";
-
-        const code =
-          match[2].replace(/^\n/, "").replace(/\n$/, "");
-
-
-        const codeWrapper =
-          document.createElement("div");
-
-        codeWrapper.className =
-          "code-wrapper";
-
-
-        const codeHeader =
-          document.createElement("div");
-
-        codeHeader.className =
-          "code-header";
-
-
-        const languageLabel =
-          document.createElement("span");
-
-        languageLabel.className =
-          "code-language";
-
-        languageLabel.textContent =
-          language;
-
-
-        const copyButton =
-          document.createElement("button");
-
-        copyButton.className =
-          "copy-code-button";
-
-        copyButton.textContent =
+        button.textContent =
           "Copier";
 
-        copyButton.onclick = function() {
+      }, 1500);
 
-          copyText(code);
+    });
 
-        };
-
-
-        codeHeader.appendChild(
-          languageLabel
-        );
-
-        codeHeader.appendChild(
-          copyButton
-        );
+}
 
 
-        const codeContent =
-          document.createElement("div");
+/* =========================
+   ENVOYER
+========================= */
 
-        codeContent.className =
-          "code-content";
+async function sendMessage() {
 
-        codeContent.textContent =
-          code;
+  const text =
+    messageInput.value.trim();
 
+  if (!text) {
+    return;
+  }
 
-        codeWrapper.appendChild(
-          codeHeader
-        );
+  messageInput.value = "";
 
-        codeWrapper.appendChild(
-          codeContent
-        );
+  messageInput.style.height =
+    "auto";
 
-        wrapper.appendChild(
-          codeWrapper
-        );
+  addMessage(
+    text,
+    "user"
+  );
 
+  messages.push({
+    role: "user",
+    content: text
+  });
 
-        lastIndex =
-          codeRegex.lastIndex;
+  sendButton.disabled = true;
 
-      }
+  status.textContent =
+    "F5 CORE • PROCESSING...";
 
+  try {
 
-      const remaining =
-        text.slice(lastIndex);
+    const response =
+      await fetch(
+        "/api/chat",
+        {
+          method: "POST",
 
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-      if (remaining.trim()) {
+          body: JSON.stringify({
 
-        const normal =
-          document.createElement("div");
+            messages:
+              messages,
 
-        normal.className =
-          "ai-text styled-normal";
+            language:
+              "Français"
 
-        normal.textContent =
-          remaining;
-
-        wrapper.appendChild(normal);
-
-      }
-
-
-      wrapper.appendChild(actions);
-
-
-      return wrapper;
-
-    }
-
-
-    /* =========================
-       COPIE
-    ========================= */
-
-    async function copyText(text) {
-
-      try {
-
-        await navigator.clipboard.writeText(text);
-
-        addMessage(
-          "📋 Texte copié dans le presse-papiers.",
-          "system"
-        );
-
-      } catch (error) {
-
-        addMessage(
-          "⚠️ Impossible de copier automatiquement le texte.",
-          "system"
-        );
-
-      }
-
-    }
-
-
-    /* =========================
-       ENVOYER LE MESSAGE
-    ========================= */
-
-    async function sendMessage() {
-
-      const text =
-        messageInput.value.trim();
-
-
-      if (!text && !selectedFiles.length) {
-
-        return;
-
-      }
-
-
-      let finalMessage = text;
-
-
-      if (selectedFiles.length) {
-
-        const fileNames =
-          selectedFiles
-            .map(file => file.name)
-            .join(", ");
-
-        finalMessage +=
-          (finalMessage ? "\n\n" : "") +
-          "📎 Fichiers sélectionnés : " +
-          fileNames;
-
-      }
-
-
-      addMessage(
-        finalMessage,
-        "user"
+          })
+        }
       );
 
+    const data =
+      await response.json();
 
-      conversation.push({
-        role: "user",
-        content: finalMessage
-      });
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Erreur serveur"
+      );
+
+    }
+
+    const aiText =
+      extractAIText(data);
+
+    if (!aiText) {
+
+      throw new Error(
+        "Réponse IA vide"
+      );
+
+    }
+
+    addMessage(
+      aiText,
+      "ai"
+    );
+
+    messages.push({
+      role: "assistant",
+      content: aiText
+    });
+
+    status.textContent =
+      "F5 CORE • ONLINE";
+
+    saveConversation();
+
+  } catch (error) {
+
+    console.error(error);
+
+    addMessage(
+      "⚠️ HACKER F5 n'a pas pu répondre. Vérifie la configuration de Vercel.",
+      "ai"
+    );
+
+    status.textContent =
+      "F5 CORE • ERROR";
+
+  }
+
+  sendButton.disabled = false;
+
+  messageInput.focus();
+
+}
 
 
-      messageInput.value = "";
+/* =========================
+   EXTRAIRE REPONSE
+========================= */
 
-      messageInput.style.height = "auto";
+function extractAIText(data) {
+
+  if (!data) {
+    return "";
+  }
+
+  if (
+    typeof data.output_text ===
+    "string"
+  ) {
+
+    return data.output_text;
+
+  }
+
+  if (
+    typeof data.content ===
+    "string"
+  ) {
+
+    return data.content;
+
+  }
+
+  if (
+    Array.isArray(data.outputs)
+  ) {
+
+    for (
+      const output of data.outputs
+    ) {
+
+      if (
+        output &&
+        typeof output.content ===
+        "string"
+      ) {
+
+        return output.content;
+
+      }
+
+      if (
+        output &&
+        Array.isArray(output.content)
+      ) {
+
+        const text =
+          output.content
+            .map(item => {
+
+              if (
+                typeof item ===
+                "string"
+              ) {
+
+                return item;
+
+              }
+
+              return item?.text || "";
+
+            })
+            .join("");
+
+        if (text) {
+          return text;
+        }
+
+      }
+
+    }
+
+  }
+
+  return "";
+
+}
 
 
-      const filesToReset =
-        selectedFiles.length;
+/* =========================
+   MICROPHONE
+========================= */
 
-      selectedFiles = [];
+let recognition = null;
 
-      renderFiles();
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+  recognition =
+    new SpeechRecognition();
+
+  recognition.lang =
+    "fr-FR";
+
+  recognition.continuous =
+    false;
+
+  recognition.interimResults =
+    true;
+
+  recognition.onstart =
+    function() {
+
+      micButton.classList.add(
+        "recording"
+      );
+
+      status.textContent =
+        "F5 CORE • LISTENING...";
+
+    };
+
+  recognition.onresult =
+    function(event) {
+
+      let transcript = "";
+
+      for (
+        let i =
+          event.resultIndex;
+        i <
+          event.results.length;
+        i++
+      ) {
+
+        transcript +=
+          event.results[i][0].transcript;
+
+      }
+
+      messageInput.value =
+        transcript;
+
+      messageInput.dispatchEvent(
+        new Event("input")
+      );
+
+    };
+
+  recognition.onend =
+    function() {
+
+      micButton.classList.remove(
+        "recording"
+      );
+
+      status.textContent =
+        "F5 CORE • ONLINE";
+
+      messageInput.focus();
+
+    };
+
+  recognition.onerror =
+    function(event) {
+
+      console.error(
+        "Microphone :",
+        event.error
+      );
+
+      micButton.classList.remove(
+        "recording"
+      );
+
+      status.textContent =
+        "F5 CORE • MIC ERROR";
+
+    };
+
+}
 
 
-      closeTools();
+/* =========================
+   BOUTON MICRO
+========================= */
+
+micButton.addEventListener(
+  "click",
+  function() {
+
+    if (!recognition) {
+
+      addMessage(
+        "🎤 La reconnaissance vocale n'est pas disponible dans ce navigateur.",
+        "ai"
+      );
+
+      return;
+
+    }
+
+    try {
+
+      recognition.start();
+
+    } catch (error) {
+
+      recognition.stop();
+
+    }
+
+  }
+);
 
 
-      welcome.style.display = "none";
+/* =========================
+   VOIX IA
+========================= */
 
+voiceButton.addEventListener(
+  "click",
+  async function() {
 
-      sendButton.disabled = true;
-
-      sendButton.textContent = "…";
-
-
-      const typing =
-        addMessage(
-          "⚡ HACKER F5 analyse votre demande...",
-          "ai"
+    const lastAIMessage =
+      [...messages]
+        .reverse()
+        .find(
+          message =>
+            message.role ===
+            "assistant"
         );
 
-      typing.classList.add("typing");
+    if (
+      !lastAIMessage ||
+      !lastAIMessage.content
+    ) {
 
+      addMessage(
+        "🔊 Il n'y a pas encore de réponse à lire.",
+        "ai"
+      );
 
-      try {
+      return;
 
-        const response =
-          await fetch("/api/chat", {
+    }
 
+    status.textContent =
+      "F5 CORE • VOICE PROCESSING...";
+
+    try {
+
+      const response =
+        await fetch(
+          "/api/voice",
+          {
             method: "POST",
 
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type":
+                "application/json"
             },
 
             body: JSON.stringify({
 
-              messages: conversation,
+              text:
+                lastAIMessage.content,
 
-              language: selectedLanguage
+              language:
+                "fr"
 
             })
 
-          });
-
-
-        let result;
-
-        try {
-
-          result =
-            await response.json();
-
-        } catch (jsonError) {
-
-          throw new Error(
-            "La réponse du serveur n'est pas un JSON valide."
-          );
-
-        }
-
-
-        if (!response.ok) {
-
-          const serverError =
-            result?.error;
-
-          let errorText =
-            "Une erreur est survenue avec le serveur.";
-
-          if (
-            typeof serverError === "string"
-          ) {
-
-            errorText =
-              serverError;
-
-          } else if (
-            serverError
-          ) {
-
-            errorText =
-              JSON.stringify(
-                serverError,
-                null,
-                2
-              );
-
           }
+        );
 
-          throw new Error(errorText);
+      if (!response.ok) {
+        throw new Error(
+          "Erreur voix IA"
+        );
+      }
 
-        }
+      const audioBlob =
+        await response.blob();
 
+      const audioURL =
+        URL.createObjectURL(
+          audioBlob
+        );
 
-        const aiText =
-          extractAIText(result);
+      const audio =
+        new Audio(audioURL);
 
+      await audio.play();
 
-        if (!aiText.trim()) {
+      audio.onended =
+        function() {
 
-          throw new Error(
-            "HACKER F5 n'a pas renvoyé de texte."
+          URL.revokeObjectURL(
+            audioURL
           );
 
-        }
+        };
 
+      status.textContent =
+        "F5 CORE • ONLINE";
 
-        typing.remove();
+    } catch (error) {
 
+      console.error(error);
 
-        const aiMessage =
-          document.createElement("div");
+      status.textContent =
+        "F5 CORE • VOICE ERROR";
 
-        aiMessage.className =
-          "message ai";
-
-        aiMessage.appendChild(
-          renderAIResponse(aiText)
-        );
-
-        messagesContainer.appendChild(
-          aiMessage
-        );
-
-
-        conversation.push({
-          role: "assistant",
-          content: aiText
-        });
-
-
-        saveCurrentConversation();
-
-        scrollToBottom();
-
-
-      } catch (error) {
-
-        typing.remove();
-
-
-        addMessage(
-          "⚠️ " +
-          (error.message ||
-          "Impossible de contacter HACKER F5."),
-          "system"
-        );
-
-      } finally {
-
-        sendButton.disabled = false;
-
-        sendButton.textContent = "➤";
-
-      }
-
-    }
-
-
-    /* =========================
-       HISTORIQUE
-    ========================= */
-
-    function saveCurrentConversation() {
-
-      if (!conversation.length) {
-        return;
-      }
-
-
-      const history =
-        JSON.parse(
-          localStorage.getItem("hackerF5History") ||
-          "[]"
-        );
-
-
-      const firstUserMessage =
-        conversation.find(
-          message =>
-            message.role === "user"
-        );
-
-
-      const title =
-        firstUserMessage
-          ? firstUserMessage.content
-              .substring(0, 45)
-          : "Nouvelle conversation";
-
-
-      const item = {
-        id: Date.now(),
-        title: title,
-        messages: conversation
-      };
-
-
-      history.unshift(item);
-
-
-      const limitedHistory =
-        history.slice(0, 20);
-
-
-      localStorage.setItem(
-        "hackerF5History",
-        JSON.stringify(limitedHistory)
+      addMessage(
+        "🔊 La voix IA n'est pas encore connectée. Elle sera activée dans api/chat.js.",
+        "ai"
       );
 
     }
 
+  }
+);
 
-    function showHistory() {
 
-      closeSidebar();
+/* =========================
+   OUTILS
+========================= */
 
-
-      const history =
-        JSON.parse(
-          localStorage.getItem("hackerF5History") ||
-          "[]"
-        );
-
-
-      messagesContainer.innerHTML = "";
-
-
-      welcome.style.display = "none";
-
-
-      if (!history.length) {
-
-        addMessage(
-          "🕘 Aucun historique disponible pour le moment.",
-          "system"
-        );
-
-        return;
-
-      }
-
-
-      const title =
-        document.createElement("div");
-
-      title.className =
-        "message ai";
-
-
-      const heading =
-        document.createElement("div");
-
-      heading.className =
-        "hacker-title";
-
-      heading.textContent =
-        "🕘 HISTORIQUE HACKER F5";
-
-
-      title.appendChild(heading);
-
-
-      history.forEach(item => {
-
-        const historyItem =
-          document.createElement("div");
-
-        historyItem.className =
-          "history-item";
-
-        historyItem.textContent =
-          "➤ " + item.title;
-
-
-        historyItem.onclick =
-          function() {
-
-            loadConversation(item);
-
-          };
-
-
-        title.appendChild(historyItem);
-
-      });
-
-
-      messagesContainer.appendChild(title);
-
-      scrollToBottom();
-
-    }
-
-
-    function loadConversation(item) {
-
-      conversation =
-        Array.isArray(item.messages)
-          ? [...item.messages]
-          : [];
-
-
-      messagesContainer.innerHTML = "";
-
-      welcome.style.display = "none";
-
-
-      conversation.forEach(message => {
-
-        if (
-          message.role === "user"
-        ) {
-
-          addMessage(
-            message.content,
-            "user"
-          );
-
-        } else if (
-          message.role === "assistant"
-        ) {
-
-          const aiMessage =
-            document.createElement("div");
-
-          aiMessage.className =
-            "message ai";
-
-          aiMessage.appendChild(
-            renderAIResponse(
-              message.content
-            )
-          );
-
-          messagesContainer.appendChild(
-            aiMessage
-          );
-
-        }
-
-      });
-
-
-      closeSidebar();
-
-      scrollToBottom();
-
-    }
-
-
-    /* =========================
-       NOUVELLE CONVERSATION
-    ========================= */
-
-    function newConversation() {
-
-      conversation = [];
-
-      selectedFiles = [];
-
-      messagesContainer.innerHTML = "";
-
-      welcome.style.display = "block";
-
-      renderFiles();
-
-      closeTools();
-
-      closeSidebar();
-
-      messageInput.value = "";
-
-      messageInput.style.height = "auto";
-
-    }
-
-
-    /* =========================
-       ACTIONS DU MENU
-    ========================= */
-
-    function prepareCreation() {
-
-      closeSidebar();
-
-      messageInput.value =
-        "Je veux créer un projet avec l'aide de HACKER F5.";
-
-      messageInput.focus();
-
-    }
-
-
-    function securityAnalysis() {
-
-      closeSidebar();
-
-      messageInput.value =
-        "Analyse cette situation de cybersécurité et donne-moi des recommandations défensives.";
-
-      messageInput.focus();
-
-    }
-
-
-    function codeAnalysis() {
-
-      closeSidebar();
-
-      messageInput.value =
-        "Analyse ce code et explique-moi les erreurs et les améliorations possibles.";
-
-      messageInput.focus();
-
-    }
-
-
-    function showSettings() {
-
-      closeSidebar();
-
-      messagesContainer.innerHTML = "";
-
-      welcome.style.display = "none";
-
-
-      const box =
-        document.createElement("div");
-
-      box.className =
-        "settings-box";
-
-
-      const heading =
-        document.createElement("h3");
-
-      heading.textContent =
-        "⚙️ Paramètres HACKER F5";
-
-
-      box.appendChild(heading);
-
-
-      const label =
-        document.createElement("div");
-
-      label.textContent =
-        "🌐 Langue des réponses";
-
-
-      box.appendChild(label);
-
-
-      const select =
-        document.createElement("select");
-
-      select.style.width = "100%";
-
-      select.style.padding = "12px";
-
-      select.style.marginTop = "8px";
-
-      select.style.border =
-        "1px solid #cccccc";
-
-      select.style.borderRadius =
-        "10px";
-
-
-      languageList.forEach(language => {
-
-        const option =
-          document.createElement("option");
-
-        option.value = language;
-
-        option.textContent = language;
-
-        if (
-          language === selectedLanguage
-        ) {
-
-          option.selected = true;
-
-        }
-
-        select.appendChild(option);
-
-      });
-
-
-      select.onchange =
-        function() {
-
-          selectedLanguage =
-            this.value;
-
-          localStorage.setItem(
-            "hackerF5Language",
-            selectedLanguage
-          );
-
-          status.textContent =
-            "✓ Langue enregistrée : " +
-            selectedLanguage;
-
-        };
-
-
-      box.appendChild(select);
-
-
-      const status =
-        document.createElement("div");
-
-      status.className =
-        "language-status";
-
-      status.textContent =
-        "✓ Langue actuelle : " +
-        selectedLanguage;
-
-
-      box.appendChild(status);
-
-
-      const backButton =
-        document.createElement("button");
-
-      backButton.className =
-        "settings-button";
-
-      backButton.textContent =
-        "← Retour au chat";
-
-      backButton.onclick =
-        function() {
-
-          messagesContainer.innerHTML = "";
-
-          welcome.style.display =
-            conversation.length
-              ? "none"
-              : "block";
-
-          if (conversation.length) {
-
-            conversation.forEach(message => {
-
-              if (
-                message.role === "user"
-              ) {
-
-                addMessage(
-                  message.content,
-                  "user"
-                );
-
-              } else {
-
-                const aiMessage =
-                  document.createElement("div");
-
-                aiMessage.className =
-                  "message ai";
-
-                aiMessage.appendChild(
-                  renderAIResponse(
-                    message.content
-                  )
-                );
-
-                messagesContainer.appendChild(
-                  aiMessage
-                );
-
-              }
-
-            });
-
-          }
-
-          scrollToBottom();
-
-        };
-
-
-      box.appendChild(backButton);
-
-
-      messagesContainer.appendChild(box);
-
-      scrollToBottom();
-
-    }
-
-
-    /* =========================
-       OUTILS
-    ========================= */
-
-    function prepareImage() {
-
-      closeTools();
-
-      messageInput.value =
-        "Je veux travailler avec une image.";
-
-      messageInput.focus();
-
-    }
-
-
-    function startVoice() {
-
-      closeTools();
-
-
-      const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-      if (!SpeechRecognition) {
-
-        addMessage(
-          "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur.",
-          "system"
-        );
-
-        return;
-
-      }
-
-
-      const recognition =
-        new SpeechRecognition();
-
-
-      recognition.lang =
-        selectedLanguage === "Français"
-          ? "fr-FR"
-          : "en-US";
-
-
-      recognition.interimResults =
-        false;
-
-      recognition.maxAlternatives =
-        1;
-
-
-      recognition.onstart =
-        function() {
-
-          addMessage(
-            "🎙️ Parle maintenant...",
-            "system"
-          );
-
-        };
-
-
-      recognition.onresult =
-        function(event) {
-
-          const transcript =
-            event.results[0][0].transcript;
-
-          messageInput.value =
-            transcript;
-
-          messageInput.focus();
-
-        };
-
-
-      recognition.onerror =
-        function() {
-
-          addMessage(
-            "⚠️ La reconnaissance vocale a rencontré un problème.",
-            "system"
-          );
-
-        };
-
-
-      recognition.start();
-
-    }
-
-
-    function prepareDocument() {
-
-      closeTools();
-
-      messageInput.value =
-        "Je veux analyser ou préparer un document.";
-
-      messageInput.focus();
-
-    }
-
-
-    function prepareImageGeneration() {
-
-      closeTools();
-
-      messageInput.value =
-        "Je veux créer une image avec l'aide de HACKER F5.";
-
-      messageInput.focus();
-
-    }
-
-
-    function preparePresentation() {
-
-      closeTools();
-
-      messageInput.value =
-        "Je veux créer une présentation.";
-
-      messageInput.focus();
-
-    }
-
-
-    function prepareTable() {
-
-      closeTools();
-
-      messageInput.value =
-        "Je veux créer un tableau.";
-
-      messageInput.focus();
-
-    }
-
-
-    function prepareWebSearch() {
-
-      closeTools();
-
-      messageInput.value =
-        "Recherche des informations récentes sur : ";
-
-      messageInput.focus();
-
-    }
-
-
-    /* =========================
-       INITIALISATION
-    ========================= */
-
-    window.addEventListener(
-      "load",
-      function() {
-
-        messageInput.focus();
-
-      }
-    );
-
-  </script>
-
-</body>
-</html>
+toolsButton.addEventListener(
+  "click",
+  fun
