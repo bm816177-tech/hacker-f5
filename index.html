@@ -2359,4 +2359,61 @@
       messageInput.value =
         "Je veux créer une image avec l'aide de HACKER F5.";
 
-      mes
+      messageInput.focus();
+
+    }
+
+
+    function preparePresentation() {
+
+      closeTools();
+
+      messageInput.value =
+        "Je veux créer une présentation.";
+
+      messageInput.focus();
+
+    }
+
+
+    function prepareTable() {
+
+      closeTools();
+
+      messageInput.value =
+        "Je veux créer un tableau.";
+
+      messageInput.focus();
+
+    }
+
+
+    function prepareWebSearch() {
+
+      closeTools();
+
+      messageInput.value =
+        "Recherche des informations récentes sur : ";
+
+      messageInput.focus();
+
+    }
+
+
+    /* =========================
+       INITIALISATION
+    ========================= */
+
+    window.addEventListener(
+      "load",
+      function() {
+
+        messageInput.focus();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
