@@ -1584,4 +1584,259 @@ voiceButton.addEventListener(
 
 toolsButton.addEventListener(
   "click",
-  fun
+  function() {
+
+    tools.classList.toggle(
+      "active"
+    );
+
+  }
+);
+
+
+/* =========================
+   MENU
+========================= */
+
+menuButton.addEventListener(
+  "click",
+  function() {
+
+    if (
+      menu.style.display ===
+      "block"
+    ) {
+
+      closeMenu();
+
+    } else {
+
+      menu.style.display =
+        "block";
+
+    }
+
+  }
+);
+
+function closeMenu() {
+
+  menu.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   NOUVELLE CONVERSATION
+========================= */
+
+function newConversation() {
+
+  messages = [];
+
+  chat.innerHTML = "";
+
+  localStorage.removeItem(
+    "hacker_f5_messages"
+  );
+
+  status.textContent =
+    "F5 CORE • READY";
+
+  closeMenu();
+
+  messageInput.focus();
+
+}
+
+
+/* =========================
+   EFFACER
+========================= */
+
+function clearChat() {
+
+  newConversation();
+
+}
+
+
+/* =========================
+   A PROPOS
+========================= */
+
+function showAbout() {
+
+  closeMenu();
+
+  addMessage(
+`╔══════════════════════╗
+║     ♛ HΛ₵ҠΞЯ F5 ♛    ║
+╠══════════════════════╣
+║  CORE      : ONLINE  ║
+║  NETWORK   : READY   ║
+║  DEFENSE   : ACTIVE  ║
+╚══════════════════════╝
+
+👑 HACKF5 — by King Franck
+
+Assistant IA orienté programmation,
+cybersécurité responsable et assistance numérique.`,
+    "ai"
+  );
+
+}
+
+
+/* =========================
+   CLAVIER
+========================= */
+
+messageInput.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   AUTO RESIZE
+========================= */
+
+messageInput.addEventListener(
+  "input",
+  function() {
+
+    this.style.height =
+      "auto";
+
+    this.style.height =
+      Math.min(
+        this.scrollHeight,
+        120
+      ) + "px";
+
+  }
+);
+
+
+/* =========================
+   ENVOYER
+========================= */
+
+sendButton.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+/* =========================
+   SAUVEGARDE
+========================= */
+
+function saveConversation() {
+
+  try {
+
+    localStorage.setItem(
+      "hacker_f5_messages",
+      JSON.stringify(messages)
+    );
+
+  } catch (error) {
+
+    console.log(
+      "Sauvegarde locale indisponible"
+    );
+
+  }
+
+}
+
+function loadConversation() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        "hacker_f5_messages"
+      );
+
+    if (!saved) {
+      return;
+    }
+
+    messages =
+      JSON.parse(saved);
+
+    messages.forEach(
+      message => {
+
+        if (
+          message.role ===
+          "user"
+        ) {
+
+          addMessage(
+            message.content,
+            "user"
+          );
+
+        }
+
+        if (
+          message.role ===
+          "assistant"
+        ) {
+
+          addMessage(
+            message.content,
+            "ai"
+          );
+
+        }
+
+      }
+    );
+
+  } catch (error) {
+
+    messages = [];
+
+  }
+
+}
+
+
+/* =========================
+   INITIALISATION
+========================= */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    loadConversation();
+
+    messageInput.focus();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
