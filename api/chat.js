@@ -1,185 +1,313 @@
-export default async function handler(req, res) {
+import { Mistral } from "@mistralai/mistralai";
+
+const client = new Mistral({
+  apiKey: process.env.MISTRAL_API_KEY
+});
+
+const AGENT_ID =
+  "ag_01a0bd128b0a75be97d07bc34dea0418";
+
+const AGENT_VERSION = 0;
+
+
+/*
+ * Récupère proprement le texte
+ * dans les différentes structures
+ * possibles retournées par Mistral.
+ */
+
+function extractText(value) {
+
+  if (!value) {
+    return "";
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+
+    return value
+      .map(extractText)
+      .filter(Boolean)
+      .join("");
+  }
+
+  if (typeof value === "object") {
+
+    if (
+      typeof value.text === "string"
+    ) {
+      return value.text;
+    }
+
+    if (
+      typeof value.content === "string"
+    ) {
+      return value.content;
+    }
+
+    if (value.content) {
+      return extractText(
+        value.content
+      );
+    }
+
+    if (value.outputs) {
+      return extractText(
+        value.outputs
+      );
+    }
+
+    if (value.output) {
+      return extractText(
+        value.output
+      );
+    }
+
+    if (value.message) {
+      return extractText(
+        value.message
+      );
+    }
+  }
+
+  return "";
+}
+
+
+/*
+ * API HACKER F5
+ */
+
+export default async function handler(
+  req,
+  res
+) {
+
+  /*
+   * Méthode HTTP
+   */
+
   if (req.method !== "POST") {
+
     return res.status(405).json({
       ok: false,
       error: "Méthode non autorisée"
     });
   }
 
+
   try {
-    const body = req.body || {};
 
-    const messages = body.messages;
-    const mode = body.mode || "chat";
+    /*
+     * Vérification de la clé
+     */
 
-    if (!Array.isArray(messages) || messages.length === 0) {
-      return res.status(400).json({
-        ok: false,
-        error: "Aucun message reçu"
-      });
-    }
+    if (
+      !process.env.MISTRAL_API_KEY
+    ) {
 
-    if (!process.env.MISTRAL_API_KEY) {
       return res.status(500).json({
         ok: false,
-        error: "Configuration du serveur incomplète"
+        error:
+          "Configuration du serveur incomplète"
       });
     }
 
-    /*
-     * HACKER F5
-     * Nouvel agent Mistral uniquement
-     */
 
-    const response = await fetch(
-      "https://api.mistral.ai/v1/conversations",
-      {
-        method: "POST",
+    const body =
+      req.body || {};
 
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-            `Bearer ${process.env.MISTRAL_API_KEY}`
-        },
 
-        body: JSON.stringify({
-          agent_id:
-            "ag_01a0bd128b0a75be97d07bc34dea0418",
+    const messages =
+      body.messages;
 
-          agent_version: 0,
 
-          inputs: messages
-        })
-      }
-    );
+    const conversationId =
+      body.conversationId ||
+      null;
 
-    let data;
 
-    try {
-      data = await response.json();
-    } catch {
-      return res.status(502).json({
-        ok: false,
-        error: "Réponse invalide du serveur Mistral"
-      });
-    }
+    const mode =
+      body.mode ||
+      "chat";
+
 
     /*
-     * Gestion des erreurs Mistral
+     * Vérification des messages
      */
 
-    if (!response.ok) {
-      return res.status(response.status).json({
+    if (
+      !Array.isArray(messages) ||
+      messages.length === 0
+    ) {
+
+      return res.status(400).json({
         ok: false,
         error:
-          data?.message ||
-          data?.error?.message ||
-          data?.error ||
-          "Erreur lors de la communication avec Mistral"
+          "Aucun message reçu"
       });
     }
 
+
     /*
-     * Extraction de la réponse
+     * On prend uniquement
+     * le dernier message utilisateur
+     * pour l'API Conversations.
      */
 
-    let answer = "";
+    const lastMessage =
+      messages[
+        messages.length - 1
+      ];
 
-    if (Array.isArray(data?.outputs)) {
 
-      for (const output of data.outputs) {
+    const userMessage =
+      typeof lastMessage?.content ===
+      "string"
+        ? lastMessage.content.trim()
+        : "";
 
-        if (typeof output === "string") {
-          answer += output;
-          continue;
-        }
 
-        if (
-          typeof output?.content === "string"
-        ) {
-          answer += output.content;
-          continue;
-        }
+    if (!userMessage) {
 
-        if (
-          Array.isArray(output?.content)
-        ) {
+      return res.status(400).json({
+        ok: false,
+        error:
+          "Message utilisateur invalide"
+      });
+    }
 
-          for (const item of output.content) {
 
-            if (typeof item === "string") {
-              answer += item;
+    let response;
+
+
+    /*
+     * =================================
+     * NOUVELLE CONVERSATION
+     * =================================
+     *
+     * TON AGENT MISTRAL est appelé ici.
+     *
+     * Son System Prompt configuré
+     * dans Mistral reste attaché
+     * à cet Agent.
+     */
+
+    if (!conversationId) {
+
+      response =
+        await client.beta.conversations.start({
+
+          agentId:
+            AGENT_ID,
+
+          agentVersion:
+            AGENT_VERSION,
+
+          inputs: [
+            {
+              role: "user",
+
+              content:
+                userMessage
             }
+          ]
+        });
+    }
 
-            else if (
-              typeof item?.text === "string"
-            ) {
-              answer += item.text;
-            }
 
+    /*
+     * =================================
+     * CONVERSATION EXISTANTE
+     * =================================
+     */
+
+    else {
+
+      response =
+        await client.beta.conversations.append({
+
+          conversationId:
+            conversationId,
+
+          conversationAppendRequest: {
+
+            inputs: [
+              {
+                role: "user",
+
+                content:
+                  userMessage
+              }
+            ]
           }
-        }
-
-        if (
-          !answer &&
-          typeof output?.text === "string"
-        ) {
-          answer = output.text;
-        }
-      }
+        });
     }
+
 
     /*
-     * Formats de réponse alternatifs
+     * =================================
+     * EXTRACTION DE LA RÉPONSE
+     * =================================
      */
 
-    if (
-      !answer &&
-      typeof data?.output === "string"
-    ) {
-      answer = data.output;
-    }
+    const answer =
+      extractText(
+        response?.outputs
+      ).trim();
 
-    if (
-      !answer &&
-      typeof data?.content === "string"
-    ) {
-      answer = data.content;
-    }
-
-    if (
-      !answer &&
-      typeof data?.text === "string"
-    ) {
-      answer = data.text;
-    }
-
-    /*
-     * Dernière sécurité
-     */
 
     if (!answer) {
-      answer =
-        "HACKER F5 a reçu la demande, mais aucune réponse texte n'a été retournée.";
+
+      console.error(
+        "MISTRAL EMPTY RESPONSE:",
+        JSON.stringify(response)
+      );
+
+      return res.status(502).json({
+        ok: false,
+        error:
+          "Mistral a répondu sans contenu texte."
+      });
     }
 
+
     /*
-     * Réponse finale vers index.html
+     * =================================
+     * CONVERSATION ID
+     * =================================
+     */
+
+    const newConversationId =
+      response?.conversationId ||
+      response?.conversation_id ||
+      conversationId ||
+      null;
+
+
+    /*
+     * =================================
+     * RÉPONSE À INDEX.HTML
+     * =================================
      */
 
     return res.status(200).json({
+
       ok: true,
 
-      answer: answer.trim(),
-
-      mode,
+      answer:
+        answer,
 
       conversationId:
-        data?.conversation_id ||
-        data?.conversationId ||
-        data?.id ||
-        null
+        newConversationId,
+
+      mode:
+        mode
     });
+
 
   } catch (error) {
 
@@ -188,8 +316,11 @@ export default async function handler(req, res) {
       error
     );
 
+
     return res.status(500).json({
+
       ok: false,
+
       error:
         error?.message ||
         "Erreur interne du serveur"
