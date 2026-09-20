@@ -1,1619 +1,1844 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#070707">
-
-  <title>HACKER F5 👑</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #050505;
-      color: white;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    button,
-    textarea {
-      font-family: inherit;
-    }
-
-    /* =========================
-       APP
-    ========================= */
-
-    .app {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background:
-        radial-gradient(circle at top, rgba(255, 0, 0, 0.12), transparent 35%),
-        #050505;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      height: 65px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 15px;
-      border-bottom: 1px solid #202020;
-      background: rgba(5, 5, 5, 0.96);
-      z-index: 10;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .menu-btn {
-      width: 42px;
-      height: 42px;
-      border: 1px solid #292929;
-      border-radius: 12px;
-      background: #101010;
-      color: white;
-      font-size: 21px;
-      cursor: pointer;
-    }
-
-    .logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(145deg, #ff0000, #700000);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-      font-size: 22px;
-    }
-
-    .brand h1 {
-      font-size: 17px;
-      letter-spacing: 1px;
-    }
-
-    .brand span {
-      font-size: 10px;
-      color: #888;
-    }
-
-    .new-btn {
-      border: 1px solid #333;
-      background: #111;
-      color: white;
-      border-radius: 10px;
-      padding: 9px 11px;
-      cursor: pointer;
-    }
-
-    /* =========================
-       CHAT
-    ========================= */
-
-    #chat {
-      flex: 1;
-      overflow-y: auto;
-      padding: 18px 13px 145px;
-      scroll-behavior: smooth;
-    }
-
-    .welcome {
-      text-align: center;
-      padding: 65px 20px 20px;
-    }
-
-    .welcome-logo {
-      font-size: 55px;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.5));
-    }
-
-    .welcome h2 {
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .welcome p {
-      color: #999;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    /* =========================
-       MESSAGES
-    ========================= */
-
-    .message {
-      display: flex;
-      margin: 12px 0;
-      animation: messageIn 0.25s ease;
-    }
-
-    @keyframes messageIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .message.user {
-      justify-content: flex-end;
-    }
-
-    .message.ai {
-      justify-content: flex-start;
-    }
-
-    .bubble {
-      max-width: 88%;
-      padding: 12px 14px;
-      border-radius: 17px;
-      line-height: 1.5;
-      font-size: 14px;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .user .bubble {
-      background: #8d0000;
-      border-bottom-right-radius: 5px;
-    }
-
-    .ai .bubble {
-      background: #111;
-      border: 1px solid #242424;
-      border-bottom-left-radius: 5px;
-    }
-
-    .ai-name {
-      color: #ff3333;
-      font-size: 11px;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    /* =========================
-       ACTION STATUS
-    ========================= */
-
-    .status-card {
-      display: none;
-      max-width: 88%;
-      margin: 10px 0;
-      padding: 12px 14px;
-      background: #0d0d0d;
-      border: 1px solid #292929;
-      border-radius: 14px;
-      animation: statusIn 0.3s ease;
-    }
-
-    .status-card.active {
-      display: block;
-    }
-
-    @keyframes statusIn {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .status-title {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .status-detail {
-      color: #888;
-      font-size: 11px;
-      margin-top: 5px;
-      margin-left: 28px;
-    }
-
-    .loader {
-      width: 17px;
-      height: 17px;
-      border: 2px solid #333;
-      border-top-color: #ff1a1a;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .done-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #b00000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-    }
-
-    /* =========================
-       QUICK ACTIONS
-    ========================= */
-
-    .quick-actions {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 8px 2px 12px;
-      scrollbar-width: none;
-    }
-
-    .quick-actions::-webkit-scrollbar {
-      display: none;
-    }
-
-    .quick-btn {
-      flex-shrink: 0;
-      background: #101010;
-      border: 1px solid #282828;
-      color: #ddd;
-      border-radius: 12px;
-      padding: 9px 11px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-
-    .quick-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* =========================
-       COMPOSER
-    ========================= */
-
-    .composer-area {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 8px 10px 12px;
-      background: linear-gradient(
-        to top,
-        #050505 75%,
-        transparent
-      );
-      z-index: 20;
-    }
-
-    .composer {
-      max-width: 800px;
-      margin: auto;
-      background: #101010;
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 8px;
-      display: flex;
-      align-items: flex-end;
-      gap: 7px;
-    }
-
-    .composer textarea {
-      flex: 1;
-      resize: none;
-      min-height: 42px;
-      max-height: 120px;
-      background: transparent;
-      color: white;
-      border: none;
-      outline: none;
-      padding: 11px 5px;
-      font-size: 14px;
-    }
-
-    .composer textarea::placeholder {
-      color: #666;
-    }
-
-    .icon-btn {
-      width: 39px;
-      height: 39px;
-      flex-shrink: 0;
-      border: 1px solid #292929;
-      border-radius: 12px;
-      background: #151515;
-      color: #ddd;
-      cursor: pointer;
-      font-size: 17px;
-    }
-
-    .send-btn {
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      border: none;
-      border-radius: 13px;
-      background: linear-gradient(145deg, #ff1a1a, #850000);
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    /* =========================
-       SIDE MENU
-    ========================= */
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      display: none;
-      z-index: 50;
-    }
-
-    .overlay.open {
-      display: block;
-    }
-
-    .side-menu {
-      position: fixed;
-      top: 0;
-      left: -290px;
-      width: 280px;
-      height: 100vh;
-      background: #090909;
-      border-right: 1px solid #252525;
-      z-index: 60;
-      transition: left 0.25s ease;
-      padding: 18px;
-      overflow-y: auto;
-    }
-
-    .side-menu.open {
-      left: 0;
-    }
-
-    .side-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 25px;
-    }
-
-    .side-title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .close-btn {
-      background: #151515;
-      color: white;
-      border: 1px solid #292929;
-      border-radius: 10px;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
-    }
-
-    .menu-section {
-      margin-top: 20px;
-    }
-
-    .menu-label {
-      color: #666;
-      font-size: 10px;
-      text-transform: uppercase;
-      margin: 0 0 8px 5px;
-      letter-spacing: 1px;
-    }
-
-    .menu-item {
-      width: 100%;
-      border: 1px solid transparent;
-      background: transparent;
-      color: #ddd;
-      padding: 12px;
-      border-radius: 11px;
-      text-align: left;
-      cursor: pointer;
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-
-    .menu-item:hover {
-      background: #151515;
-      border-color: #292929;
-    }
-
-    /* =========================
-       FILE
-    ========================= */
-
-    #fileInput {
-      display: none;
-    }
-
-    .file-preview {
-      display: none;
-      margin: 5px auto;
-      max-width: 800px;
-      background: #111;
-      border: 1px solid #292929;
-      padding: 9px;
-      border-radius: 12px;
-      font-size: 12px;
-      color: #aaa;
-    }
-
-    .file-preview.active {
-      display: block;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 600px) {
-      .brand h1 {
-        font-size: 15px;
-      }
-
-      .new-btn {
-        font-size: 11px;
-        padding: 8px;
-      }
-
-      .welcome {
-        padding-top: 45px;
-      }
-
-      .bubble {
-        max-width: 92%;
-      }
-
-      .status-card {
-        max-width: 92%;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HACKER F5 👑</title>
+
+<style>
+:root{
+  --bg:#030405;
+  --panel:#090c11;
+  --panel2:#0d1118;
+  --line:#242b35;
+  --red:#ff1744;
+  --red2:#ff3158;
+  --text:#f4f7fb;
+  --muted:#8993a3;
+  --green:#22e6a7;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 50% -15%,#3b0b18 0,#08090c 35%,#030405 75%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+.app{
+  width:100%;
+  max-width:820px;
+  margin:auto;
+  padding:12px 12px 125px;
+}
+
+/* HEADER */
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:7px 4px 15px;
+}
+
+.logo{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:2px solid var(--red);
+  object-fit:cover;
+  background:#07090c;
+  box-shadow:
+    0 0 12px #ff174455,
+    0 0 30px #ff174422;
+}
+
+.brand b{
+  display:block;
+  font-size:22px;
+  letter-spacing:.5px;
+}
+
+.brand small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* MAIN STATUS */
+
+.panel{
+  border:1px solid var(--line);
+  background:
+    linear-gradient(180deg,#0d1118,#07090d);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 0 35px #0009;
+}
+
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.panel-title h2{
+  margin:0;
+  font-size:18px;
+}
+
+.live{
+  color:var(--green);
+  font-size:10px;
+  font-weight:bold;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.stat{
+  min-height:62px;
+  border:1px solid #202631;
+  border-radius:13px;
+  padding:10px;
+  background:#080b10;
+}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:6px;
+}
+
+.stat b{
+  font-size:12px;
+}
+
+/* ANIMATED BANNER */
+
+.banner{
+  margin-top:12px;
+  border:1px solid var(--line);
+  background:#080b10;
+  border-radius:16px;
+  padding:10px;
+  box-shadow:0 0 25px #0008;
+}
+
+.banner-frame{
+  min-height:44px;
+  border:1px solid #343b47;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 11px;
+  overflow:hidden;
+}
+
+.banner-text{
+  flex:1;
+  text-align:center;
+  font-family:monospace;
+  font-size:11px;
+  letter-spacing:.8px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  flex:none;
+  border-radius:50%;
+  background:#444;
+}
+
+.dot.active{
+  background:var(--red);
+  box-shadow:0 0 12px var(--red);
+  animation:dotPulse 1s infinite;
+}
+
+@keyframes dotPulse{
+  0%,100%{opacity:1}
+  50%{opacity:.25}
+}
+
+/* ACTIONS */
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:12px 0;
+}
+
+.action-btn,
+.mode-btn{
+  border:1px solid var(--line);
+  background:
+    linear-gradient(180deg,#0d1117,#090c11);
+  color:var(--text);
+  border-radius:13px;
+  padding:12px 7px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.action-btn:active,
+.mode-btn:active{
+  transform:scale(.97);
+}
+
+.action-btn:hover,
+.mode-btn:hover,
+.mode-btn.active{
+  border-color:#ff174488;
+  box-shadow:0 0 18px #ff17441c;
+}
+
+/* MODES */
+
+.mode{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding-bottom:4px;
+  scrollbar-width:none;
+}
+
+.mode::-webkit-scrollbar{
+  display:none;
+}
+
+.mode-btn{
+  white-space:nowrap;
+  padding:10px 13px;
+}
+
+/* CHAT */
+
+.chat{
+  min-height:350px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:12px;
+}
+
+.msg{
+  max-width:94%;
+  padding:13px;
+  border-radius:15px;
+  white-space:pre-wrap;
+  word-break:break-word;
+  line-height:1.45;
+  font-size:14px;
+}
+
+.msg.user{
+  align-self:flex-end;
+  background:#241018;
+  border:1px solid #54202d;
+}
+
+.msg.bot{
+  align-self:flex-start;
+  background:#0c1016;
+  border:1px solid #242b35;
+}
+
+.msg.system{
+  align-self:center;
+  max-width:100%;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+  border:1px dashed #252b35;
+  background:#080a0d;
+}
+
+.media{
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin-top:10px;
+  border-radius:12px;
+  background:#000;
+}
+
+.download{
+  display:inline-block;
+  margin-top:9px;
+  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  color:#fff;
+  text-decoration:none;
+  font-size:12px;
+}
+
+/* PROGRESS */
+
+.progress-box{
+  border:1px solid #292f39;
+  background:#080b10;
+  border-radius:13px;
+  padding:12px;
+  margin-top:5px;
+  font-family:monospace;
+  font-size:11px;
+}
+
+.progress-title{
+  color:#fff;
+  margin-bottom:9px;
+}
+
+.progress-bar{
+  height:7px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#181c23;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+  background:var(--red);
+  box-shadow:0 0 12px var(--red);
+  transition:width .5s ease;
+}
+
+.progress-status{
+  margin-top:7px;
+  color:var(--muted);
+}
+
+/* FILE */
+
+.hidden{
+  display:none!important;
+}
+
+.hint{
+  color:var(--muted);
+  font-size:10px;
+  text-align:center;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+/* COMPOSER */
+
+.composer{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:50;
+  padding:9px 10px;
+  background:#050608ee;
+  backdrop-filter:blur(15px);
+  border-top:1px solid #1c222b;
+}
+
+.compose{
+  max-width:820px;
+  margin:auto;
+  display:flex;
+  align-items:flex-end;
+  gap:7px;
+}
+
+.tool{
+  width:45px;
+  height:48px;
+  flex:none;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#0a0d12;
+  color:#fff;
+  font-size:18px;
+}
+
+.compose textarea{
+  flex:1;
+  resize:none;
+  min-height:48px;
+  max-height:130px;
+  border:1px solid var(--line);
+  background:#090c11;
+  color:#fff;
+  border-radius:14px;
+  padding:13px;
+  outline:none;
+  font-size:14px;
+}
+
+.compose textarea:focus{
+  border-color:#ff174455;
+}
+
+.send{
+  width:50px;
+  height:48px;
+  flex:none;
+  border:0;
+  border-radius:14px;
+  background:var(--red);
+  color:#fff;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+  .app{
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid{
+    gap:7px;
+  }
+
+  .stat{
+    padding:9px;
+  }
+
+  .brand b{
+    font-size:19px;
+  }
+
+  .logo{
+    width:54px;
+    height:54px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- HEADER -->
-  <header>
+  <header class="top">
 
-    <div class="header-left">
+    <img
+      id="logo"
+      class="logo"
+      alt="HACKER F5"
+      src=""
+    >
 
-      <button
-        class="menu-btn"
-        onclick="openMenu()">
-        ☰
-      </button>
-
-      <div class="logo">
-        👑
-      </div>
-
-      <div class="brand">
-        <h1>HACKER F5</h1>
-        <span>IA • CYBERSÉCURITÉ • CRÉATION</span>
-      </div>
-
+    <div class="brand">
+      <b>👑 HACKER F5</b>
+      <small>Assistant IA de cybersécurité responsable</small>
     </div>
-
-    <button
-      class="new-btn"
-      onclick="newConversation()">
-      ＋ Nouveau
-    </button>
 
   </header>
 
 
+  <!-- PANEL PRINCIPAL -->
+
+  <section class="panel">
+
+    <div class="panel-title">
+      <h2>👑 HACKER F5</h2>
+      <span class="live">● EN LIGNE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="stat">
+        <span>STATUT</span>
+        <b>● ACTIF</b>
+      </div>
+
+      <div class="stat">
+        <span>MODE</span>
+        <b>⚡ NO CENSURE ACTIF</b>
+      </div>
+
+      <div class="stat">
+        <span>IA</span>
+        <b>● EN LIGNE</b>
+      </div>
+
+      <div class="stat">
+        <span>ÉTAT</span>
+        <b>● STABLE</b>
+      </div>
+
+      <div class="stat">
+        <span>SESSION</span>
+        <b>● ACTIVE</b>
+      </div>
+
+      <div class="stat">
+        <span>SYSTÈME</span>
+        <b>● OPÉRATIONNEL</b>
+      </div>
+
+      <div class="stat">
+        <span>OUTILS</span>
+        <b>● DISPONIBLES</b>
+      </div>
+
+      <div class="stat">
+        <span>MODE ACTUEL</span>
+        <b id="modeLabel">CHAT IA</b>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BANNIÈRE ANIMÉE -->
+
+  <section class="banner">
+
+    <div class="banner-frame">
+
+      <i id="dot1" class="dot active"></i>
+
+      <div id="activity" class="banner-text">
+        PRÊT...
+      </div>
+
+      <i id="dot2" class="dot active"></i>
+
+    </div>
+
+  </section>
+
+
+  <!-- ACTIONS RAPIDES -->
+
+  <div class="actions">
+
+    <button class="action-btn" onclick="setMode('image')">
+      🖼️ Image
+    </button>
+
+    <button class="action-btn" onclick="setMode('video')">
+      🎬 Vidéo
+    </button>
+
+    <button class="action-btn" onclick="setMode('music')">
+      🎵 Musique
+    </button>
+
+    <button class="action-btn" onclick="setMode('web')">
+      🌐 Recherche
+    </button>
+
+    <button class="action-btn" onclick="setMode('document')">
+      📄 Document
+    </button>
+
+    <button class="action-btn" onclick="newChat()">
+      🆕 Nouveau
+    </button>
+
+  </div>
+
+
+  <!-- MODES -->
+
+  <div class="mode">
+
+    <button
+      class="mode-btn active"
+      data-mode="chat"
+      onclick="setMode('chat')">
+      💬 Chat
+    </button>
+
+    <button
+      class="mode-btn"
+      data-mode="code"
+      onclick="setMode('code')">
+      💻 Code
+    </button>
+
+    <button
+      class="mode-btn"
+      data-mode="cyber"
+      onclick="setMode('cyber')">
+      🛡️ Cyber
+    </button>
+
+    <button
+      class="mode-btn"
+      data-mode="decode"
+      onclick="setMode('decode')">
+      🔐 Décodage
+    </button>
+
+    <button
+      class="mode-btn"
+      data-mode="files"
+      onclick="setMode('files')">
+      📎 Fichiers
+    </button>
+
+  </div>
+
+
   <!-- CHAT -->
-  <main id="chat">
 
-    <div id="welcome" class="welcome">
-
-      <div class="welcome-logo">
-        👑
-      </div>
-
-      <h2>HACKER F5</h2>
-
-      <p>
-        Assistant IA intelligent pour le numérique,
-        la programmation, la cybersécurité défensive,
-        la création et l'analyse de fichiers.
-      </p>
-
-    </div>
+  <main id="chat" class="chat"></main>
 
 
-    <!-- STATUS -->
-    <div id="statusCard" class="status-card">
+  <!-- IMPORT -->
 
-      <div class="status-title">
-
-        <div id="statusLoader" class="loader"></div>
-
-        <span id="statusTitle">
-          Analyse en cours…
-        </span>
-
-      </div>
-
-      <div id="statusDetail" class="status-detail">
-        HACKER F5 traite votre demande.
-      </div>
-
-    </div>
-
-  </main>
+  <input
+    id="file"
+    type="file"
+    class="hidden"
+    onchange="readFile(event)"
+  >
 
 
-  <!-- FILE PREVIEW -->
-  <div id="filePreview" class="file-preview"></div>
-
-
-  <!-- COMPOSER -->
-  <div class="composer-area">
-
-    <!-- QUICK ACTIONS -->
-    <div class="quick-actions">
-
-      <button
-        class="quick-btn"
-        onclick="useMode('web')">
-        🌐 Recherche Web
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('code')">
-        💻 Code
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('cyber')">
-        🛡️ Cyber
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('decode')">
-        🔐 Décoder
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('document')">
-        📄 Document
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('image')">
-        🖼️ Image
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('video')">
-        🎬 Vidéo
-      </button>
-
-      <button
-        class="quick-btn"
-        onclick="useMode('music')">
-        🎵 Chanson
-      </button>
-
-    </div>
-
-
-    <div class="composer">
-
-      <input
-        id="fileInput"
-        type="file"
-        multiple
-        onchange="selectFile(event)"
-      >
-
-      <button
-        class="icon-btn"
-        onclick="document.getElementById('fileInput').click()"
-        title="Fichier">
-        📎
-      </button>
-
-      <textarea
-        id="messageInput"
-        rows="1"
-        placeholder="Message à HACKER F5…"
-        onkeydown="handleKey(event)"
-      ></textarea>
-
-      <button
-        class="icon-btn"
-        onclick="startVoice()"
-        title="Voix">
-        🎙️
-      </button>
-
-      <button
-        class="send-btn"
-        onclick="sendMessage()"
-        title="Envoyer">
-        ➤
-      </button>
-
-    </div>
-
+  <div class="hint">
+    /image · /video · /music · /pdf · /docx · /xlsx · /pptx · /txt · /md · /csv
   </div>
 
+</div>
 
-  <!-- SIDE MENU -->
-  <div
-    id="overlay"
-    class="overlay"
-    onclick="closeMenu()">
+
+<!-- COMPOSER -->
+
+<div class="composer">
+
+  <div class="compose">
+
+    <button
+      class="tool"
+      onclick="document.getElementById('file').click()">
+      📎
+    </button>
+
+    <textarea
+      id="input"
+      placeholder="Écris à HACKER F5..."
+      onkeydown="key(event)"
+    ></textarea>
+
+    <button
+      class="send"
+      onclick="send()">
+      ➤
+    </button>
+
   </div>
-
-  <aside
-    id="sideMenu"
-    class="side-menu">
-
-    <div class="side-header">
-
-      <div class="side-title">
-        👑 HACKER F5
-      </div>
-
-      <button
-        class="close-btn"
-        onclick="closeMenu()">
-        ✕
-      </button>
-
-    </div>
-
-
-    <div class="menu-section">
-
-      <div class="menu-label">
-        Conversation
-      </div>
-
-      <button
-        class="menu-item"
-        onclick="newConversation()">
-        🆕 Nouvelle conversation
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="showHistory()">
-        🗂️ Historique
-      </button>
-
-    </div>
-
-
-    <div class="menu-section">
-
-      <div class="menu-label">
-        Intelligence
-      </div>
-
-      <button
-        class="menu-item"
-        onclick="useMode('web')">
-        🌐 Recherche Web
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('code')">
-        💻 Programmation
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('cyber')">
-        🛡️ Cybersécurité défensive
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('decode')">
-        🔐 Décodage / analyse
-      </button>
-
-    </div>
-
-
-    <div class="menu-section">
-
-      <div class="menu-label">
-        Création
-      </div>
-
-      <button
-        class="menu-item"
-        onclick="useMode('document')">
-        📄 Documents
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('image')">
-        🖼️ Images
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('video')">
-        🎬 Vidéos
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="useMode('music')">
-        🎵 Chansons / musique
-      </button>
-
-    </div>
-
-
-    <div class="menu-section">
-
-      <div class="menu-label">
-        Compte
-      </div>
-
-      <button
-        class="menu-item"
-        onclick="accountInfo()">
-        👤 Mon compte
-      </button>
-
-      <button
-        class="menu-item"
-        onclick="settings()">
-        ⚙️ Paramètres
-      </button>
-
-    </div>
-
-  </aside>
 
 </div>
 
 
 <script>
 
-  /* =========================
-     VARIABLES
-  ========================= */
+/* =========================
+   CONFIGURATION
+========================= */
 
-  let conversationMessages = [];
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+const activity = document.getElementById("activity");
+const modeLabel = document.getElementById("modeLabel");
 
-  let currentMode = "normal";
+let messages = [];
+let currentMode = "chat";
 
-  let selectedFiles = [];
+let history = [];
 
-
-  /* =========================
-     ELEMENTS
-  ========================= */
-
-  const chat = document.getElementById("chat");
-
-  const input = document.getElementById("messageInput");
-
-  const statusCard = document.getElementById("statusCard");
-
-  const statusTitle = document.getElementById("statusTitle");
-
-  const statusDetail = document.getElementById("statusDetail");
-
-  const statusLoader = document.getElementById("statusLoader");
-
-  const welcome = document.getElementById("welcome");
-
-  const filePreview = document.getElementById("filePreview");
+try {
+  history = JSON.parse(
+    localStorage.getItem("hacker_f5_history") || "[]"
+  );
+} catch {
+  history = [];
+}
 
 
-  /* =========================
-     STATUS
-  ========================= */
+/* =========================
+   OUTILS
+========================= */
 
-  function showStatus(title, detail) {
+function esc(value){
 
-    statusCard.classList.add("active");
+  return String(value).replace(
+    /[&<>"']/g,
+    function(m){
 
-    statusLoader.className = "loader";
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
 
-    statusTitle.textContent = title;
+    }
+  );
 
-    statusDetail.textContent = detail;
+}
 
-    scrollChat();
+
+function addMessage(role,text,extra=""){
+
+  const element = document.createElement("div");
+
+  element.className = "msg " + role;
+
+  element.innerHTML =
+    esc(text) + extra;
+
+  chat.appendChild(element);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  return element;
+}
+
+
+/* =========================
+   ACTIVITÉ HUD
+========================= */
+
+let activityTimer = null;
+
+function setActivity(text){
+
+  activity.textContent = text;
+
+  clearTimeout(activityTimer);
+
+  activityTimer = setTimeout(() => {
+
+    activity.textContent = "PRÊT...";
+
+  }, 700);
+
+}
+
+
+function setWorking(text){
+
+  activity.textContent = text;
+
+  document.getElementById("dot1")
+    .classList.add("active");
+
+  document.getElementById("dot2")
+    .classList.add("active");
+
+}
+
+
+function setReady(){
+
+  activity.textContent = "PRÊT...";
+
+}
+
+
+/* =========================
+   MODE
+========================= */
+
+function setMode(mode){
+
+  currentMode = mode;
+
+  modeLabel.textContent =
+    mode.toUpperCase();
+
+  document
+    .querySelectorAll(".mode-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.mode === mode
+      );
+
+    });
+
+  if(mode === "files"){
+
+    document
+      .getElementById("file")
+      .click();
+
+    return;
+  }
+
+  if(mode === "image"){
+
+    input.placeholder =
+      "Décris l'image à générer...";
+
+  }
+  else if(mode === "video"){
+
+    input.placeholder =
+      "Décris la vidéo à générer...";
+
+  }
+  else if(mode === "music"){
+
+    input.placeholder =
+      "Décris la musique ou chanson...";
+
+  }
+  else if(mode === "web"){
+
+    input.placeholder =
+      "Que veux-tu rechercher ?";
+
+  }
+  else if(mode === "document"){
+
+    input.placeholder =
+      "Décris le document à créer...";
+
+  }
+  else{
+
+    input.placeholder =
+      "Écris à HACKER F5...";
+
+  }
+
+  input.focus();
+}
+
+
+/* =========================
+   NOUVELLE CONVERSATION
+========================= */
+
+function newChat(){
+
+  messages = [];
+
+  chat.innerHTML = "";
+
+  addMessage(
+    "bot",
+    "Lab HACKF5 ACTIVATE 🇦🇱 HACKF5 ✍️(by - king 👑 Franck)"
+  );
+
+  addMessage(
+    "system",
+    "HACKER F5 est prêt. Comment puis-je t'aider ?"
+  );
+
+  setReady();
+
+}
+
+
+/* =========================
+   HISTORIQUE
+========================= */
+
+function saveHistory(){
+
+  try{
+
+    localStorage.setItem(
+      "hacker_f5_history",
+      JSON.stringify(
+        history.slice(-50)
+      )
+    );
+
+  }catch{
+
+  }
+
+}
+
+
+/* =========================
+   CLAVIER
+========================= */
+
+function key(event){
+
+  if(
+    event.key === "Enter" &&
+    !event.shiftKey
+  ){
+
+    event.preventDefault();
+
+    send();
+
+  }
+
+}
+
+
+/* =========================
+   PROGRESSION
+========================= */
+
+function progressMessage(title){
+
+  const box =
+    document.createElement("div");
+
+  box.className =
+    "msg bot";
+
+  box.innerHTML = `
+    <div class="progress-box">
+
+      <div class="progress-title">
+        👑 ${esc(title)}
+      </div>
+
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          id="progressFill">
+        </div>
+      </div>
+
+      <div
+        class="progress-status"
+        id="progressStatus">
+        Initialisation...
+      </div>
+
+    </div>
+  `;
+
+  chat.appendChild(box);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  return {
+    box,
+    fill:box.querySelector("#progressFill"),
+    status:box.querySelector("#progressStatus")
+  };
+
+}
+
+
+function updateProgress(progress,value,status){
+
+  progress.fill.style.width =
+    value + "%";
+
+  progress.status.textContent =
+    status;
+
+}
+
+
+/* =========================
+   ENVOI PRINCIPAL
+========================= */
+
+async function send(){
+
+  const text =
+    input.value.trim();
+
+  if(!text)return;
+
+  input.value = "";
+
+  addMessage(
+    "user",
+    text
+  );
+
+  messages.push({
+    role:"user",
+    content:text
+  });
+
+
+  /* COMMANDES */
+
+  let command = null;
+
+  if(/^\/image\s+/i.test(text))
+    command = "image";
+
+  else if(/^\/video\s+/i.test(text))
+    command = "video";
+
+  else if(/^\/music\s+/i.test(text))
+    command = "music";
+
+  else if(
+    /^\/(pdf|docx|xlsx|pptx|txt|md|csv)\s+/i.test(text)
+  ){
+
+    command =
+      text.match(/^\/(\w+)/i)[1]
+      .toLowerCase();
+
   }
 
 
-  function updateStatus(title, detail) {
+  try{
 
-    statusTitle.textContent = title;
+    /* IMAGE */
 
-    statusDetail.textContent = detail;
+    if(command === "image"){
 
-    scrollChat();
-  }
+      await generateImage(
+        text.replace(
+          /^\/image\s+/i,
+          ""
+        )
+      );
 
-
-  function finishStatus() {
-
-    statusLoader.className = "done-icon";
-
-    statusLoader.textContent = "✓";
-
-    statusTitle.textContent = "Terminé";
-
-    statusDetail.textContent =
-      "HACKER F5 a terminé le traitement.";
-
-    setTimeout(() => {
-
-      statusCard.classList.remove("active");
-
-      statusLoader.className = "loader";
-
-      statusLoader.textContent = "";
-
-    }, 1200);
-
-  }
-
-
-  /* =========================
-     MODE
-  ========================= */
-
-  function useMode(mode) {
-
-    currentMode = mode;
-
-    const modes = {
-
-      web:
-        "🌐 Recherche Web : que veux-tu que je recherche ?",
-
-      code:
-        "💻 Programmation : envoie ton code ou explique ton problème.",
-
-      cyber:
-        "🛡️ Cybersécurité : décris ton problème de sécurité ou ton environnement autorisé.",
-
-      decode:
-        "🔐 Décodage : envoie le texte ou les données à analyser.",
-
-      document:
-        "📄 Document : indique le type de document que tu veux créer.",
-
-      image:
-        "🖼️ Image : décris l'image que tu veux créer.",
-
-      video:
-        "🎬 Vidéo : décris la vidéo que tu veux créer.",
-
-      music:
-        "🎵 Chanson : décris le style et le contenu souhaités.",
-
-      normal:
-        "Que puis-je faire pour toi ?"
-
-    };
-
-    input.value = modes[mode] || modes.normal;
-
-    input.focus();
-
-  }
-
-
-  /* =========================
-     SEND MESSAGE
-  ========================= */
-
-  async function sendMessage() {
-
-    const text = input.value.trim();
-
-    if (!text && selectedFiles.length === 0) {
       return;
     }
 
-    welcome.style.display = "none";
 
-    addMessage(
-      "user",
-      text || "📎 Fichier envoyé"
-    );
+    /* VIDÉO */
 
-    input.value = "";
+    if(command === "video"){
 
-    autoResize();
+      await generateVideo(
+        text.replace(
+          /^\/video\s+/i,
+          ""
+        )
+      );
 
-
-    conversationMessages.push({
-      role: "user",
-      content: text
-    });
-
-
-    let statusTitleText =
-      "🧠 Analyse de la demande…";
-
-    let statusDetailText =
-      "HACKER F5 prépare la réponse.";
-
-
-    if (currentMode === "web") {
-
-      statusTitleText =
-        "🌐 Recherche sur le Web…";
-
-      statusDetailText =
-        "Recherche et analyse des informations disponibles.";
-
-    }
-
-    else if (currentMode === "code") {
-
-      statusTitleText =
-        "💻 Analyse du code…";
-
-      statusDetailText =
-        "HACKER F5 examine le code et prépare une solution.";
-
-    }
-
-    else if (currentMode === "cyber") {
-
-      statusTitleText =
-        "🛡️ Analyse cybersécurité…";
-
-      statusDetailText =
-        "Analyse défensive de la demande.";
-
-    }
-
-    else if (currentMode === "decode") {
-
-      statusTitleText =
-        "🔐 Analyse du contenu…";
-
-      statusDetailText =
-        "Identification du format et analyse des données.";
-
-    }
-
-    else if (currentMode === "document") {
-
-      statusTitleText =
-        "📄 Préparation du document…";
-
-      statusDetailText =
-        "Préparation du contenu demandé.";
-
-    }
-
-    else if (currentMode === "image") {
-
-      statusTitleText =
-        "🖼️ Préparation de l'image…";
-
-      statusDetailText =
-        "Préparation de la demande de génération.";
-
-    }
-
-    else if (currentMode === "video") {
-
-      statusTitleText =
-        "🎬 Préparation de la vidéo…";
-
-      statusDetailText =
-        "Préparation de la demande vidéo.";
-
-    }
-
-    else if (currentMode === "music") {
-
-      statusTitleText =
-        "🎵 Préparation de la chanson…";
-
-      statusDetailText =
-        "Préparation de la demande musicale.";
-
+      return;
     }
 
 
-    showStatus(
-      statusTitleText,
-      statusDetailText
+    /* MUSIQUE */
+
+    if(command === "music"){
+
+      await generateMusic(
+        text.replace(
+          /^\/music\s+/i,
+          ""
+        )
+      );
+
+      return;
+    }
+
+
+    /* DOCUMENT */
+
+    if([
+      "pdf",
+      "docx",
+      "xlsx",
+      "pptx",
+      "txt",
+      "md",
+      "csv"
+    ].includes(command)){
+
+      await generateDoc(
+        command,
+        text.replace(
+          /^\/\w+\s+/i,
+          ""
+        )
+      );
+
+      return;
+    }
+
+
+    /* RECHERCHE WEB */
+
+    if(currentMode === "web"){
+
+      await webSearch(text);
+
+      return;
+    }
+
+
+    /* CHAT MISTRAL */
+
+    setWorking(
+      currentMode === "code"
+        ? "ANALYSE DU CODE..."
+        : currentMode === "cyber"
+        ? "ANALYSE CYBERSÉCURITÉ..."
+        : currentMode === "decode"
+        ? "ANALYSE / DÉCODAGE..."
+        : "ANALYSE EN COURS..."
     );
 
 
-    try {
-
-      if (currentMode === "web") {
-
-        await delay(500);
-
-        updateStatus(
-          "🔎 Recherche en cours…",
-          "HACKER F5 interroge son moteur de recherche."
-        );
-
-        await delay(500);
-
-        updateStatus(
-          "📚 Analyse des informations…",
-          "Les informations sont en cours d'analyse."
-        );
-
-      }
-
-      else {
-
-        await delay(400);
-
-        updateStatus(
-          "🧠 Génération de la réponse…",
-          "HACKER F5 traite votre demande."
-        );
-
-      }
-
-
-      const response = await fetch(
+    const response =
+      await fetch(
         "/api/chat",
         {
-          method: "POST",
+          method:"POST",
 
-          headers: {
-            "Content-Type": "application/json"
+          headers:{
+            "Content-Type":
+              "application/json"
           },
 
-                    body: JSON.stringify({
-            messages: conversationMessages,
-            mode: currentMode
+          body:JSON.stringify({
+            messages,
+            mode:currentMode
           })
         }
       );
 
 
-      const data = await response.json();
+    const data =
+      await response.json();
 
 
-      if (!response.ok || !data.ok) {
+    if(
+      !response.ok ||
+      !data.ok
+    ){
 
-        throw new Error(
-          data.error ||
-          "Erreur du serveur"
-        );
-
-      }
-
-
-      updateStatus(
-        "✅ Réponse prête",
-        "HACKER F5 a terminé l'analyse."
-      );
-
-
-      const answer =
-        data.answer ||
-        "Je n'ai reçu aucune réponse texte.";
-
-
-      addMessage(
-        "ai",
-        answer
-      );
-
-
-      conversationMessages.push({
-        role: "assistant",
-        content: answer
-      });
-
-
-      saveLocalHistory();
-
-
-      setTimeout(
-        finishStatus,
-        500
-      );
-
-
-    }
-
-    catch (error) {
-
-      statusLoader.className = "done-icon";
-
-      statusLoader.textContent = "⚠";
-
-      statusTitle.textContent =
-        "Erreur";
-
-      statusDetail.textContent =
-        error.message ||
-        "Une erreur est survenue.";
-
-      addMessage(
-        "ai",
-        "⚠️ Une erreur est survenue :\n" +
-        (error.message || "Erreur inconnue.")
+      throw new Error(
+        data.error ||
+        "Erreur serveur"
       );
 
     }
 
-  }
+
+    const answer =
+      data.answer ||
+      "Réponse vide.";
 
 
-  /* =========================
-     ADD MESSAGE
-  ========================= */
-
-  function addMessage(type, text) {
-
-    const wrapper =
-      document.createElement("div");
-
-    wrapper.className =
-      "message " + type;
-
-
-    const bubble =
-      document.createElement("div");
-
-    bubble.className =
-      "bubble";
-
-
-    if (type === "ai") {
-
-      const name =
-        document.createElement("div");
-
-      name.className =
-        "ai-name";
-
-      name.textContent =
-        "👑 HACKER F5";
-
-      bubble.appendChild(name);
-
-    }
-
-
-    const content =
-      document.createElement("div");
-
-    content.textContent = text;
-
-
-    bubble.appendChild(content);
-
-    wrapper.appendChild(bubble);
-
-    chat.appendChild(wrapper);
-
-    scrollChat();
-
-  }
-
-
-  /* =========================
-     FILES
-  ========================= */
-
-  function selectFile(event) {
-
-    selectedFiles =
-      Array.from(event.target.files);
-
-
-    if (selectedFiles.length === 0) {
-
-      filePreview.classList.remove("active");
-
-      return;
-
-    }
-
-
-    filePreview.classList.add("active");
-
-
-    filePreview.textContent =
-      "📎 " +
-      selectedFiles.length +
-      " fichier(s) sélectionné(s) : " +
-      selectedFiles
-        .map(file => file.name)
-        .join(", ");
-
-  }
-
-
-  /* =========================
-     VOICE
-  ========================= */
-
-  function startVoice() {
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-
-    if (!SpeechRecognition) {
-
-      alert(
-        "La reconnaissance vocale n'est pas disponible sur ce navigateur."
-      );
-
-      return;
-
-    }
-
-
-    const recognition =
-      new SpeechRecognition();
-
-
-    recognition.lang =
-      "fr-FR";
-
-    recognition.interimResults =
-      false;
-
-    recognition.continuous =
-      false;
-
-
-    showStatus(
-      "🎙️ Écoute en cours…",
-      "Parle maintenant."
+    addMessage(
+      "bot",
+      answer
     );
 
 
-    recognition.start();
-
-
-    recognition.onresult =
-      function(event) {
-
-        const text =
-          event.results[0][0].transcript;
-
-        input.value = text;
-
-        autoResize();
-
-        statusCard.classList.remove(
-          "active"
-        );
-
-      };
-
-
-    recognition.onerror =
-      function() {
-
-        statusCard.classList.remove(
-          "active"
-        );
-
-      };
-
-  }
-
-
-  /* =========================
-     NEW CONVERSATION
-  ========================= */
-
-  function newConversation() {
-
-    conversationMessages = [];
-
-    currentMode = "normal";
-
-    selectedFiles = [];
-
-    chat.innerHTML = "";
-
-    chat.appendChild(welcome);
-
-    welcome.style.display = "block";
-
-    filePreview.classList.remove(
-      "active"
-    );
-
-    input.value = "";
-
-    closeMenu();
-
-  }
-
-
-  /* =========================
-     HISTORY
-  ========================= */
-
-  function saveLocalHistory() {
-
-    try {
-
-      localStorage.setItem(
-        "hackerF5_history",
-        JSON.stringify(
-          conversationMessages
-        )
-      );
-
-    }
-
-    catch (error) {
-
-      console.log(
-        "Historique local indisponible."
-      );
-
-    }
-
-  }
-
-
-  function showHistory() {
-
-    closeMenu();
-
-    const history =
-      localStorage.getItem(
-        "hackerF5_history"
-      );
-
-
-    if (!history) {
-
-      alert(
-        "Aucune conversation enregistrée."
-      );
-
-      return;
-
-    }
-
-
-    const messages =
-      JSON.parse(history);
-
-
-    chat.innerHTML = "";
-
-    welcome.style.display = "none";
-
-
-    messages.forEach(message => {
-
-      addMessage(
-        message.role === "user"
-          ? "user"
-          : "ai",
-        message.content
-      );
-
+    messages.push({
+      role:"assistant",
+      content:answer
     });
 
+
+    history.push({
+      time:new Date().toISOString(),
+      question:text,
+      answer
+    });
+
+
+    saveHistory();
+
   }
 
+  catch(error){
 
-  /* =========================
-     ACCOUNT
-  ========================= */
-
-  function accountInfo() {
-
-    closeMenu();
-
-    alert(
-      "👤 Compte HACKER F5\n\n" +
-      "La connexion Supabase pourra être activée ici."
+    addMessage(
+      "bot",
+      "⚠️ " +
+      (
+        error.message ||
+        "Une erreur est survenue."
+      )
     );
 
   }
 
+  finally{
 
-  /* =========================
-     SETTINGS
-  ========================= */
+    setReady();
 
-  function settings() {
+  }
 
-    closeMenu();
+}
 
-    alert(
-      "⚙️ Paramètres HACKER F5\n\n" +
-      "Les réglages avancés seront disponibles ici."
+
+/* =========================
+   IMAGE
+========================= */
+
+async function generateImage(prompt){
+
+  if(!prompt){
+
+    addMessage(
+      "bot",
+      "Décris l'image que tu veux générer."
     );
 
+    return;
   }
 
 
-  /* =========================
-     MENU
-  ========================= */
-
-  function openMenu() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.add("open");
-
-    document
-      .getElementById("overlay")
-      .classList.add("open");
-
-  }
-
-
-  function closeMenu() {
-
-    document
-      .getElementById("sideMenu")
-      .classList.remove("open");
-
-    document
-      .getElementById("overlay")
-      .classList.remove("open");
-
-  }
-
-
-  /* =========================
-     KEYBOARD
-  ========================= */
-
-  function handleKey(event) {
-
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-
-      event.preventDefault();
-
-      sendMessage();
-
-    }
-
-  }
-
-
-  /* =========================
-     TEXTAREA
-  ========================= */
-
-  input.addEventListener(
-    "input",
-    autoResize
+  setWorking(
+    "GÉNÉRATION DE L'IMAGE..."
   );
 
 
-  function autoResize() {
-
-    input.style.height = "auto";
-
-    input.style.height =
-      Math.min(
-        input.scrollHeight,
-        120
-      ) + "px";
-
-  }
-
-
-  /* =========================
-     HELPERS
-  ========================= */
-
-  function scrollChat() {
-
-    setTimeout(() => {
-
-      chat.scrollTop =
-        chat.scrollHeight;
-
-    }, 50);
-
-  }
-
-
-  function delay(ms) {
-
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
+  const progress =
+    progressMessage(
+      "GÉNÉRATION IMAGE"
     );
 
-  }
+
+  updateProgress(
+    progress,
+    20,
+    "Préparation..."
+  );
 
 
-  /* =========================
-     OVERLAY
-  ========================= */
+  const response =
+    await fetch(
+      "/api/generate-image",
+      {
+        method:"POST",
 
-  document
-    .getElementById("overlay")
-    .addEventListener(
-      "click",
-      function(event) {
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
 
-        if (event.target === this) {
-
-          closeMenu();
-
-        }
-
+        body:JSON.stringify({
+          prompt
+        })
       }
     );
 
+
+  updateProgress(
+    progress,
+    70,
+    "Traitement..."
+  );
+
+
+  const data =
+    await response.json();
+
+
+  if(
+    !response.ok ||
+    !data.ok
+  ){
+
+    throw new Error(
+      data.error ||
+      "Génération image impossible"
+    );
+
+  }
+
+
+  updateProgress(
+    progress,
+    100,
+    "Terminé."
+  );
+
+
+  const image =
+    data.image;
+
+
+  addMessage(
+    "bot",
+    "🖼️ Image générée.",
+    `
+      <img
+        class="media"
+        src="${esc(image)}"
+        alt="Image générée par HACKER F5"
+      >
+
+      <a
+        class="download"
+        href="${esc(image)}"
+        target="_blank"
+        rel="noopener">
+        📥 Ouvrir / télécharger
+      </a>
+    `
+  );
+
+}
+
+
+/* =========================
+   VIDÉO
+========================= */
+
+async function generateVideo(prompt){
+
+  if(!prompt){
+
+    addMessage(
+      "bot",
+      "Décris la vidéo que tu veux générer."
+    );
+
+    return;
+  }
+
+
+  setWorking(
+    "GÉNÉRATION DE LA VIDÉO..."
+  );
+
+
+  const progress =
+    progressMessage(
+      "GÉNÉRATION VIDÉO"
+    );
+
+
+  updateProgress(
+    progress,
+    15,
+    "Initialisation..."
+  );
+
+
+  const response =
+    await fetch(
+      "/api/generate-video",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+          prompt
+        })
+      }
+    );
+
+
+  updateProgress(
+    progress,
+    75,
+    "Traitement de la vidéo..."
+  );
+
+
+  const data =
+    await response.json();
+
+
+  if(
+    !response.ok ||
+    !data.ok
+  ){
+
+    throw new Error(
+      data.error ||
+      "Génération vidéo impossible"
+    );
+
+  }
+
+
+  updateProgress(
+    progress,
+    100,
+    "Vidéo prête."
+  );
+
+
+  if(data.video){
+
+    addMessage(
+      "bot",
+      "🎬 Vidéo générée.",
+      `
+        <video
+          class="media"
+          controls
+          src="${esc(data.video)}">
+        </video>
+
+        <a
+          class="download"
+          href="${esc(data.video)}"
+          target="_blank"
+          rel="noopener">
+          📥 Ouvrir
+        </a>
+      `
+    );
+
+  }
+  else{
+
+    addMessage(
+      "bot",
+      "🎬 La demande vidéo a été envoyée. Le traitement continue côté serveur."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   MUSIQUE
+========================= */
+
+async function generateMusic(prompt){
+
+  if(!prompt){
+
+  addMessage(
+    "bot",
+    "Décris la musique ou la chanson que tu veux créer."
+  );
+
+  return;
+}
+
+
+setWorking(
+  "CRÉATION DE LA MUSIQUE..."
+);
+
+
+const progress =
+  progressMessage(
+    "CRÉATION MUSICALE"
+  );
+
+
+updateProgress(
+  progress,
+  20,
+  "Préparation..."
+);
+
+
+const response =
+  await fetch(
+    "/api/generate-music",
+    {
+      method:"POST",
+
+      headers:{
+        "Content-Type":
+          "application/json"
+      },
+
+      body:JSON.stringify({
+        prompt
+      })
+    }
+  );
+
+
+updateProgress(
+  progress,
+  75,
+  "Création audio..."
+);
+
+
+const data =
+  await response.json();
+
+
+if(
+  !response.ok ||
+  !data.ok
+){
+
+  throw new Error(
+    data.error ||
+    "Génération musicale impossible"
+  );
+
+}
+
+
+updateProgress(
+  progress,
+  100,
+  "Terminé."
+);
+
+
+if(data.audio){
+
+  addMessage(
+    "bot",
+    "🎵 Musique générée.",
+    `
+      <audio
+        class="media"
+        controls
+        src="${esc(data.audio)}">
+      </audio>
+
+      <a
+        class="download"
+        href="${esc(data.audio)}"
+        target="_blank"
+        rel="noopener">
+        📥 Ouvrir
+      </a>
+    `
+  );
+
+}
+else{
+
+  addMessage(
+    "bot",
+    "🎵 La création musicale a été lancée, mais aucun fichier audio n'est encore disponible."
+  );
+
+}
+
+}
+
+
+/* =========================
+   DOCUMENTS
+========================= */
+
+async function generateDoc(
+  format,
+  content
+){
+
+  if(!content){
+
+    addMessage(
+      "bot",
+      "Indique le contenu du document à créer."
+    );
+
+    return;
+  }
+
+
+  setWorking(
+    "GÉNÉRATION DU DOCUMENT..."
+  );
+
+
+  const progress =
+    progressMessage(
+      "GÉNÉRATION DOCUMENT"
+    );
+
+
+  updateProgress(
+    progress,
+    25,
+    "Préparation du fichier..."
+  );
+
+
+  const response =
+    await fetch(
+      "/api/generate-document",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+          format,
+          title:"HACKER F5",
+          content
+        })
+      }
+    );
+
+
+  if(!response.ok){
+
+    let errorData = {};
+
+    try{
+      errorData =
+        await response.json();
+    }catch{}
+
+    throw new Error(
+      errorData.error ||
+      "Impossible de créer le document."
+    );
+
+  }
+
+
+  updateProgress(
+    progress,
+    90,
+    "Préparation du téléchargement..."
+  );
+
+
+  const blob =
+    await response.blob();
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download =
+    "hacker-f5." + format;
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  link.remove();
+
+  URL.revokeObjectURL(url);
+
+
+  updateProgress(
+    progress,
+    100,
+    "Terminé."
+  );
+
+
+  addMessage(
+    "bot",
+    "📥 Document " +
+    format.toUpperCase() +
+    " généré."
+  );
+
+}
+
+
+/* =========================
+   RECHERCHE WEB
+========================= */
+
+async function webSearch(query){
+
+  if(!query){
+
+    addMessage(
+      "bot",
+      "Indique ce que tu veux rechercher."
+    );
+
+    return;
+  }
+
+
+  setWorking(
+    "RECHERCHE EN COURS..."
+  );
+
+
+  const progress =
+    progressMessage(
+      "RECHERCHE WEB"
+    );
+
+
+  updateProgress(
+    progress,
+    20,
+    "Recherche..."
+  );
+
+
+  const response =
+    await fetch(
+      "/api/web-search",
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/json"
+        },
+
+        body:JSON.stringify({
+          query
+        })
+      }
+    );
+
+
+  updateProgress(
+    progress,
+    75,
+    "Analyse des résultats..."
+  );
+
+
+  const data =
+    await response.json();
+
+
+  if(
+    !response.ok ||
+    !data.ok
+  ){
+
+    throw new Error(
+      data.error ||
+      "Recherche impossible"
+    );
+
+  }
+
+
+  updateProgress(
+    progress,
+    100,
+    "Terminé."
+  );
+
+
+  addMessage(
+    "bot",
+    data.answer ||
+    "Aucun résultat."
+  );
+
+}
+
+
+/* =========================
+   FICHIERS
+========================= */
+
+function readFile(event){
+
+  const file =
+    event.target.files &&
+    event.target.files[0];
+
+
+  if(!file)return;
+
+
+  setWorking(
+    "LECTURE DU DOCUMENT..."
+  );
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(){
+
+    const content =
+      String(reader.result || "");
+
+
+    input.value =
+      "Analyse ce fichier : " +
+      file.name +
+      "\n\n" +
+      content.slice(
+        0,
+        120000
+      );
+
+
+    setMode("chat");
+
+    setActivity(
+      "FICHIER PRÊT..."
+    );
+
+  };
+
+
+  reader.onerror =
+    function(){
+
+      addMessage(
+        "bot",
+        "⚠️ Impossible de lire ce fichier."
+      );
+
+      setReady();
+
+    };
+
+
+  reader.readAsText(file);
+
+}
+
+
+/* =========================
+   DÉMARRAGE
+========================= */
+
+newChat();
 
 </script>
 
 </body>
 </html>
-      
+
+   
