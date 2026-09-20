@@ -1,0 +1,9 @@
+{
+  "name": "hacker-f5-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@mistralai/mistralai": "^1.0.0"
+  }
+}
