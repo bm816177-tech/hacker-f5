@@ -7,27 +7,14 @@ const client = new Mistral({
 const AGENT_ID =
   "ag_01a0bd128b0a75be97d07bc34dea0418";
 
-const AGENT_VERSION = 0;
-
-
-/*
- * Récupère proprement le texte
- * dans les différentes structures
- * possibles retournées par Mistral.
- */
-
 function extractText(value) {
-
-  if (!value) {
-    return "";
-  }
+  if (!value) return "";
 
   if (typeof value === "string") {
     return value;
   }
 
   if (Array.isArray(value)) {
-
     return value
       .map(extractText)
       .filter(Boolean)
@@ -35,295 +22,133 @@ function extractText(value) {
   }
 
   if (typeof value === "object") {
-
-    if (
-      typeof value.text === "string"
-    ) {
+    if (typeof value.text === "string") {
       return value.text;
     }
 
-    if (
-      typeof value.content === "string"
-    ) {
+    if (typeof value.content === "string") {
       return value.content;
     }
 
     if (value.content) {
-      return extractText(
-        value.content
-      );
+      return extractText(value.content);
     }
 
     if (value.outputs) {
-      return extractText(
-        value.outputs
-      );
+      return extractText(value.outputs);
     }
 
     if (value.output) {
-      return extractText(
-        value.output
-      );
-    }
-
-    if (value.message) {
-      return extractText(
-        value.message
-      );
+      return extractText(value.output);
     }
   }
 
   return "";
 }
 
-
-/*
- * API HACKER F5
- */
-
-export default async function handler(
-  req,
-  res
-) {
-
-  /*
-   * Méthode HTTP
-   */
-
+export default async function handler(req, res) {
   if (req.method !== "POST") {
-
     return res.status(405).json({
       ok: false,
       error: "Méthode non autorisée"
     });
   }
 
-
   try {
+    const body = req.body || {};
 
-    /*
-     * Vérification de la clé
-     */
+    const messages = body.messages;
 
-    if (
-      !process.env.MISTRAL_API_KEY
-    ) {
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({
+        ok: false,
+        error: "Aucun message reçu"
+      });
+    }
 
+    if (!process.env.MISTRAL_API_KEY) {
       return res.status(500).json({
         ok: false,
-        error:
-          "Configuration du serveur incomplète"
+        error: "Configuration API manquante"
       });
     }
 
-
-    const body =
-      req.body || {};
-
-
-    const messages =
-      body.messages;
-
-
-    const conversationId =
-      body.conversationId ||
-      null;
-
-
-    const mode =
-      body.mode ||
-      "chat";
-
-
     /*
-     * Vérification des messages
+     * On garde uniquement les messages
+     * utilisateur / assistant utiles à l'agent.
      */
+    const cleanMessages = messages
+      .filter(
+        (message) =>
+          message &&
+          (message.role === "user" ||
+            message.role === "assistant") &&
+          typeof message.content === "string" &&
+          message.content.trim()
+      )
+      .map((message) => ({
+        role: message.role,
+        content: message.content
+      }));
 
-    if (
-      !Array.isArray(messages) ||
-      messages.length === 0
-    ) {
-
+    if (cleanMessages.length === 0) {
       return res.status(400).json({
         ok: false,
-        error:
-          "Aucun message reçu"
+        error: "Message invalide"
       });
     }
 
-
     /*
-     * On prend uniquement
-     * le dernier message utilisateur
-     * pour l'API Conversations.
+     * IMPORTANT :
+     * On utilise TON nouvel Agent Mistral.
+     *
+     * Le System Prompt configuré dans l'Agent
+     * est donc conservé côté Mistral.
      */
-
-    const lastMessage =
-      messages[
-        messages.length - 1
-      ];
-
-
-    const userMessage =
-      typeof lastMessage?.content ===
-      "string"
-        ? lastMessage.content.trim()
-        : "";
-
-
-    if (!userMessage) {
-
-      return res.status(400).json({
-        ok: false,
-        error:
-          "Message utilisateur invalide"
+    const response =
+      await client.beta.conversations.start({
+        agentId: AGENT_ID,
+        agentVersion: 0,
+        inputs: cleanMessages
       });
-    }
-
-
-    let response;
-
-
-    /*
-     * =================================
-     * NOUVELLE CONVERSATION
-     * =================================
-     *
-     * TON AGENT MISTRAL est appelé ici.
-     *
-     * Son System Prompt configuré
-     * dans Mistral reste attaché
-     * à cet Agent.
-     */
-
-    if (!conversationId) {
-
-      response =
-        await client.beta.conversations.start({
-
-          agentId:
-            AGENT_ID,
-
-          agentVersion:
-            AGENT_VERSION,
-
-          inputs: [
-            {
-              role: "user",
-
-              content:
-                userMessage
-            }
-          ]
-        });
-    }
-
-
-    /*
-     * =================================
-     * CONVERSATION EXISTANTE
-     * =================================
-     */
-
-    else {
-
-      response =
-        await client.beta.conversations.append({
-
-          conversationId:
-            conversationId,
-
-          conversationAppendRequest: {
-
-            inputs: [
-              {
-                role: "user",
-
-                content:
-                  userMessage
-              }
-            ]
-          }
-        });
-    }
-
-
-    /*
-     * =================================
-     * EXTRACTION DE LA RÉPONSE
-     * =================================
-     */
 
     const answer =
-      extractText(
-        response?.outputs
-      ).trim();
-
+      extractText(response?.outputs) ||
+      extractText(response?.output) ||
+      extractText(response?.content);
 
     if (!answer) {
-
       console.error(
-        "MISTRAL EMPTY RESPONSE:",
+        "Réponse Mistral sans texte :",
         JSON.stringify(response)
       );
 
       return res.status(502).json({
         ok: false,
-        error:
-          "Mistral a répondu sans contenu texte."
+        error: "Aucun texte reçu de Mistral"
       });
     }
 
-
-    /*
-     * =================================
-     * CONVERSATION ID
-     * =================================
-     */
-
-    const newConversationId =
-      response?.conversationId ||
-      response?.conversation_id ||
-      conversationId ||
-      null;
-
-
-    /*
-     * =================================
-     * RÉPONSE À INDEX.HTML
-     * =================================
-     */
-
     return res.status(200).json({
-
       ok: true,
-
-      answer:
-        answer,
-
+      answer: answer.trim(),
       conversationId:
-        newConversationId,
-
-      mode:
-        mode
+        response?.conversationId ||
+        response?.conversation_id ||
+        null
     });
 
-
   } catch (error) {
-
     console.error(
-      "HACKER F5 ERROR:",
+      "HACKER F5 / MISTRAL ERROR:",
       error
     );
 
-
     return res.status(500).json({
-
       ok: false,
-
       error:
         error?.message ||
-        "Erreur interne du serveur"
+        "Erreur lors du traitement de la demande"
     });
   }
-}
+  }
