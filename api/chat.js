@@ -1,12 +1,12 @@
 import { Mistral } from "@mistralai/mistralai";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SYSTEM_PROMPT_PATH = path.join(
+const SYSTEM_PROMPT_FILE = path.join(
   __dirname,
   "..",
   "config",
@@ -16,13 +16,21 @@ const SYSTEM_PROMPT_PATH = path.join(
 const AGENT_ID = "ag_01a0bd128b0a75be97d07bc34dea0418";
 const AGENT_VERSION = 0;
 
-function loadSystemPrompt() {
-  try {
-    return fs.readFileSync(SYSTEM_PROMPT_PATH, "utf8").trim();
-  } catch (error) {
-    console.error("SYSTEM PROMPT ERROR:", error);
-    return "";
+const client = new Mistral({
+  apiKey: process.env.MISTRAL_API_KEY
+});
+
+async function getSystemPrompt() {
+  const prompt = await fs.readFile(SYSTEM_PROMPT_FILE, "utf8");
+  const cleanPrompt = prompt.trim();
+
+  if (!cleanPrompt) {
+    throw new Error(
+      "Le fichier config/system-prompt.txt est vide."
+    );
   }
+
+  return cleanPrompt;
 }
 
 function extractText(value) {
@@ -30,21 +38,21 @@ function extractText(value) {
     return value;
   }
 
-  if (!value) {
+  if (!value || typeof value !== "object") {
     return "";
-  }
-
-  if (typeof value.text === "string") {
-    return value.text;
   }
 
   if (typeof value.content === "string") {
     return value.content;
   }
 
+  if (typeof value.text === "string") {
+    return value.text;
+  }
+
   if (Array.isArray(value.content)) {
     return value.content
-      .map((item) => extractText(item))
+      .map(extractText)
       .filter(Boolean)
       .join("\n");
   }
@@ -53,20 +61,22 @@ function extractText(value) {
 }
 
 function extractAnswer(response) {
-  let answer = "";
-
   if (Array.isArray(response?.outputs)) {
-    answer = response.outputs
-      .map((output) => extractText(output))
+    const text = response.outputs
+      .map(extractText)
       .filter(Boolean)
-      .join("\n");
+      .join("\n")
+      .trim();
+
+    if (text) return text;
   }
 
-  if (!answer) answer = extractText(response?.output);
-  if (!answer) answer = extractText(response?.content);
-  if (!answer) answer = extractText(response?.text);
-
-  return answer.trim();
+  return (
+    extractText(response?.output) ||
+    extractText(response?.content) ||
+    extractText(response?.text) ||
+    ""
+  );
 }
 
 export default async function handler(req, res) {
@@ -81,92 +91,106 @@ export default async function handler(req, res) {
     if (!process.env.MISTRAL_API_KEY) {
       return res.status(500).json({
         ok: false,
-        error: "MISTRAL_API_KEY absente des variables Vercel."
+        error: "MISTRAL_API_KEY absente de Vercel."
       });
     }
 
-    const systemPrompt = loadSystemPrompt();
-
-    if (!systemPrompt) {
-      return res.status(500).json({
-        ok: false,
-        error: "Le fichier config/system-prompt.txt est vide ou introuvable."
-      });
-    }
+    /*
+     * OBLIGATOIRE :
+     * HACKER F5 doit utiliser le fichier local.
+     */
+    const systemPrompt = await getSystemPrompt();
 
     const body = req.body || {};
-    const incomingMessages = Array.isArray(body.messages)
+
+    const messages = Array.isArray(body.messages)
       ? body.messages
       : [];
 
-    const safeMessages = incomingMessages
+    const validMessages = messages
       .filter(
         (message) =>
           message &&
-          typeof message.content === "string" &&
-          ["user", "assistant"].includes(message.role)
+          ["user", "assistant"].includes(message.role) &&
+          typeof message.content === "string"
       )
       .map((message) => ({
         role: message.role,
         content: message.content
       }));
 
-    if (safeMessages.length === 0) {
+    if (validMessages.length === 0) {
       return res.status(400).json({
         ok: false,
-        error: "Aucun message utilisateur reçu."
+        error: "Aucun message valide reçu."
       });
     }
 
-    const client = new Mistral({
-      apiKey: process.env.MISTRAL_API_KEY
-    });
+    /*
+     * NOUVELLE CONVERSATION
+     *
+     * Le fichier system-prompt.txt devient
+     * l'instruction obligatoire de cette conversation.
+     */
+    if (!body.conversationId) {
+      const response = await client.beta.conversations.start({
+        agentId: AGENT_ID,
+        agentVersion: AGENT_VERSION,
+        instructions: systemPrompt,
+        inputs: validMessages
+      });
+
+      const answer = extractAnswer(response);
+
+      return res.status(200).json({
+        ok: true,
+        answer:
+          answer ||
+          "Aucune réponse textuelle n'a été retournée.",
+        conversationId:
+          response?.conversation_id ||
+          response?.conversationId ||
+          null
+      });
+    }
 
     /*
-     * Le prompt privé est chargé depuis :
-     * config/system-prompt.txt
+     * CONVERSATION EXISTANTE
      *
-     * Il n'est jamais envoyé au navigateur.
-     *
-     * Le dernier message utilisateur est conservé comme
-     * entrée principale de l'agent.
+     * Le prompt a déjà été appliqué au démarrage.
+     * On continue la conversation avec son historique Mistral.
      */
-    const messages = [
-      {
-        role: "user",
-        content: `${systemPrompt}\n\n--- MESSAGE UTILISATEUR ---\n${safeMessages
-          .filter((message) => message.role === "user")
-          .map((message) => message.content)
-          .join("\n\n")}`
-      }
-    ];
+    const lastUserMessage = [...validMessages]
+      .reverse()
+      .find((message) => message.role === "user");
 
-    const response = await client.beta.conversations.start({
-      agentId: AGENT_ID,
-      agentVersion: AGENT_VERSION,
-      inputs: messages
+    if (!lastUserMessage) {
+      return res.status(400).json({
+        ok: false,
+        error: "Aucun nouveau message utilisateur."
+      });
+    }
+
+    const response = await client.beta.conversations.append({
+      conversationId: body.conversationId,
+      conversationAppendRequest: {
+        inputs: [lastUserMessage]
+      }
     });
 
-    console.log(
-      "HACKER F5 MISTRAL RESPONSE:",
-      JSON.stringify(response)
-    );
-
-    const answer =
-      extractAnswer(response) ||
-      "HACKER F5 a reçu la demande, mais aucune réponse textuelle n'a été retournée.";
-
-    const conversationId =
-      response?.conversation_id ||
-      response?.conversationId ||
-      response?.id ||
-      null;
+    const answer = extractAnswer(response);
 
     return res.status(200).json({
       ok: true,
-      answer,
-      conversationId
+      answer:
+        answer ||
+        "Aucune réponse textuelle n'a été retournée.",
+      conversationId:
+        response?.conversation_id ||
+        response?.conversationId ||
+        body.conversationId
     });
+
   } catch (error) {
     console.error("HACKER F5 ERROR:", error);
 
@@ -174,7 +198,7 @@ export default async function handler(req, res) {
       ok: false,
       error:
         error?.message ||
-        "Une erreur est survenue pendant la communication avec HACKER F5."
+        "Erreur lors de la communication avec HACKER F5."
     });
   }
-}
+      }
