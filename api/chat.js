@@ -8,7 +8,9 @@ export default async function handler(req, res) {
 
   try {
     const body = req.body || {};
+
     const messages = body.messages;
+    const mode = body.mode || "chat";
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({
@@ -23,6 +25,11 @@ export default async function handler(req, res) {
         error: "Configuration du serveur incomplète"
       });
     }
+
+    /*
+     * HACKER F5
+     * Nouvel agent Mistral uniquement
+     */
 
     const response = await fetch(
       "https://api.mistral.ai/v1/conversations",
@@ -46,7 +53,20 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    let data;
+
+    try {
+      data = await response.json();
+    } catch {
+      return res.status(502).json({
+        ok: false,
+        error: "Réponse invalide du serveur Mistral"
+      });
+    }
+
+    /*
+     * Gestion des erreurs Mistral
+     */
 
     if (!response.ok) {
       return res.status(response.status).json({
@@ -59,9 +79,13 @@ export default async function handler(req, res) {
       });
     }
 
+    /*
+     * Extraction de la réponse
+     */
+
     let answer = "";
 
-    if (Array.isArray(data.outputs)) {
+    if (Array.isArray(data?.outputs)) {
 
       for (const output of data.outputs) {
 
@@ -81,13 +105,9 @@ export default async function handler(req, res) {
           Array.isArray(output?.content)
         ) {
 
-          for (
-            const item of output.content
-          ) {
+          for (const item of output.content) {
 
-            if (
-              typeof item === "string"
-            ) {
+            if (typeof item === "string") {
               answer += item;
             }
 
@@ -98,7 +118,6 @@ export default async function handler(req, res) {
             }
 
           }
-
         }
 
         if (
@@ -107,10 +126,12 @@ export default async function handler(req, res) {
         ) {
           answer = output.text;
         }
-
       }
-
     }
+
+    /*
+     * Formats de réponse alternatifs
+     */
 
     if (
       !answer &&
@@ -133,15 +154,25 @@ export default async function handler(req, res) {
       answer = data.text;
     }
 
+    /*
+     * Dernière sécurité
+     */
+
     if (!answer) {
       answer =
         "HACKER F5 a reçu la demande, mais aucune réponse texte n'a été retournée.";
     }
 
+    /*
+     * Réponse finale vers index.html
+     */
+
     return res.status(200).json({
       ok: true,
 
       answer: answer.trim(),
+
+      mode,
 
       conversationId:
         data?.conversation_id ||
@@ -164,4 +195,4 @@ export default async function handler(req, res) {
         "Erreur interne du serveur"
     });
   }
-  }
+}
