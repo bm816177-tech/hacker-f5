@@ -7,7 +7,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const messages = req.body?.messages;
+    const body = req.body || {};
+    const messages = body.messages;
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({
@@ -47,25 +48,18 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-
     if (!response.ok) {
       return res.status(response.status).json({
         ok: false,
         error:
           data?.message ||
+          data?.error?.message ||
           data?.error ||
           "Erreur lors de la communication avec Mistral"
       });
     }
 
-
-    /*
-      Extraction robuste de la réponse.
-      On évite d'afficher [object Object].
-    */
-
     let answer = "";
-
 
     if (Array.isArray(data.outputs)) {
 
@@ -76,18 +70,24 @@ export default async function handler(req, res) {
           continue;
         }
 
-
-        if (typeof output?.content === "string") {
+        if (
+          typeof output?.content === "string"
+        ) {
           answer += output.content;
           continue;
         }
 
+        if (
+          Array.isArray(output?.content)
+        ) {
 
-        if (Array.isArray(output?.content)) {
+          for (
+            const item of output.content
+          ) {
 
-          for (const item of output.content) {
-
-            if (typeof item === "string") {
+            if (
+              typeof item === "string"
+            ) {
               answer += item;
             }
 
@@ -101,18 +101,16 @@ export default async function handler(req, res) {
 
         }
 
-
         if (
           !answer &&
           typeof output?.text === "string"
         ) {
-          answer += output.text;
+          answer = output.text;
         }
 
       }
 
     }
-
 
     if (
       !answer &&
@@ -121,14 +119,12 @@ export default async function handler(req, res) {
       answer = data.output;
     }
 
-
     if (
       !answer &&
       typeof data?.content === "string"
     ) {
       answer = data.content;
     }
-
 
     if (
       !answer &&
@@ -137,12 +133,10 @@ export default async function handler(req, res) {
       answer = data.text;
     }
 
-
     if (!answer) {
       answer =
         "HACKER F5 a reçu la demande, mais aucune réponse texte n'a été retournée.";
     }
-
 
     return res.status(200).json({
       ok: true,
@@ -156,10 +150,12 @@ export default async function handler(req, res) {
         null
     });
 
-
   } catch (error) {
 
-    console.error("HACKER F5 ERROR:", error);
+    console.error(
+      "HACKER F5 ERROR:",
+      error
+    );
 
     return res.status(500).json({
       ok: false,
@@ -168,4 +164,4 @@ export default async function handler(req, res) {
         "Erreur interne du serveur"
     });
   }
-        }
+  }
