@@ -2,13 +2,8 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>HACKER F5</title>
 
@@ -23,10 +18,8 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-
   background: #07090d;
   color: #f5f5f5;
-
   font-family: Arial, sans-serif;
 }
 
@@ -34,16 +27,11 @@ body {
   overflow-x: hidden;
 }
 
-
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 header {
-
   position: sticky;
   top: 0;
-
   z-index: 100;
 
   display: flex;
@@ -53,79 +41,58 @@ header {
   padding: 13px 15px;
 
   background: #0b0e14;
-
   border-bottom: 1px solid #26303d;
 }
 
 .logo {
-
   font-size: 19px;
-
   font-weight: 900;
-
   letter-spacing: 1px;
 }
 
 .menu-button {
-
   width: 46px;
   height: 46px;
 
   border-radius: 12px;
-
   border: 1px solid #3b4655;
 
   background: #17202b;
-
   color: #38d9ff;
 
   font-size: 22px;
 }
 
-
-/* =========================
-   CORE
-========================= */
+/* CORE */
 
 .emperor-core {
-
   width: calc(100% - 24px);
-
   max-width: 700px;
 
   margin: 16px auto 7px;
-
   padding: 14px;
 
   background: #0a0e13;
 
   border: 1px solid #303d4b;
-
   border-radius: 11px;
 
   overflow-x: auto;
 }
 
 .emperor-core pre {
-
   margin: 0;
 
   font-family: monospace;
-
   font-size: 12px;
-
   line-height: 1.5;
 
   color: #dbeafe;
 }
 
-
-/* =========================
-   STATUS
-========================= */
+/* STATUS */
 
 .status {
-
   text-align: center;
 
   padding: 5px;
@@ -133,19 +100,13 @@ header {
   color: #38d9ff;
 
   font-size: 10px;
-
   letter-spacing: .7px;
 }
 
-
-/* =========================
-   CHAT
-========================= */
+/* CHAT */
 
 #chat {
-
   width: 100%;
-
   max-width: 760px;
 
   margin: auto;
@@ -154,24 +115,19 @@ header {
 }
 
 .message {
-
   display: flex;
-
   margin: 12px 0;
 }
 
 .message.user {
-
   justify-content: flex-end;
 }
 
 .message.ai {
-
   justify-content: flex-start;
 }
 
 .bubble {
-
   max-width: 90%;
 
   padding: 13px 15px;
@@ -186,7 +142,6 @@ header {
 }
 
 .user .bubble {
-
   background: #151d28;
 
   border: 1px solid #3b4a5c;
@@ -195,7 +150,6 @@ header {
 }
 
 .ai .bubble {
-
   background: #0d141b;
 
   border: 1px solid #293846;
@@ -203,13 +157,9 @@ header {
   border-bottom-left-radius: 5px;
 }
 
-
-/* =========================
-   CODE
-========================= */
+/* CODE */
 
 .code-container {
-
   margin: 12px 0;
 
   background: #05070a;
@@ -222,11 +172,9 @@ header {
 }
 
 .code-header {
-
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   padding: 9px 11px;
@@ -241,7 +189,6 @@ header {
 }
 
 .copy-code {
-
   padding: 7px 11px;
 
   border-radius: 8px;
@@ -254,54 +201,42 @@ header {
 }
 
 .code-container pre {
-
   margin: 0;
 
   padding: 13px;
 
   overflow-x: auto;
 
-  font-family:
-    "Courier New",
-    monospace;
+  font-family: "Courier New", monospace;
 
   font-size: 12px;
-
   line-height: 1.5;
 
   color: #eeeeee;
 }
 
-
-/* =========================
-   OUTILS
-========================= */
+/* OUTILS */
 
 .tools {
-
   display: none;
 
   width: 100%;
-
   max-width: 760px;
 
   margin: 0 auto 8px;
 
   padding: 8px;
 
-  grid-template-columns:
-    repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
   gap: 7px;
 }
 
 .tools.active {
-
   display: grid;
 }
 
 .tool-button {
-
   min-height: 56px;
 
   padding: 7px 4px;
@@ -315,59 +250,26 @@ header {
   color: #e2e8f0;
 
   font-size: 10px;
-
   font-weight: 700;
 }
 
-.tool-image {
-  border-color: #6d4aff;
-}
+.tool-image { border-color: #6d4aff; }
+.tool-video { border-color: #e43cff; }
+.tool-pdf { border-color: #ff5b5b; }
+.tool-ppt { border-color: #ff9f43; }
+.tool-file { border-color: #3b82f6; }
+.tool-voice { border-color: #22c55e; }
+.tool-music { border-color: #ec4899; }
+.tool-web { border-color: #06b6d4; }
+.tool-code { border-color: #a855f7; }
 
-.tool-video {
-  border-color: #e43cff;
-}
-
-.tool-pdf {
-  border-color: #ff5b5b;
-}
-
-.tool-ppt {
-  border-color: #ff9f43;
-}
-
-.tool-file {
-  border-color: #3b82f6;
-}
-
-.tool-voice {
-  border-color: #22c55e;
-}
-
-.tool-music {
-  border-color: #ec4899;
-}
-
-.tool-web {
-  border-color: #06b6d4;
-}
-
-.tool-code {
-  border-color: #a855f7;
-}
-
-
-/* =========================
-   INPUT
-========================= */
+/* INPUT */
 
 .input-area {
-
   position: fixed;
 
   bottom: 0;
-
   left: 0;
-
   right: 0;
 
   z-index: 90;
@@ -383,7 +285,6 @@ header {
 }
 
 .input-box {
-
   display: flex;
 
   align-items: flex-end;
@@ -404,17 +305,14 @@ header {
 }
 
 #messageInput {
-
   flex: 1;
 
   min-height: 46px;
-
   max-height: 120px;
 
   resize: none;
 
   border: 0;
-
   outline: 0;
 
   background: transparent;
@@ -427,14 +325,11 @@ header {
 }
 
 #messageInput::placeholder {
-
   color: #64748b;
 }
 
 .input-button {
-
   width: 46px;
-
   height: 46px;
 
   flex-shrink: 0;
@@ -445,7 +340,6 @@ header {
 }
 
 #toolsButton {
-
   background: #102b3d;
 
   border: 1px solid #38d9ff;
@@ -454,14 +348,12 @@ header {
 }
 
 #micButton {
-
   background: #12352a;
 
   border: 1px solid #22c55e;
 }
 
 #voiceButton {
-
   background: #27213d;
 
   border: 1px solid #a855f7;
@@ -470,7 +362,6 @@ header {
 }
 
 #sendButton {
-
   background: #b91414;
 
   border: 1px solid #ff3838;
@@ -479,23 +370,17 @@ header {
 }
 
 #sendButton:disabled {
-
   opacity: .45;
 }
 
-
-/* =========================
-   MENU
-========================= */
+/* MENU */
 
 #menu {
-
   display: none;
 
   position: fixed;
 
   top: 70px;
-
   right: 10px;
 
   z-index: 200;
@@ -515,7 +400,6 @@ header {
 }
 
 .menu-item {
-
   display: block;
 
   width: 100%;
@@ -539,13 +423,9 @@ header {
   font-size: 13px;
 }
 
-
-/* =========================
-   PANELS
-========================= */
+/* PANELS */
 
 .panel {
-
   display: none;
 
   position: fixed;
@@ -556,14 +436,12 @@ header {
 
   padding: 70px 14px 20px;
 
-  background:
-    rgba(0,0,0,.86);
+  background: rgba(0,0,0,.86);
 
   overflow-y: auto;
 }
 
 .panel-box {
-
   max-width: 650px;
 
   margin: auto;
@@ -578,7 +456,6 @@ header {
 }
 
 .panel-title {
-
   margin-bottom: 15px;
 
   color: #38d9ff;
@@ -589,7 +466,6 @@ header {
 }
 
 .panel-button {
-
   width: 100%;
 
   min-height: 48px;
@@ -610,7 +486,6 @@ header {
 }
 
 .close-panel {
-
   background: #351719;
 
   border-color: #702a2d;
@@ -618,13 +493,9 @@ header {
   color: #ff7070;
 }
 
-
-/* =========================
-   HISTORIQUE
-========================= */
+/* HISTORIQUE */
 
 .history-item {
-
   width: 100%;
 
   padding: 11px;
@@ -642,33 +513,24 @@ header {
   text-align: left;
 }
 
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 480px) {
 
   .tool-button {
-
     font-size: 9px;
   }
 
   .input-button {
-
     width: 43px;
     height: 43px;
   }
-
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -686,63 +548,33 @@ header {
 
 </header>
 
+<div id="menu">
 
-<!-- =========================
-     MENU
-========================= -->
-
-<div
-  id="menu"
->
-
-  <button
-    class="menu-item"
-    onclick="newConversation()"
-  >
+  <button class="menu-item" onclick="newConversation()">
     🆕 Nouvelle conversation
   </button>
 
-  <button
-    class="menu-item"
-    onclick="openHistory()"
-  >
+  <button class="menu-item" onclick="openHistory()">
     🕘 Historique
   </button>
 
-  <button
-    class="menu-item"
-    onclick="openLanguage()"
-  >
+  <button class="menu-item" onclick="openLanguage()">
     🌐 Langue
   </button>
 
-  <button
-    class="menu-item"
-    onclick="openSettings()"
-  >
+  <button class="menu-item" onclick="openSettings()">
     ⚙️ Paramètres
   </button>
 
-  <button
-    class="menu-item"
-    onclick="clearChat()"
-  >
+  <button class="menu-item" onclick="clearChat()">
     🗑️ Effacer la conversation
   </button>
 
-  <button
-    class="menu-item"
-    onclick="showAbout()"
-  >
+  <button class="menu-item" onclick="showAbout()">
     👑 À propos
   </button>
 
 </div>
-
-
-<!-- =========================
-     CORE
-========================= -->
 
 <div class="emperor-core">
 
@@ -756,100 +588,51 @@ header {
 
 </div>
 
-
-<div
-  class="status"
-  id="status"
->
+<div class="status" id="status">
   F5 CORE • READY
 </div>
 
-
-<!-- =========================
-     CHAT
-========================= -->
-
 <main id="chat"></main>
 
+<div class="tools" id="tools">
 
-<!-- =========================
-     OUTILS
-========================= -->
-
-<div
-  class="tools"
-  id="tools"
->
-
-  <button
-    class="tool-button tool-image"
-    onclick="useTool('image')"
-  >
+  <button class="tool-button tool-image" onclick="useTool('image')">
     🖼️<br>Image
   </button>
 
-  <button
-    class="tool-button tool-video"
-    onclick="useTool('video')"
-  >
+  <button class="tool-button tool-video" onclick="useTool('video')">
     🎬<br>Vidéo
   </button>
 
-  <button
-    class="tool-button tool-pdf"
-    onclick="useTool('pdf')"
-  >
+  <button class="tool-button tool-pdf" onclick="useTool('pdf')">
     📄<br>PDF
   </button>
 
-  <button
-    class="tool-button tool-ppt"
-    onclick="useTool('ppt')"
-  >
+  <button class="tool-button tool-ppt" onclick="useTool('ppt')">
     📊<br>PowerPoint
   </button>
 
-  <button
-    class="tool-button tool-file"
-    onclick="useTool('file')"
-  >
+  <button class="tool-button tool-file" onclick="useTool('file')">
     📁<br>Fichier / ZIP
   </button>
 
-  <button
-    class="tool-button tool-voice"
-    onclick="useTool('voice')"
-  >
+  <button class="tool-button tool-voice" onclick="useTool('voice')">
     🎙️<br>Voix IA
   </button>
 
-  <button
-    class="tool-button tool-music"
-    onclick="useTool('music')"
-  >
+  <button class="tool-button tool-music" onclick="useTool('music')">
     🎵<br>Musique
   </button>
 
-  <button
-    class="tool-button tool-web"
-    onclick="useTool('web')"
-  >
+  <button class="tool-button tool-web" onclick="useTool('web')">
     🌐<br>Recherche
   </button>
 
-  <button
-    class="tool-button tool-code"
-    onclick="useTool('code')"
-  >
+  <button class="tool-button tool-code" onclick="useTool('code')">
     💻<br>Code
   </button>
 
 </div>
-
-
-<!-- =========================
-     INPUT
-========================= -->
 
 <div class="input-area">
 
@@ -897,15 +680,7 @@ header {
 
 </div>
 
-
-<!-- =========================
-     HISTORIQUE
-========================= -->
-
-<div
-  class="panel"
-  id="historyPanel"
->
+<div class="panel" id="historyPanel">
 
   <div class="panel-box">
 
@@ -926,15 +701,7 @@ header {
 
 </div>
 
-
-<!-- =========================
-     LANGUE
-========================= -->
-
-<div
-  class="panel"
-  id="languagePanel"
->
+<div class="panel" id="languagePanel">
 
   <div class="panel-box">
 
@@ -974,15 +741,7 @@ header {
 
 </div>
 
-
-<!-- =========================
-     PARAMETRES
-========================= -->
-
-<div
-  class="panel"
-  id="settingsPanel"
->
+<div class="panel" id="settingsPanel">
 
   <div class="panel-box">
 
@@ -1022,12 +781,9 @@ header {
 
 </div>
 
-
 <script>
 
-/* =========================
-   VARIABLES
-========================= */
+/* VARIABLES */
 
 const chat =
   document.getElementById("chat");
@@ -1074,63 +830,38 @@ const historyList =
 let messages = [];
 
 let currentLanguage =
-  localStorage.getItem(
-    "hacker_f5_language"
-  ) || "Français";
+  localStorage.getItem("hacker_f5_language") ||
+  "Français";
 
 
-/* =========================
-   OUTILS
-========================= */
+/* OUTILS */
 
 function useTool(type) {
 
   const prompts = {
 
-    image:
-      "Je veux générer une image : ",
-
-    video:
-      "Je veux générer une vidéo : ",
-
-    pdf:
-      "Je veux créer un PDF : ",
-
-    ppt:
-      "Je veux créer une présentation PowerPoint : ",
-
-    file:
-      "Je veux créer un fichier ou un ZIP : ",
-
-    voice:
-      "Je veux utiliser la voix IA : ",
-
-    music:
-      "Je veux créer une musique : ",
-
-    web:
-      "Recherche sur le web : ",
-
-    code:
-      "Aide-moi avec du code : "
+    image: "Je veux générer une image : ",
+    video: "Je veux générer une vidéo : ",
+    pdf: "Je veux créer un PDF : ",
+    ppt: "Je veux créer une présentation PowerPoint : ",
+    file: "Je veux créer un fichier ou un ZIP : ",
+    voice: "Je veux utiliser la voix IA : ",
+    music: "Je veux créer une musique : ",
+    web: "Recherche sur le web : ",
+    code: "Aide-moi avec du code : "
 
   };
 
   messageInput.value =
     prompts[type] || "";
 
-  tools.classList.remove(
-    "active"
-  );
+  tools.classList.remove("active");
 
   messageInput.focus();
-
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ESCAPE HTML */
 
 function escapeHTML(text) {
 
@@ -1144,19 +875,19 @@ function escapeHTML(text) {
 }
 
 
-/* =========================
-   FORMATAGE IA
-========================= */
+/* FORMATAGE IA */
 
 function renderAIText(text) {
+
+  if (typeof text !== "string") {
+    text = String(text ?? "");
+  }
 
   const escaped =
     escapeHTML(text);
 
   const parts =
-    escaped.split(
-      /(```[\s\S]*?```)/g
-    );
+    escaped.split(/(```[\s\S]*?```)/g);
 
   return parts.map(part => {
 
@@ -1204,19 +935,14 @@ function renderAIText(text) {
         /\*\*(.*?)\*\*/g,
         "<strong>$1</strong>"
       )
-      .replace(
-        /\n/g,
-        "<br>"
-      );
+      .replace(/\n/g, "<br>");
 
   }).join("");
 
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 function addMessage(text, type) {
 
@@ -1240,7 +966,7 @@ function addMessage(text, type) {
   } else {
 
     bubble.textContent =
-      text;
+      String(text ?? "");
 
   }
 
@@ -1256,9 +982,7 @@ function addMessage(text, type) {
 }
 
 
-/* =========================
-   COPIER CODE
-========================= */
+/* COPIER CODE */
 
 function copyCode(button) {
 
@@ -1272,24 +996,21 @@ function copyCode(button) {
     .writeText(code)
     .then(() => {
 
-      button.textContent =
-        "Copié";
+      button.textContent = "Copié";
 
       setTimeout(() => {
-
-        button.textContent =
-          "Copier";
-
+        button.textContent = "Copier";
       }, 1500);
 
+    })
+    .catch(() => {
+      button.textContent = "Erreur";
     });
 
 }
 
 
-/* =========================
-   ENVOYER
-========================= */
+/* ENVOYER */
 
 async function sendMessage() {
 
@@ -1302,10 +1023,9 @@ async function sendMessage() {
 
   messageInput.value = "";
 
-  addMessage(
-    text,
-    "user"
-  );
+  messageInput.style.height = "auto";
+
+  addMessage(text, "user");
 
   messages.push({
     role: "user",
@@ -1320,27 +1040,24 @@ async function sendMessage() {
   try {
 
     const response =
-      await fetch(
-        "/api/chat",
-        {
-          method: "POST",
+      await fetch("/api/chat", {
 
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
+        method: "POST",
 
-          body: JSON.stringify({
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
 
-            messages:
-              messages,
+        body: JSON.stringify({
 
-            language:
-              currentLanguage
+          messages: messages,
 
-          })
-        }
-      );
+          language: currentLanguage
+
+        })
+
+      });
 
     const raw =
       await response.text();
@@ -1352,7 +1069,12 @@ async function sendMessage() {
       data =
         JSON.parse(raw);
 
-    } catch {
+    } catch (parseError) {
+
+      console.error(
+        "Réponse brute du serveur :",
+        raw
+      );
 
       throw new Error(
         "Réponse serveur invalide."
@@ -1363,24 +1085,43 @@ async function sendMessage() {
     if (!response.ok) {
 
       throw new Error(
-        data.error ||
+        data?.error ||
         "Erreur serveur."
       );
 
     }
 
-    const answer =
-      extractAIText(data);
+    /*
+     * NOUVEAU :
+     * chat.js renvoie maintenant
+     * { answer: "..." }
+     */
+
+    let answer = "";
+
+    if (
+      typeof data?.answer === "string"
+    ) {
+
+      answer =
+        data.answer;
+
+    } else {
+
+      answer =
+        extractAIText(data);
+
+    }
 
     if (!answer) {
 
-      console.log(
-        "Réponse Mistral :",
+      console.error(
+        "Réponse reçue :",
         data
       );
 
       throw new Error(
-        "Mistral a répondu sans texte exploitable."
+        "HACKER F5 n'a retourné aucun texte."
       );
 
     }
@@ -1395,9 +1136,10 @@ async function sendMessage() {
       content: answer
     });
 
-    saveConversation();
-
-    updateHistory();
+    localStorage.setItem(
+      "hacker_f5_messages",
+      JSON.stringify(messages)
+    );
 
     status.textContent =
       "F5 CORE • ONLINE";
@@ -1411,7 +1153,7 @@ async function sendMessage() {
 
     addMessage(
       "⚠️ Erreur HACKER F5 :\n\n" +
-      error.message,
+      String(error?.message || error),
       "ai"
     );
 
@@ -1427,9 +1169,7 @@ async function sendMessage() {
 }
 
 
-/* =========================
-   EXTRAIRE REPONSE
-========================= */
+/* EXTRAIRE REPONSE */
 
 function extractAIText(data) {
 
@@ -1437,22 +1177,20 @@ function extractAIText(data) {
     return "";
   }
 
-  if (
-    typeof data.output_text ===
-    "string"
-  ) {
-
-    return data.output_text;
-
+  if (typeof data === "string") {
+    return data;
   }
 
   if (
-    typeof data.content ===
-    "string"
+    typeof data.output_text === "string"
   ) {
+    return data.output_text;
+  }
 
+  if (
+    typeof data.content === "string"
+  ) {
     return data.content;
-
   }
 
   if (
@@ -1468,12 +1206,21 @@ function extractAIText(data) {
       }
 
       if (
-        typeof output.content ===
-        "string"
+        typeof output === "string"
       ) {
+        return output;
+      }
 
+      if (
+        typeof output.text === "string"
+      ) {
+        return output.text;
+      }
+
+      if (
+        typeof output.content === "string"
+      ) {
         return output.content;
-
       }
 
       if (
@@ -1485,19 +1232,24 @@ function extractAIText(data) {
             .map(item => {
 
               if (
-                typeof item ===
-                "string"
+                typeof item === "string"
               ) {
-
                 return item;
-
               }
 
-              return (
-                item?.text ||
-                item?.content ||
-                ""
-              );
+              if (
+                typeof item?.text === "string"
+              ) {
+                return item.text;
+              }
+
+              if (
+                typeof item?.content === "string"
+              ) {
+                return item.content;
+              }
+
+              return "";
 
             })
             .join("");
@@ -1508,61 +1260,58 @@ function extractAIText(data) {
 
       }
 
+      if (output.message) {
+
+        const nested =
+          extractAIText({
+            content:
+              output.message.content
+          });
+
+        if (nested) {
+          return nested;
+        }
+
+      }
+
     }
 
   }
 
   return "";
-
 }
 
 
-/* =========================
-   OUTILS BUTTON
-========================= */
+/* OUTILS BUTTON */
 
 toolsButton.addEventListener(
   "click",
   function() {
 
-    tools.classList.toggle(
-      "active"
-    );
+    tools.classList.toggle("active");
 
   }
 );
 
 
-/* =========================
-   MENU
-========================= */
+/* MENU */
 
 menuButton.addEventListener(
   "click",
-  function() {
+  function(event) {
 
-    if (
-      menu.style.display ===
-      "block"
-    ) {
+    event.stopPropagation();
 
-      menu.style.display =
-        "none";
-
-    } else {
-
-      menu.style.display =
-        "block";
-
-    }
+    menu.style.display =
+      menu.style.display === "block"
+        ? "none"
+        : "block";
 
   }
 );
 
 
-/* =========================
-   NOUVELLE CONVERSATION
-========================= */
+/* NOUVELLE CONVERSATION */
 
 function newConversation() {
 
@@ -1574,8 +1323,7 @@ function newConversation() {
     "hacker_f5_messages"
   );
 
-  menu.style.display =
-    "none";
+  menu.style.display = "none";
 
   status.textContent =
     "F5 CORE • READY";
@@ -1585,30 +1333,26 @@ function newConversation() {
 }
 
 
-/* =========================
-   EFFACER
-========================= */
+/* EFFACER */
 
 function clearChat() {
-
   newConversation();
-
 }
 
 
-/* =========================
-   HISTORIQUE
-========================= */
+/* HISTORIQUE */
 
 let conversations = JSON.parse(
   localStorage.getItem("hackerF5_history") || "[]"
 );
 
 function saveHistory() {
+
   localStorage.setItem(
     "hackerF5_history",
     JSON.stringify(conversations)
   );
+
 }
 
 function saveCurrentConversation() {
@@ -1624,14 +1368,20 @@ function saveCurrentConversation() {
 
   const title =
     firstMessage
-      ? firstMessage.content.slice(0, 40)
+      ? String(firstMessage.content).slice(0, 40)
       : "Nouvelle conversation";
 
   const conversation = {
+
     id: Date.now(),
+
     title: title,
+
     messages: [...messages],
-    date: new Date().toLocaleString("fr-FR")
+
+    date:
+      new Date().toLocaleString("fr-FR")
+
   };
 
   conversations.unshift(
@@ -1639,17 +1389,18 @@ function saveCurrentConversation() {
   );
 
   if (conversations.length > 30) {
+
     conversations =
       conversations.slice(0, 30);
+
   }
 
   saveHistory();
+
 }
 
 
-/* =========================
-   SAUVEGARDER
-========================= */
+/* SAUVEGARDER */
 
 function saveConversation() {
 
@@ -1670,9 +1421,7 @@ function saveConversation() {
 }
 
 
-/* =========================
-   HISTORIQUE
-========================= */
+/* HISTORIQUE */
 
 function updateHistory() {
 
@@ -1704,31 +1453,52 @@ function updateHistory() {
 
       item.innerHTML = `
         <strong>
-          ${escapeHTML(
-            conversation.title
-          )}
+          ${escapeHTML(conversation.title)}
         </strong>
 
         <br>
 
-        <small style="
-          color:#64748b;
-        ">
-          ${conversation.date}
+        <small style="color:#64748b;">
+          ${escapeHTML(conversation.date)}
         </small>
       `;
 
-      item.onclick = () => {
+      item.onclick = function() {
 
-        loadConversation(
-          conversation.id
-        );
+        messages = [
+          ...conversation.messages
+        ];
+
+        chat.innerHTML = "";
+
+        messages.forEach(message => {
+
+          if (message.role === "user") {
+
+            addMessage(
+              message.content,
+              "user"
+            );
+
+          } else if (message.role === "assistant") {
+
+            addMessage(
+              message.content,
+              "ai"
+            );
+
+          }
+
+        });
+
+        closePanels();
+
+        status.textContent =
+          "F5 CORE • ONLINE";
 
       };
 
-      historyList.appendChild(
-        item
-      );
+      historyList.appendChild(item);
 
     }
   );
@@ -1736,14 +1506,11 @@ function updateHistory() {
 }
 
 
-/* =========================
-   OUVRIR HISTORIQUE
-========================= */
+/* OUVRIR HISTORIQUE */
 
 function openHistory() {
 
-  menu.style.display =
-    "none";
+  menu.style.display = "none";
 
   updateHistory();
 
@@ -1753,53 +1520,17 @@ function openHistory() {
 }
 
 
-/* =========================
-   CHARGER CONVERSATION
-========================= */
+/* LANGUE */
 
-function loadConversation(id) {
+function openLanguage() {
 
-  const conversation =
-    conversations.find(
-      item => item.id === id
-    );
+  menu.style.display = "none";
 
-  if (!conversation) {
-    return;
-  }
-
-  messages =
-    [...conversation.messages];
-
-  chat.innerHTML = "";
-
-  messages.forEach(
-    message => {
-
-      addMessage(
-        message.content,
-        message.role === "user"
-          ? "user"
-          : "ai"
-      );
-
-    }
-  );
-
-  historyPanel.style.display =
-    "none";
-
-  status.textContent =
-    "F5 CORE • ONLINE";
-
-  messageInput.focus();
+  languagePanel.style.display =
+    "block";
 
 }
 
-
-/* =========================
-   LANGUE
-========================= */
 
 function setLanguage(language) {
 
@@ -1811,14 +1542,10 @@ function setLanguage(language) {
     language
   );
 
-  languagePanel.style.display =
-    "none";
-
-  menu.style.display =
-    "none";
+  closePanels();
 
   status.textContent =
-    "LANGUE : " + language;
+    "LANGUE • " + language;
 
   setTimeout(() => {
 
@@ -1830,29 +1557,11 @@ function setLanguage(language) {
 }
 
 
-/* =========================
-   OUVRIR LANGUE
-========================= */
-
-function openLanguage() {
-
-  menu.style.display =
-    "none";
-
-  languagePanel.style.display =
-    "block";
-
-}
-
-
-/* =========================
-   PARAMÈTRES
-========================= */
+/* PARAMÈTRES */
 
 function openSettings() {
 
-  menu.style.display =
-    "none";
+  menu.style.display = "none";
 
   settingsPanel.style.display =
     "block";
@@ -1860,33 +1569,7 @@ function openSettings() {
 }
 
 
-/* =========================
-   STATUT
-========================= */
-
-function toggleStatus() {
-
-  if (
-    status.style.display ===
-    "none"
-  ) {
-
-    status.style.display =
-      "block";
-
-  } else {
-
-    status.style.display =
-      "none";
-
-  }
-
-}
-
-
-/* =========================
-   FERMER LES PANNEAUX
-========================= */
+/* FERMER LES PANNEAUX */
 
 function closePanels() {
 
@@ -1902,78 +1585,124 @@ function closePanels() {
 }
 
 
-/* =========================
-   À PROPOS
-========================= */
+/* STATUT */
 
-function showAbout() {
+function toggleStatus() {
 
-  menu.style.display =
-    "none";
+  if (
+    status.style.display === "none"
+  ) {
 
-  chat.innerHTML += `
+    status.style.display = "block";
 
-    <div class="message ai">
+  } else {
 
-      <div class="bubble">
+    status.style.display = "none";
 
-        <strong>
-          ♛ HACKER F5
-        </strong>
-
-        <br><br>
-
-        Assistant IA de cybersécurité
-        responsable.
-
-        <br><br>
-
-        Programmation •
-        Cybersécurité •
-        Analyse •
-        IA
-
-        <br><br>
-
-        <strong>
-          HACKF5 — by King Franck
-        </strong>
-
-      </div>
-
-    </div>
-
-  `;
-
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  });
+  }
 
 }
 
 
-/* =========================
-   MICROPHONE
-========================= */
+/* À PROPOS */
+
+function showAbout() {
+
+  menu.style.display = "none";
+
+  alert(
+    "HACKER F5 👑\n\n" +
+    "Assistant IA de cybersécurité responsable.\n\n" +
+    "HACKF5 — by King Franck"
+  );
+
+}
+
+
+/* CHARGER LES MESSAGES */
+
+function loadMessages() {
+
+  const saved =
+    localStorage.getItem(
+      "hacker_f5_messages"
+    );
+
+  if (!saved) {
+
+    addMessage(
+      "Bonjour 👑 Je suis HACKER F5. Comment puis-je t'aider ?",
+      "ai"
+    );
+
+    return;
+
+  }
+
+  try {
+
+    messages =
+      JSON.parse(saved);
+
+    messages.forEach(message => {
+
+      if (message.role === "user") {
+
+        addMessage(
+          message.content,
+          "user"
+        );
+
+      }
+
+      if (message.role === "assistant") {
+
+        addMessage(
+          message.content,
+          "ai"
+        );
+
+      }
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Erreur chargement messages :",
+      error
+    );
+
+    messages = [];
+
+    addMessage(
+      "Bonjour 👑 Je suis HACKER F5. Comment puis-je t'aider ?",
+      "ai"
+    );
+
+  }
+
+}
+
+
+/* MICROPHONE */
 
 let recognition = null;
 
-const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
+if (
+  "webkitSpeechRecognition" in window ||
+  "SpeechRecognition" in window
+) {
 
-if (SpeechRecognition) {
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
   recognition =
     new SpeechRecognition();
 
   recognition.lang =
-    currentLanguage === "English"
-      ? "en-US"
-      : currentLanguage === "Español"
-        ? "es-ES"
-        : "fr-FR";
+    "fr-FR";
 
   recognition.continuous =
     false;
@@ -1985,25 +1714,23 @@ if (SpeechRecognition) {
     function() {
 
       status.textContent =
-        "🎤 ÉCOUTE...";
+        "MICRO • ÉCOUTE...";
 
-      micButton.style.opacity =
-        "0.6";
+      micButton.textContent =
+        "⏹️";
 
     };
 
   recognition.onresult =
     function(event) {
 
-      const result =
+      const transcript =
         event.results[0][0].transcript;
 
       messageInput.value =
-        result;
+        transcript;
 
-      messageInput.dispatchEvent(
-        new Event("input")
-      );
+      messageInput.focus();
 
     };
 
@@ -2011,15 +1738,18 @@ if (SpeechRecognition) {
     function() {
 
       status.textContent =
-        "F5 CORE • MICRO ERROR";
+        "MICRO • ERREUR";
+
+      micButton.textContent =
+        "🎤";
 
     };
 
   recognition.onend =
     function() {
 
-      micButton.style.opacity =
-        "1";
+      micButton.textContent =
+        "🎤";
 
       status.textContent =
         "F5 CORE • ONLINE";
@@ -2029,9 +1759,7 @@ if (SpeechRecognition) {
 }
 
 
-/* =========================
-   BOUTON MICRO
-========================= */
+/* BOUTON MICRO */
 
 micButton.addEventListener(
   "click",
@@ -2039,30 +1767,23 @@ micButton.addEventListener(
 
     if (!recognition) {
 
-      status.textContent =
-        "Micro non disponible";
+      alert(
+        "La reconnaissance vocale n'est pas disponible sur ce navigateur."
+      );
 
       return;
 
     }
 
-    try {
-
-      recognition.start();
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
+    recognition.start();
 
   }
 );
 
 
-/* =========================
-   VOIX IA
-========================= */
+/* LECTURE VOCALE */
+
+let speaking = false;
 
 voiceButton.addEventListener(
   "click",
@@ -2072,54 +1793,106 @@ voiceButton.addEventListener(
       !("speechSynthesis" in window)
     ) {
 
-      return;
-
-    }
-
-    const lastMessage =
-      [...messages]
-        .reverse()
-        .find(
-          message =>
-            message.role ===
-            "assistant"
-        );
-
-    if (!lastMessage) {
-
-      return;
-
-    }
-
-    speechSynthesis.cancel();
-
-    const speech =
-      new SpeechSynthesisUtterance(
-        lastMessage.content
+      alert(
+        "La lecture vocale n'est pas disponible."
       );
 
-    speech.lang =
+      return;
+
+    }
+
+    if (speaking) {
+
+      speechSynthesis.cancel();
+
+      speaking = false;
+
+      voiceButton.textContent =
+        "🔊";
+
+      return;
+
+    }
+
+    const aiMessages =
+      chat.querySelectorAll(
+        ".message.ai .bubble"
+      );
+
+    if (aiMessages.length === 0) {
+      return;
+    }
+
+    const last =
+      aiMessages[
+        aiMessages.length - 1
+      ];
+
+    const text =
+      last.innerText.trim();
+
+    if (!text) {
+      return;
+    }
+
+    const utterance =
+      new SpeechSynthesisUtterance(
+        text
+      );
+
+    utterance.lang =
       currentLanguage === "English"
         ? "en-US"
         : currentLanguage === "Español"
           ? "es-ES"
           : "fr-FR";
 
-    speech.rate = 1;
+    utterance.onstart =
+      function() {
 
-    speech.pitch = 1;
+        speaking = true;
+
+        voiceButton.textContent =
+          "⏹️";
+
+      };
+
+    utterance.onend =
+      function() {
+
+        speaking = false;
+
+        voiceButton.textContent =
+          "🔊";
+
+      };
 
     speechSynthesis.speak(
-      speech
+      utterance
     );
 
   }
 );
 
 
-/* =========================
-   ENTRÉE CLAVIER
-========================= */
+/* ENTRÉE CLAVIER */
+
+messageInput.addEventListener(
+  "input",
+  function() {
+
+    this.style.height =
+      "auto";
+
+    this.style.height =
+      Math.min(
+        this.scrollHeight,
+        120
+      ) + "px";
+
+  }
+);
+
 
 messageInput.addEventListener(
   "keydown",
@@ -2140,30 +1913,7 @@ messageInput.addEventListener(
 );
 
 
-/* =========================
-   AUTO RESIZE
-========================= */
-
-messageInput.addEventListener(
-  "input",
-  function() {
-
-    this.style.height =
-      "auto";
-
-    this.style.height =
-      Math.min(
-        this.scrollHeight,
-        120
-      ) + "px";
-
-  }
-);
-
-
-/* =========================
-   ENVOI
-========================= */
+/* BOUTON ENVOYER */
 
 sendButton.addEventListener(
   "click",
@@ -2171,21 +1921,15 @@ sendButton.addEventListener(
 );
 
 
-/* =========================
-   FERMETURE MENU
-========================= */
+/* FERMER LE MENU EN CLIQUANT AILLEURS */
 
 document.addEventListener(
   "click",
   function(event) {
 
     if (
-      !event.target.closest(
-        "#menu"
-      ) &&
-      !event.target.closest(
-        "#menuButton"
-      )
+      !menu.contains(event.target) &&
+      !menuButton.contains(event.target)
     ) {
 
       menu.style.display =
@@ -2197,110 +1941,39 @@ document.addEventListener(
 );
 
 
-/* =========================
-   CHARGER MESSAGES
-========================= */
+/* FERMER PANNEAUX */
 
-function loadMessages() {
+document.querySelectorAll(
+  ".panel"
+).forEach(panel => {
 
-  const saved =
-    localStorage.getItem(
-      "hacker_f5_messages"
-    );
+  panel.addEventListener(
+    "click",
+    function(event) {
 
-  if (!saved) {
+      if (
+        event.target === panel
+      ) {
 
-    chat.innerHTML = `
-      <div class="message ai">
-
-        <div class="bubble">
-
-          Bonjour 👑
-
-          <br><br>
-
-          Je suis
-          <strong>HACKER F5</strong>.
-
-          <br><br>
-
-          Comment puis-je t'aider ?
-
-        </div>
-
-      </div>
-    `;
-
-    return;
-  }
-
-  try {
-
-    messages =
-      JSON.parse(saved);
-
-    chat.innerHTML = "";
-
-    messages.forEach(
-      message => {
-
-        addMessage(
-          message.content,
-          message.role === "user"
-            ? "user"
-            : "ai"
-        );
+        closePanels();
 
       }
-    );
-
-  } catch (error) {
-
-    console.error(error);
-
-    messages = [];
-
-  }
-
-}
-
-
-/* =========================
-   SAUVEGARDE AUTOMATIQUE
-========================= */
-
-setInterval(
-  function() {
-
-    if (messages.length > 0) {
-
-      localStorage.setItem(
-        "hacker_f5_messages",
-        JSON.stringify(messages)
-      );
 
     }
+  );
 
-  },
-  1000
-);
+});
 
 
-/* =========================
-   INITIALISATION
-========================= */
-
-updateHistory();
+/* DÉMARRAGE */
 
 loadMessages();
 
-status.textContent =
-  "F5 CORE • ONLINE";
+updateHistory();
 
 messageInput.focus();
 
 </script>
 
 </body>
-
 </html>
