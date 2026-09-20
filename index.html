@@ -12,7 +12,6 @@
   --panel2:#0d1118;
   --line:#242b35;
   --red:#ff1744;
-  --red2:#ff3158;
   --text:#f4f7fb;
   --muted:#8993a3;
   --green:#22e6a7;
@@ -40,7 +39,7 @@ body{
   width:100%;
   max-width:820px;
   margin:auto;
-  padding:12px 12px 125px;
+  padding:10px 10px 130px;
 }
 
 /* HEADER */
@@ -59,15 +58,12 @@ body{
   border:2px solid var(--red);
   object-fit:cover;
   background:#07090c;
-  box-shadow:
-    0 0 12px #ff174455,
-    0 0 30px #ff174422;
+  box-shadow:0 0 14px #ff174455,0 0 30px #ff174422;
 }
 
 .brand b{
   display:block;
   font-size:22px;
-  letter-spacing:.5px;
 }
 
 .brand small{
@@ -77,22 +73,25 @@ body{
   font-size:11px;
 }
 
-/* MAIN STATUS */
+/* PANEL */
+
+.panel,
+.banner{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#0d1118,#07090d);
+  border-radius:18px;
+  box-shadow:0 0 35px #0009;
+}
 
 .panel{
-  border:1px solid var(--line);
-  background:
-    linear-gradient(180deg,#0d1118,#07090d);
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 0 35px #0009;
+  padding:15px;
 }
 
 .panel-title{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
 .panel-title h2{
@@ -109,11 +108,11 @@ body{
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px;
+  gap:8px;
 }
 
 .stat{
-  min-height:62px;
+  min-height:61px;
   border:1px solid #202631;
   border-radius:13px;
   padding:10px;
@@ -128,30 +127,24 @@ body{
 }
 
 .stat b{
-  font-size:12px;
+  font-size:11px;
 }
 
-/* ANIMATED BANNER */
+/* BANNER */
 
 .banner{
-  margin-top:12px;
-  border:1px solid var(--line);
-  background:#080b10;
-  border-radius:16px;
-  padding:10px;
-  box-shadow:0 0 25px #0008;
+  margin-top:11px;
+  padding:9px;
 }
 
 .banner-frame{
-  min-height:44px;
+  min-height:45px;
   border:1px solid #343b47;
   border-radius:11px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:8px;
+  gap:9px;
   padding:8px 11px;
-  overflow:hidden;
 }
 
 .banner-text{
@@ -159,10 +152,9 @@ body{
   text-align:center;
   font-family:monospace;
   font-size:11px;
-  letter-spacing:.8px;
-  white-space:nowrap;
+  letter-spacing:.6px;
   overflow:hidden;
-  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .dot{
@@ -176,10 +168,10 @@ body{
 .dot.active{
   background:var(--red);
   box-shadow:0 0 12px var(--red);
-  animation:dotPulse 1s infinite;
+  animation:pulse 1s infinite;
 }
 
-@keyframes dotPulse{
+@keyframes pulse{
   0%,100%{opacity:1}
   50%{opacity:.25}
 }
@@ -190,31 +182,29 @@ body{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
-  margin:12px 0;
+  margin:11px 0;
 }
 
 .action-btn,
-.mode-btn{
+.mode-btn,
+.tool{
   border:1px solid var(--line);
-  background:
-    linear-gradient(180deg,#0d1117,#090c11);
-  color:var(--text);
+  background:linear-gradient(180deg,#0d1117,#090c11);
+  color:#fff;
+}
+
+.action-btn{
   border-radius:13px;
-  padding:12px 7px;
+  padding:12px 6px;
   font-size:11px;
   font-weight:bold;
 }
 
 .action-btn:active,
-.mode-btn:active{
-  transform:scale(.97);
-}
-
-.action-btn:hover,
-.mode-btn:hover,
-.mode-btn.active{
-  border-color:#ff174488;
-  box-shadow:0 0 18px #ff17441c;
+.mode-btn:active,
+.tool:active,
+.send:active{
+  transform:scale(.96);
 }
 
 /* MODES */
@@ -223,7 +213,6 @@ body{
   display:flex;
   gap:7px;
   overflow-x:auto;
-  padding-bottom:4px;
   scrollbar-width:none;
 }
 
@@ -233,13 +222,21 @@ body{
 
 .mode-btn{
   white-space:nowrap;
+  border-radius:13px;
   padding:10px 13px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.mode-btn.active{
+  border-color:#ff174488;
+  box-shadow:0 0 18px #ff17441c;
 }
 
 /* CHAT */
 
 .chat{
-  min-height:350px;
+  min-height:360px;
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -278,40 +275,19 @@ body{
   background:#080a0d;
 }
 
-.media{
-  display:block;
-  width:100%;
-  max-width:100%;
-  margin-top:10px;
-  border-radius:12px;
-  background:#000;
-}
-
-.download{
-  display:inline-block;
-  margin-top:9px;
-  padding:8px 11px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  color:#fff;
-  text-decoration:none;
-  font-size:12px;
-}
-
-/* PROGRESS */
+/* PROGRESSION */
 
 .progress-box{
+  min-width:260px;
   border:1px solid #292f39;
   background:#080b10;
   border-radius:13px;
   padding:12px;
-  margin-top:5px;
   font-family:monospace;
   font-size:11px;
 }
 
 .progress-title{
-  color:#fff;
   margin-bottom:9px;
 }
 
@@ -335,18 +311,59 @@ body{
   color:var(--muted);
 }
 
-/* FILE */
+/* MEDIA */
 
-.hidden{
-  display:none!important;
+.media{
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin-top:10px;
+  border-radius:12px;
+  background:#000;
 }
 
-.hint{
-  color:var(--muted);
-  font-size:10px;
-  text-align:center;
-  margin-top:10px;
-  line-height:1.5;
+.download{
+  display:inline-block;
+  margin-top:9px;
+  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  color:#fff;
+  text-decoration:none;
+  font-size:12px;
+}
+
+/* MENU */
+
+.menu{
+  position:fixed;
+  left:10px;
+  right:10px;
+  bottom:73px;
+  max-width:820px;
+  margin:auto;
+  z-index:80;
+  padding:12px;
+  border:1px solid #343b47;
+  border-radius:17px;
+  background:#090c11f5;
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 30px #000;
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+.menu button{
+  padding:12px 5px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:#0d1117;
+  color:#fff;
+  font-size:11px;
 }
 
 /* COMPOSER */
@@ -356,8 +373,8 @@ body{
   left:0;
   right:0;
   bottom:0;
-  z-index:50;
-  padding:9px 10px;
+  z-index:70;
+  padding:8px 9px;
   background:#050608ee;
   backdrop-filter:blur(15px);
   border-top:1px solid #1c222b;
@@ -368,18 +385,22 @@ body{
   margin:auto;
   display:flex;
   align-items:flex-end;
-  gap:7px;
+  gap:6px;
 }
 
 .tool{
-  width:45px;
+  width:43px;
   height:48px;
   flex:none;
-  border:1px solid var(--line);
   border-radius:13px;
-  background:#0a0d12;
-  color:#fff;
   font-size:18px;
+}
+
+.voice.recording{
+  border-color:var(--red);
+  color:var(--red);
+  box-shadow:0 0 15px #ff174444;
+  animation:pulse 1s infinite;
 }
 
 .compose textarea{
@@ -396,12 +417,8 @@ body{
   font-size:14px;
 }
 
-.compose textarea:focus{
-  border-color:#ff174455;
-}
-
 .send{
-  width:50px;
+  width:48px;
   height:48px;
   flex:none;
   border:0;
@@ -409,28 +426,26 @@ body{
   background:var(--red);
   color:#fff;
   font-size:20px;
-  font-weight:bold;
 }
 
-/* MOBILE */
+/* UTILS */
+
+.hidden{
+  display:none!important;
+}
+
+.hint{
+  color:var(--muted);
+  font-size:10px;
+  text-align:center;
+  margin-top:10px;
+  line-height:1.5;
+}
 
 @media(max-width:430px){
 
-  .app{
-    padding-left:9px;
-    padding-right:9px;
-  }
-
   .actions{
     grid-template-columns:repeat(2,1fr);
-  }
-
-  .grid{
-    gap:7px;
-  }
-
-  .stat{
-    padding:9px;
   }
 
   .brand b{
@@ -441,6 +456,18 @@ body{
     width:54px;
     height:54px;
   }
+
+  .compose{
+    gap:4px;
+  }
+
+  .tool{
+    width:40px;
+  }
+
+  .send{
+    width:44px;
+  }
 }
 </style>
 </head>
@@ -449,189 +476,242 @@ body{
 
 <div class="app">
 
-  <header class="top">
+<header class="top">
 
-    <img
-      id="logo"
-      class="logo"
-      alt="HACKER F5"
-      src=""
-    >
+<img
+  id="logo"
+  class="logo"
+  alt="HACKER F5"
+  src=""
+>
 
-    <div class="brand">
-      <b>👑 HACKER F5</b>
-      <small>Assistant IA de cybersécurité responsable</small>
-    </div>
+<div class="brand">
+<b>👑 HACKER F5</b>
+<small>Assistant IA de cybersécurité responsable</small>
+</div>
 
-  </header>
-
-
-  <!-- PANEL PRINCIPAL -->
-
-  <section class="panel">
-
-    <div class="panel-title">
-      <h2>👑 HACKER F5</h2>
-      <span class="live">● EN LIGNE</span>
-    </div>
-
-    <div class="grid">
-
-      <div class="stat">
-        <span>STATUT</span>
-        <b>● ACTIF</b>
-      </div>
-
-      <div class="stat">
-        <span>MODE</span>
-        <b>⚡ NO CENSURE ACTIF</b>
-      </div>
-
-      <div class="stat">
-        <span>IA</span>
-        <b>● EN LIGNE</b>
-      </div>
-
-      <div class="stat">
-        <span>ÉTAT</span>
-        <b>● STABLE</b>
-      </div>
-
-      <div class="stat">
-        <span>SESSION</span>
-        <b>● ACTIVE</b>
-      </div>
-
-      <div class="stat">
-        <span>SYSTÈME</span>
-        <b>● OPÉRATIONNEL</b>
-      </div>
-
-      <div class="stat">
-        <span>OUTILS</span>
-        <b>● DISPONIBLES</b>
-      </div>
-
-      <div class="stat">
-        <span>MODE ACTUEL</span>
-        <b id="modeLabel">CHAT IA</b>
-      </div>
-
-    </div>
-
-  </section>
+</header>
 
 
-  <!-- BANNIÈRE ANIMÉE -->
+<section class="panel">
 
-  <section class="banner">
+<div class="panel-title">
+<h2>👑 HACKER F5</h2>
+<span class="live">● EN LIGNE</span>
+</div>
 
-    <div class="banner-frame">
+<div class="grid">
 
-      <i id="dot1" class="dot active"></i>
+<div class="stat">
+<span>STATUT</span>
+<b>● ACTIF</b>
+</div>
 
-      <div id="activity" class="banner-text">
-        PRÊT...
-      </div>
+<div class="stat">
+<span>MODE</span>
+<b>⚡ ACTIF</b>
+</div>
 
-      <i id="dot2" class="dot active"></i>
+<div class="stat">
+<span>IA</span>
+<b>● EN LIGNE</b>
+</div>
 
-    </div>
+<div class="stat">
+<span>ÉTAT</span>
+<b>● STABLE</b>
+</div>
 
-  </section>
+<div class="stat">
+<span>SESSION</span>
+<b>● ACTIVE</b>
+</div>
 
+<div class="stat">
+<span>SYSTÈME</span>
+<b>● OPÉRATIONNEL</b>
+</div>
 
-  <!-- ACTIONS RAPIDES -->
+<div class="stat">
+<span>OUTILS</span>
+<b>● DISPONIBLES</b>
+</div>
 
-  <div class="actions">
+<div class="stat">
+<span>MODE ACTUEL</span>
+<b id="modeLabel">CHAT IA</b>
+</div>
 
-    <button class="action-btn" onclick="setMode('image')">
-      🖼️ Image
-    </button>
-
-    <button class="action-btn" onclick="setMode('video')">
-      🎬 Vidéo
-    </button>
-
-    <button class="action-btn" onclick="setMode('music')">
-      🎵 Musique
-    </button>
-
-    <button class="action-btn" onclick="setMode('web')">
-      🌐 Recherche
-    </button>
-
-    <button class="action-btn" onclick="setMode('document')">
-      📄 Document
-    </button>
-
-    <button class="action-btn" onclick="newChat()">
-      🆕 Nouveau
-    </button>
-
-  </div>
-
-
-  <!-- MODES -->
-
-  <div class="mode">
-
-    <button
-      class="mode-btn active"
-      data-mode="chat"
-      onclick="setMode('chat')">
-      💬 Chat
-    </button>
-
-    <button
-      class="mode-btn"
-      data-mode="code"
-      onclick="setMode('code')">
-      💻 Code
-    </button>
-
-    <button
-      class="mode-btn"
-      data-mode="cyber"
-      onclick="setMode('cyber')">
-      🛡️ Cyber
-    </button>
-
-    <button
-      class="mode-btn"
-      data-mode="decode"
-      onclick="setMode('decode')">
-      🔐 Décodage
-    </button>
-
-    <button
-      class="mode-btn"
-      data-mode="files"
-      onclick="setMode('files')">
-      📎 Fichiers
-    </button>
-
-  </div>
+</div>
+</section>
 
 
-  <!-- CHAT -->
+<section class="banner">
 
-  <main id="chat" class="chat"></main>
+<div class="banner-frame">
+
+<i id="dot1" class="dot active"></i>
+
+<div id="activity" class="banner-text">
+PRÊT...
+</div>
+
+<i id="dot2" class="dot active"></i>
+
+</div>
+
+</section>
 
 
-  <!-- IMPORT -->
+<div class="actions">
 
-  <input
-    id="file"
-    type="file"
-    class="hidden"
-    onchange="readFile(event)"
-  >
+<button class="action-btn" onclick="setMode('image')">
+🖼️ Image
+</button>
+
+<button class="action-btn" onclick="setMode('video')">
+🎬 Vidéo
+</button>
+
+<button class="action-btn" onclick="setMode('music')">
+🎵 Musique
+</button>
+
+<button class="action-btn" onclick="setMode('web')">
+🌐 Recherche
+</button>
+
+<button class="action-btn" onclick="setMode('document')">
+📄 Document
+</button>
+
+<button class="action-btn" onclick="newChat()">
+🆕 Nouveau
+</button>
+
+</div>
 
 
-  <div class="hint">
-    /image · /video · /music · /pdf · /docx · /xlsx · /pptx · /txt · /md · /csv
-  </div>
+<div class="mode">
+
+<button class="mode-btn active"
+data-mode="chat"
+onclick="setMode('chat')">
+💬 Chat
+</button>
+
+<button class="mode-btn"
+data-mode="code"
+onclick="setMode('code')">
+💻 Code
+</button>
+
+<button class="mode-btn"
+data-mode="cyber"
+onclick="setMode('cyber')">
+🛡️ Cyber
+</button>
+
+<button class="mode-btn"
+data-mode="decode"
+onclick="setMode('decode')">
+🔐 Décodage
+</button>
+
+<button class="mode-btn"
+data-mode="files"
+onclick="setMode('files')">
+📎 Fichiers
+</button>
+
+</div>
+
+
+<main id="chat" class="chat"></main>
+
+
+<input
+id="file"
+type="file"
+class="hidden"
+onchange="readFile(event)"
+accept=".txt,.md,.csv,.json,.js,.html,.css,.py,.java,.php,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+>
+
+
+<div class="hint">
+/image · /video · /music · /pdf · /docx · /xlsx · /pptx · /txt · /md · /csv
+</div>
+
+</div>
+
+
+<!-- MENU + -->
+
+<div id="plusMenu" class="menu hidden">
+
+<div class="menu-grid">
+
+<button onclick="setMode('image');closeMenus()">
+🖼️ Image
+</button>
+
+<button onclick="setMode('video');closeMenus()">
+🎬 Vidéo
+</button>
+
+<button onclick="setMode('music');closeMenus()">
+🎵 Musique
+</button>
+
+<button onclick="setMode('document');closeMenus()">
+📄 Document
+</button>
+
+<button onclick="document.getElementById('file').click();closeMenus()">
+📎 Fichier
+</button>
+
+<button onclick="newChat();closeMenus()">
+🆕 Nouveau
+</button>
+
+</div>
+
+</div>
+
+
+<!-- MENU = -->
+
+<div id="equalMenu" class="menu hidden">
+
+<div class="menu-grid">
+
+<button onclick="setMode('code');closeMenus()">
+💻 Code
+</button>
+
+<button onclick="setMode('cyber');closeMenus()">
+🛡️ Cyber
+</button>
+
+<button onclick="setMode('decode');closeMenus()">
+🔐 Décodage
+</button>
+
+<button onclick="setMode('web');closeMenus()">
+🌐 Recherche
+</button>
+
+<button onclick="speakLast();closeMenus()">
+🔊 Lire
+</button>
+
+<button onclick="stopVoice();closeMenus()">
+⏹️ Stop vocal
+</button>
+
+</div>
 
 </div>
 
@@ -640,1199 +720,1313 @@ body{
 
 <div class="composer">
 
-  <div class="compose">
+<div class="compose">
 
-    <button
-      class="tool"
-      onclick="document.getElementById('file').click()">
-      📎
-    </button>
+<button
+class="tool"
+title="Ajouter"
+onclick="togglePlus()">
++
+</button>
 
-    <textarea
-      id="input"
-      placeholder="Écris à HACKER F5..."
-      onkeydown="key(event)"
-    ></textarea>
+<button
+class="tool"
+title="Options"
+onclick="toggleEqual()">
+=
+</button>
 
-    <button
-      class="send"
-      onclick="send()">
-      ➤
-    </button>
+<button
+id="voiceButton"
+class="tool voice"
+title="Vocal"
+onclick="toggleVoice()">
+🎙️
+</button>
 
-  </div>
+<textarea
+id="input"
+placeholder="Écris à HACKER F5..."
+onkeydown="key(event)"
+></textarea>
+
+<button
+class="send"
+onclick="send()">
+➤
+</button>
+
+</div>
 
 </div>
 
 
 <script>
 
-/* =========================
-   CONFIGURATION
-========================= */
+const chat=document.getElementById("chat");
+const input=document.getElementById("input");
+const activity=document.getElementById("activity");
+const modeLabel=document.getElementById("modeLabel");
+const voiceButton=document.getElementById("voiceButton");
 
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-const activity = document.getElementById("activity");
-const modeLabel = document.getElementById("modeLabel");
+let messages=[];
+let currentMode="chat";
+let recognition=null;
+let listening=false;
 
-let messages = [];
-let currentMode = "chat";
+let history=[];
 
-let history = [];
-
-try {
-  history = JSON.parse(
-    localStorage.getItem("hacker_f5_history") || "[]"
-  );
-} catch {
-  history = [];
+try{
+history=JSON.parse(
+localStorage.getItem("hacker_f5_history")||"[]"
+);
+}catch{
+history=[];
 }
 
 
-/* =========================
-   OUTILS
-========================= */
+/* LOGO */
+
+const savedLogo=localStorage.getItem("hacker_f5_logo");
+
+if(savedLogo){
+document.getElementById("logo").src=savedLogo;
+}
+
+
+/* SECURITE HTML */
 
 function esc(value){
 
-  return String(value).replace(
-    /[&<>"']/g,
-    function(m){
-
-      return {
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m];
-
-    }
-  );
+return String(value).replace(
+/[&<>"']/g,
+m=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
 
 }
 
+
+/* MESSAGES */
 
 function addMessage(role,text,extra=""){
 
-  const element = document.createElement("div");
+const element=document.createElement("div");
 
-  element.className = "msg " + role;
+element.className="msg "+role;
 
-  element.innerHTML =
-    esc(text) + extra;
+element.innerHTML=esc(text)+extra;
 
-  chat.appendChild(element);
+chat.appendChild(element);
 
-  chat.scrollTop = chat.scrollHeight;
+chat.scrollTop=chat.scrollHeight;
 
-  return element;
+return element;
 }
 
 
-/* =========================
-   ACTIVITÉ HUD
-========================= */
-
-let activityTimer = null;
-
-function setActivity(text){
-
-  activity.textContent = text;
-
-  clearTimeout(activityTimer);
-
-  activityTimer = setTimeout(() => {
-
-    activity.textContent = "PRÊT...";
-
-  }, 700);
-
-}
-
+/* HUD */
 
 function setWorking(text){
 
-  activity.textContent = text;
+activity.textContent=text;
 
-  document.getElementById("dot1")
-    .classList.add("active");
+document.getElementById("dot1")
+.classList.add("active");
 
-  document.getElementById("dot2")
-    .classList.add("active");
-
+document.getElementById("dot2")
+.classList.add("active");
 }
-
 
 function setReady(){
 
-  activity.textContent = "PRÊT...";
+activity.textContent="PRÊT...";
+}
+
+
+/* MENUS */
+
+function closeMenus(){
+
+document.getElementById("plusMenu")
+.classList.add("hidden");
+
+document.getElementById("equalMenu")
+.classList.add("hidden");
+
+}
+
+function togglePlus(){
+
+const menu=document.getElementById("plusMenu");
+
+document.getElementById("equalMenu")
+.classList.add("hidden");
+
+menu.classList.toggle("hidden");
+
+}
+
+function toggleEqual(){
+
+const menu=document.getElementById("equalMenu");
+
+document.getElementById("plusMenu")
+.classList.add("hidden");
+
+menu.classList.toggle("hidden");
 
 }
 
 
-/* =========================
-   MODE
-========================= */
+/* MODES */
 
 function setMode(mode){
 
-  currentMode = mode;
+currentMode=mode;
 
-  modeLabel.textContent =
-    mode.toUpperCase();
+modeLabel.textContent=mode.toUpperCase();
 
-  document
-    .querySelectorAll(".mode-btn")
-    .forEach(button => {
+document.querySelectorAll(".mode-btn")
+.forEach(button=>{
+button.classList.toggle(
+"active",
+button.dataset.mode===mode
+);
+});
 
-      button.classList.toggle(
-        "active",
-        button.dataset.mode === mode
-      );
+if(mode==="files"){
 
-    });
+document.getElementById("file").click();
+return;
 
-  if(mode === "files"){
+}
 
-    document
-      .getElementById("file")
-      .click();
+if(mode==="image")
+input.placeholder="Décris l'image à générer...";
 
-    return;
-  }
+else if(mode==="video")
+input.placeholder="Décris la vidéo à générer...";
 
-  if(mode === "image"){
+else if(mode==="music")
+input.placeholder="Décris la musique ou chanson...";
 
-    input.placeholder =
-      "Décris l'image à générer...";
+else if(mode==="web")
+input.placeholder="Que veux-tu rechercher ?";
 
-  }
-  else if(mode === "video"){
+else if(mode==="document")
+input.placeholder="Décris le document à créer...";
 
-    input.placeholder =
-      "Décris la vidéo à générer...";
+else
+input.placeholder="Écris à HACKER F5...";
 
-  }
-  else if(mode === "music"){
+input.focus();
 
-    input.placeholder =
-      "Décris la musique ou chanson...";
-
-  }
-  else if(mode === "web"){
-
-    input.placeholder =
-      "Que veux-tu rechercher ?";
-
-  }
-  else if(mode === "document"){
-
-    input.placeholder =
-      "Décris le document à créer...";
-
-  }
-  else{
-
-    input.placeholder =
-      "Écris à HACKER F5...";
-
-  }
-
-  input.focus();
 }
 
 
-/* =========================
-   NOUVELLE CONVERSATION
-========================= */
+/* NOUVELLE CONVERSATION */
 
 function newChat(){
 
-  messages = [];
+messages=[];
+chat.innerHTML="";
 
-  chat.innerHTML = "";
+addMessage(
+"bot",
+"Lab HACKF5 ACTIVATE 🇦🇱 HACKF5 ✍️(by - king 👑 Franck)"
+);
 
-  addMessage(
-    "bot",
-    "Lab HACKF5 ACTIVATE 🇦🇱 HACKF5 ✍️(by - king 👑 Franck)"
-  );
+addMessage(
+"system",
+"HACKER F5 est prêt. Comment puis-je t'aider ?"
+);
 
-  addMessage(
-    "system",
-    "HACKER F5 est prêt. Comment puis-je t'aider ?"
-  );
-
-  setReady();
+setReady();
 
 }
 
 
-/* =========================
-   HISTORIQUE
-========================= */
+/* HISTORIQUE */
 
 function saveHistory(){
 
-  try{
+try{
 
-    localStorage.setItem(
-      "hacker_f5_history",
-      JSON.stringify(
-        history.slice(-50)
-      )
-    );
+localStorage.setItem(
+"hacker_f5_history",
+JSON.stringify(history.slice(-50))
+);
 
-  }catch{
-
-  }
+}catch{}
 
 }
 
 
-/* =========================
-   CLAVIER
-========================= */
+/* CLAVIER */
 
 function key(event){
 
-  if(
-    event.key === "Enter" &&
-    !event.shiftKey
-  ){
+if(
+event.key==="Enter" &&
+!event.shiftKey
+){
 
-    event.preventDefault();
+event.preventDefault();
+send();
 
-    send();
-
-  }
+}
 
 }
 
 
-/* =========================
-   PROGRESSION
-========================= */
+/* PROGRESSION */
 
 function progressMessage(title){
 
-  const box =
-    document.createElement("div");
+const box=document.createElement("div");
 
-  box.className =
-    "msg bot";
+box.className="msg bot";
 
-  box.innerHTML = `
-    <div class="progress-box">
+box.innerHTML=`
+<div class="progress-box">
 
-      <div class="progress-title">
-        👑 ${esc(title)}
-      </div>
+<div class="progress-title">
+👑 ${esc(title)}
+</div>
 
-      <div class="progress-bar">
-        <div
-          class="progress-fill"
-          id="progressFill">
-        </div>
-      </div>
+<div class="progress-bar">
+<div class="progress-fill"></div>
+</div>
 
-      <div
-        class="progress-status"
-        id="progressStatus">
-        Initialisation...
-      </div>
+<div class="progress-status">
+Initialisation...
+</div>
 
-    </div>
-  `;
+</div>
+`;
 
-  chat.appendChild(box);
+chat.appendChild(box);
 
-  chat.scrollTop = chat.scrollHeight;
+chat.scrollTop=chat.scrollHeight;
 
-  return {
-    box,
-    fill:box.querySelector("#progressFill"),
-    status:box.querySelector("#progressStatus")
-  };
+return{
+box,
+fill:box.querySelector(".progress-fill"),
+status:box.querySelector(".progress-status")
+};
 
 }
 
 
 function updateProgress(progress,value,status){
 
-  progress.fill.style.width =
-    value + "%";
-
-  progress.status.textContent =
-    status;
+progress.fill.style.width=value+"%";
+progress.status.textContent=status;
 
 }
 
 
-/* =========================
-   ENVOI PRINCIPAL
-========================= */
+/* ENVOI */
 
 async function send(){
 
-  const text =
-    input.value.trim();
+const text=input.value.trim();
 
-  if(!text)return;
+if(!text)return;
 
-  input.value = "";
+input.value="";
 
-  addMessage(
-    "user",
-    text
-  );
+closeMenus();
 
-  messages.push({
-    role:"user",
-    content:text
-  });
+addMessage("user",text);
 
+messages.push({
+role:"user",
+content:text
+});
 
-  /* COMMANDES */
 
-  let command = null;
+let command=null;
 
-  if(/^\/image\s+/i.test(text))
-    command = "image";
+if(/^\/image\s+/i.test(text))
+command="image";
 
-  else if(/^\/video\s+/i.test(text))
-    command = "video";
+else if(/^\/video\s+/i.test(text))
+command="video";
 
-  else if(/^\/music\s+/i.test(text))
-    command = "music";
+else if(/^\/music\s+/i.test(text))
+command="music";
 
-  else if(
-    /^\/(pdf|docx|xlsx|pptx|txt|md|csv)\s+/i.test(text)
-  ){
+else if(/^\/(pdf|docx|xlsx|pptx|txt|md|csv)\s+/i.test(text))
+command=text.match(/^\/(\w+)/i)[1].toLowerCase();
 
-    command =
-      text.match(/^\/(\w+)/i)[1]
-      .toLowerCase();
 
-  }
+try{
 
+if(command==="image"){
 
-  try{
+await generateImage(
+text.replace(/^\/image\s+/i,"")
+);
 
-    /* IMAGE */
+return;
+}
 
-    if(command === "image"){
 
-      await generateImage(
-        text.replace(
-          /^\/image\s+/i,
-          ""
-        )
-      );
+if(command==="video"){
 
-      return;
-    }
+await generateVideo(
+text.replace(/^\/video\s+/i,"")
+);
 
+return;
+}
 
-    /* VIDÉO */
 
-    if(command === "video"){
+if(command==="music"){
 
-      await generateVideo(
-        text.replace(
-          /^\/video\s+/i,
-          ""
-        )
-      );
+await generateMusic(
+text.replace(/^\/music\s+/i,"")
+);
 
-      return;
-    }
+return;
+}
 
 
-    /* MUSIQUE */
+if([
+"pdf",
+"docx",
+"xlsx",
+"pptx",
+"txt",
+"md",
+"csv"
+].includes(command)){
 
-    if(command === "music"){
+await generateDoc(
+command,
+text.replace(/^\/\w+\s+/i,"")
+);
 
-      await generateMusic(
-        text.replace(
-          /^\/music\s+/i,
-          ""
-        )
-      );
+return;
+}
 
-      return;
-    }
 
+if(currentMode==="web"){
 
-    /* DOCUMENT */
+await webSearch(text);
 
-    if([
-      "pdf",
-      "docx",
-      "xlsx",
-      "pptx",
-      "txt",
-      "md",
-      "csv"
-    ].includes(command)){
+return;
+}
 
-      await generateDoc(
-        command,
-        text.replace(
-          /^\/\w+\s+/i,
-          ""
-        )
-      );
 
-      return;
-    }
+/* MISTRAL */
 
-
-    /* RECHERCHE WEB */
-
-    if(currentMode === "web"){
-
-      await webSearch(text);
-
-      return;
-    }
-
-
-    /* CHAT MISTRAL */
-
-    setWorking(
-      currentMode === "code"
-        ? "ANALYSE DU CODE..."
-        : currentMode === "cyber"
-        ? "ANALYSE CYBERSÉCURITÉ..."
-        : currentMode === "decode"
-        ? "ANALYSE / DÉCODAGE..."
-        : "ANALYSE EN COURS..."
-    );
-
-
-    const response =
-      await fetch(
-        "/api/chat",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            messages,
-            mode:currentMode
-          })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !response.ok ||
-      !data.ok
-    ){
-
-      throw new Error(
-        data.error ||
-        "Erreur serveur"
-      );
-
-    }
-
-
-    const answer =
-      data.answer ||
-      "Réponse vide.";
-
-
-    addMessage(
-      "bot",
-      answer
-    );
-
-
-    messages.push({
-      role:"assistant",
-      content:answer
-    });
-
-
-    history.push({
-      time:new Date().toISOString(),
-      question:text,
-      answer
-    });
-
-
-    saveHistory();
-
-  }
-
-  catch(error){
-
-    addMessage(
-      "bot",
-      "⚠️ " +
-      (
-        error.message ||
-        "Une erreur est survenue."
-      )
-    );
-
-  }
-
-  finally{
-
-    setReady();
-
-  }
+setWorking(
+currentMode==="code"
+?"ANALYSE DU CODE..."
+:
+currentMode==="cyber"
+?"ANALYSE CYBERSÉCURITÉ..."
+:
+currentMode==="decode"
+?"ANALYSE / DÉCODAGE..."
+:
+"ANALYSE EN COURS..."
+);
+
+
+const response=await fetch(
+"/api/chat",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+messages,
+mode:currentMode
+})
+}
+);
+
+
+const data=await response.json();
+
+
+if(!response.ok||!data.ok){
+
+throw new Error(
+data.error||"Erreur serveur"
+);
 
 }
 
 
-/* =========================
-   IMAGE
-========================= */
+const answer=data.answer||"Réponse vide.";
+
+addMessage("bot",answer);
+
+messages.push({
+role:"assistant",
+content:answer
+});
+
+history.push({
+time:new Date().toISOString(),
+question:text,
+answer
+});
+
+saveHistory();
+
+
+/* LECTURE VOCALE OPTIONNELLE */
+
+if(localStorage.getItem("hacker_f5_auto_voice")==="true"){
+speak(answer);
+}
+
+}
+
+catch(error){
+
+addMessage(
+"bot",
+"⚠️ "+(
+error.message||
+"Une erreur est survenue."
+)
+);
+
+}
+
+finally{
+
+setReady();
+
+}
+
+}
+
+
+/* IMAGE */
 
 async function generateImage(prompt){
 
-  if(!prompt){
+if(!prompt){
 
-    addMessage(
-      "bot",
-      "Décris l'image que tu veux générer."
-    );
+addMessage(
+"bot",
+"Décris l'image que tu veux générer."
+);
 
-    return;
-  }
+return;
+}
 
+setWorking("GÉNÉRATION DE L'IMAGE...");
 
-  setWorking(
-    "GÉNÉRATION DE L'IMAGE..."
-  );
+const progress=
+progressMessage("GÉNÉRATION IMAGE");
 
+updateProgress(
+progress,
+20,
+"Préparation..."
+);
 
-  const progress =
-    progressMessage(
-      "GÉNÉRATION IMAGE"
-    );
+const response=await fetch(
+"/api/generate-image",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({prompt})
+}
+);
 
+updateProgress(
+progress,
+70,
+"Traitement..."
+);
 
-  updateProgress(
-    progress,
-    20,
-    "Préparation..."
-  );
+const data=await response.json();
 
+if(!response.ok||!data.ok){
 
-  const response =
-    await fetch(
-      "/api/generate-image",
-      {
-        method:"POST",
+throw new Error(
+data.error||
+"Génération image impossible"
+);
 
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
+}
 
-        body:JSON.stringify({
-          prompt
-        })
-      }
-    );
+updateProgress(
+progress,
+100,
+"Terminé."
+);
 
+if(data.image){
 
-  updateProgress(
-    progress,
-    70,
-    "Traitement..."
-  );
+addMessage(
+"bot",
+"🖼️ Image générée.",
+`
+<img
+class="media"
+src="${esc(data.image)}"
+alt="Image générée"
+>
+<a
+class="download"
+href="${esc(data.image)}"
+target="_blank"
+rel="noopener">
+📥 Ouvrir / télécharger
+</a>
+`
+);
 
+}else{
 
-  const data =
-    await response.json();
+throw new Error(
+"Aucune image retournée."
+);
 
-
-  if(
-    !response.ok ||
-    !data.ok
-  ){
-
-    throw new Error(
-      data.error ||
-      "Génération image impossible"
-    );
-
-  }
-
-
-  updateProgress(
-    progress,
-    100,
-    "Terminé."
-  );
-
-
-  const image =
-    data.image;
-
-
-  addMessage(
-    "bot",
-    "🖼️ Image générée.",
-    `
-      <img
-        class="media"
-        src="${esc(image)}"
-        alt="Image générée par HACKER F5"
-      >
-
-      <a
-        class="download"
-        href="${esc(image)}"
-        target="_blank"
-        rel="noopener">
-        📥 Ouvrir / télécharger
-      </a>
-    `
-  );
+}
 
 }
 
 
-/* =========================
-   VIDÉO
-========================= */
+/* VIDEO */
 
 async function generateVideo(prompt){
 
-  if(!prompt){
+if(!prompt){
 
-    addMessage(
-      "bot",
-      "Décris la vidéo que tu veux générer."
-    );
+addMessage(
+"bot",
+"Décris la vidéo que tu veux générer."
+);
 
-    return;
-  }
+return;
+}
 
+setWorking("GÉNÉRATION DE LA VIDÉO...");
 
-  setWorking(
-    "GÉNÉRATION DE LA VIDÉO..."
-  );
+const progress=
+progressMessage("GÉNÉRATION VIDÉO");
 
+updateProgress(
+progress,
+15,
+"Initialisation..."
+);
 
-  const progress =
-    progressMessage(
-      "GÉNÉRATION VIDÉO"
-    );
+const response=await fetch(
+"/api/generate-video",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({prompt})
+}
+);
 
+updateProgress(
+progress,
+75,
+"Traitement..."
+);
 
-  updateProgress(
-    progress,
-    15,
-    "Initialisation..."
-  );
+const data=await response.json();
 
+if(!response.ok||!data.ok){
 
-  const response =
-    await fetch(
-      "/api/generate-video",
-      {
-        method:"POST",
+throw new Error(
+data.error||
+"Génération vidéo impossible"
+);
 
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
+}
 
-        body:JSON.stringify({
-          prompt
-        })
-      }
-    );
+updateProgress(
+progress,
+100,
+"Vidéo prête."
+);
 
+if(data.video){
 
-  updateProgress(
-    progress,
-    75,
-    "Traitement de la vidéo..."
-  );
+addMessage(
+"bot",
+"🎬 Vidéo générée.",
+`
+<video
+class="media"
+controls
+src="${esc(data.video)}">
+</video>
 
+<a
+class="download"
+href="${esc(data.video)}"
+target="_blank"
+rel="noopener">
+📥 Ouvrir
+</a>
+`
+);
 
-  const data =
-    await response.json();
+}else{
 
+addMessage(
+"bot",
+"🎬 La demande vidéo a été envoyée."
+);
 
-  if(
-    !response.ok ||
-    !data.ok
-  ){
-
-    throw new Error(
-      data.error ||
-      "Génération vidéo impossible"
-    );
-
-  }
-
-
-  updateProgress(
-    progress,
-    100,
-    "Vidéo prête."
-  );
-
-
-  if(data.video){
-
-    addMessage(
-      "bot",
-      "🎬 Vidéo générée.",
-      `
-        <video
-          class="media"
-          controls
-          src="${esc(data.video)}">
-        </video>
-
-        <a
-          class="download"
-          href="${esc(data.video)}"
-          target="_blank"
-          rel="noopener">
-          📥 Ouvrir
-        </a>
-      `
-    );
-
-  }
-  else{
-
-    addMessage(
-      "bot",
-      "🎬 La demande vidéo a été envoyée. Le traitement continue côté serveur."
-    );
-
-  }
+}
 
 }
 
 
-/* =========================
-   MUSIQUE
-========================= */
+/* MUSIQUE */
 
 async function generateMusic(prompt){
 
-  if(!prompt){
+if(!prompt){
 
-  addMessage(
-    "bot",
-    "Décris la musique ou la chanson que tu veux créer."
-  );
+addMessage(
+"bot",
+"Décris la musique ou la chanson."
+);
 
-  return;
+return;
 }
 
+setWorking("CRÉATION DE LA MUSIQUE...");
 
-setWorking(
-  "CRÉATION DE LA MUSIQUE..."
-);
-
-
-const progress =
-  progressMessage(
-    "CRÉATION MUSICALE"
-  );
-
+const progress=
+progressMessage("CRÉATION MUSICALE");
 
 updateProgress(
-  progress,
-  20,
-  "Préparation..."
+progress,
+20,
+"Préparation..."
 );
 
-
-const response =
-  await fetch(
-    "/api/generate-music",
-    {
-      method:"POST",
-
-      headers:{
-        "Content-Type":
-          "application/json"
-      },
-
-      body:JSON.stringify({
-        prompt
-      })
-    }
-  );
-
+const response=await fetch(
+"/api/generate-music",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({prompt})
+}
+);
 
 updateProgress(
-  progress,
-  75,
-  "Création audio..."
+progress,
+75,
+"Création audio..."
 );
 
+const data=await response.json();
 
-const data =
-  await response.json();
+if(!response.ok||!data.ok){
 
-
-if(
-  !response.ok ||
-  !data.ok
-){
-
-  throw new Error(
-    data.error ||
-    "Génération musicale impossible"
-  );
+throw new Error(
+data.error||
+"Génération musicale impossible"
+);
 
 }
 
-
 updateProgress(
-  progress,
-  100,
-  "Terminé."
+progress,
+100,
+"Terminé."
 );
-
 
 if(data.audio){
 
-  addMessage(
-    "bot",
-    "🎵 Musique générée.",
-    `
-      <audio
-        class="media"
-        controls
-        src="${esc(data.audio)}">
-      </audio>
+addMessage(
+"bot",
+"🎵 Musique générée.",
+`
+<audio
+class="media"
+controls
+src="${esc(data.audio)}">
+</audio>
 
-      <a
-        class="download"
-        href="${esc(data.audio)}"
-        target="_blank"
-        rel="noopener">
-        📥 Ouvrir
-      </a>
-    `
-  );
+<a
+class="download"
+href="${esc(data.audio)}"
+target="_blank"
+rel="noopener">
+📥 Ouvrir
+</a>
+`
+);
 
-}
-else{
+}else{
 
-  addMessage(
-    "bot",
-    "🎵 La création musicale a été lancée, mais aucun fichier audio n'est encore disponible."
-  );
-
-}
+addMessage(
+"bot",
+"🎵 La création musicale a été lancée."
+);
 
 }
-
-
-/* =========================
-   DOCUMENTS
-========================= */
-
-async function generateDoc(
-  format,
-  content
-){
-
-  if(!content){
-
-    addMessage(
-      "bot",
-      "Indique le contenu du document à créer."
-    );
-
-    return;
-  }
-
-
-  setWorking(
-    "GÉNÉRATION DU DOCUMENT..."
-  );
-
-
-  const progress =
-    progressMessage(
-      "GÉNÉRATION DOCUMENT"
-    );
-
-
-  updateProgress(
-    progress,
-    25,
-    "Préparation du fichier..."
-  );
-
-
-  const response =
-    await fetch(
-      "/api/generate-document",
-      {
-        method:"POST",
-
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
-
-        body:JSON.stringify({
-          format,
-          title:"HACKER F5",
-          content
-        })
-      }
-    );
-
-
-  if(!response.ok){
-
-    let errorData = {};
-
-    try{
-      errorData =
-        await response.json();
-    }catch{}
-
-    throw new Error(
-      errorData.error ||
-      "Impossible de créer le document."
-    );
-
-  }
-
-
-  updateProgress(
-    progress,
-    90,
-    "Préparation du téléchargement..."
-  );
-
-
-  const blob =
-    await response.blob();
-
-
-  const url =
-    URL.createObjectURL(blob);
-
-
-  const link =
-    document.createElement("a");
-
-  link.href = url;
-
-  link.download =
-    "hacker-f5." + format;
-
-  document.body.appendChild(link);
-
-  link.click();
-
-  link.remove();
-
-  URL.revokeObjectURL(url);
-
-
-  updateProgress(
-    progress,
-    100,
-    "Terminé."
-  );
-
-
-  addMessage(
-    "bot",
-    "📥 Document " +
-    format.toUpperCase() +
-    " généré."
-  );
 
 }
 
 
-/* =========================
-   RECHERCHE WEB
-========================= */
+/* DOCUMENTS */
+
+async function generateDoc(format,content){
+
+if(!content){
+
+addMessage(
+"bot",
+"Indique le contenu du document."
+);
+
+return;
+}
+
+setWorking("GÉNÉRATION DU DOCUMENT...");
+
+const progress=
+progressMessage(
+"GÉNÉRATION "+
+format.toUpperCase()
+);
+
+updateProgress(
+progress,
+25,
+"Préparation..."
+);
+
+const response=await fetch(
+"/api/generate-document",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+format,
+title:"HACKER F5",
+content
+})
+}
+);
+
+if(!response.ok){
+
+let errorData={};
+
+try{
+errorData=await response.json();
+}catch{}
+
+throw new Error(
+errorData.error||
+"Impossible de créer le document."
+);
+
+}
+
+updateProgress(
+progress,
+90,
+"Préparation du téléchargement..."
+);
+
+const blob=await response.blob();
+
+const url=URL.createObjectURL(blob);
+
+const link=document.createElement("a");
+
+link.href=url;
+link.download="hacker-f5."+format;
+
+document.body.appendChild(link);
+link.click();
+link.remove();
+
+URL.recreateObjectURL(blob);
+
+link.href=url;
+link.download="hacker-f5."+format;
+
+document.body.appendChild(link);
+link.click();
+link.remove();
+
+URL.revokeObjectURL(url);
+
+setReady();
+
+}
+
+
+/* RECHERCHE WEB */
 
 async function webSearch(query){
 
-  if(!query){
+if(!query){
 
-    addMessage(
-      "bot",
-      "Indique ce que tu veux rechercher."
-    );
+addMessage(
+"bot",
+"Indique ce que tu veux rechercher."
+);
 
-    return;
-  }
+return;
+}
 
+setWorking("RECHERCHE WEB EN COURS...");
 
-  setWorking(
-    "RECHERCHE EN COURS..."
-  );
+const progress=
+progressMessage("RECHERCHE WEB");
 
+updateProgress(
+progress,
+20,
+"Préparation de la recherche..."
+);
 
-  const progress =
-    progressMessage(
-      "RECHERCHE WEB"
-    );
+const response=await fetch(
+"/api/web-search",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({query})
+}
+);
 
+updateProgress(
+progress,
+70,
+"Analyse des résultats..."
+);
 
-  updateProgress(
-    progress,
-    20,
-    "Recherche..."
-  );
+const data=await response.json();
 
+if(!response.ok||!data.ok){
 
-  const response =
-    await fetch(
-      "/api/web-search",
-      {
-        method:"POST",
+throw new Error(
+data.error||
+"Recherche web impossible"
+);
 
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
+}
 
-        body:JSON.stringify({
-          query
-        })
-      }
-    );
+updateProgress(
+progress,
+100,
+"Recherche terminée."
+);
 
-
-  updateProgress(
-    progress,
-    75,
-    "Analyse des résultats..."
-  );
-
-
-  const data =
-    await response.json();
-
-
-  if(
-    !response.ok ||
-    !data.ok
-  ){
-
-    throw new Error(
-      data.error ||
-      "Recherche impossible"
-    );
-
-  }
-
-
-  updateProgress(
-    progress,
-    100,
-    "Terminé."
-  );
-
-
-  addMessage(
-    "bot",
-    data.answer ||
-    "Aucun résultat."
-  );
+addMessage(
+"bot",
+data.answer||
+"Aucun résultat disponible."
+);
 
 }
 
 
-/* =========================
-   FICHIERS
-========================= */
+/* LECTURE VOCALE */
 
-function readFile(event){
+function speak(text){
 
-  const file =
-    event.target.files &&
-    event.target.files[0];
+if(!("speechSynthesis" in window)){
 
+return;
+}
 
-  if(!file)return;
+speechSynthesis.cancel();
 
+const utterance=
+new SpeechSynthesisUtterance(text);
 
-  setWorking(
-    "LECTURE DU DOCUMENT..."
-  );
+utterance.lang="fr-FR";
+utterance.rate=.95;
+utterance.pitch=1;
 
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload = function(){
-
-    const content =
-      String(reader.result || "");
-
-
-    input.value =
-      "Analyse ce fichier : " +
-      file.name +
-      "\n\n" +
-      content.slice(
-        0,
-        120000
-      );
-
-
-    setMode("chat");
-
-    setActivity(
-      "FICHIER PRÊT..."
-    );
-
-  };
-
-
-  reader.onerror =
-    function(){
-
-      addMessage(
-        "bot",
-        "⚠️ Impossible de lire ce fichier."
-      );
-
-      setReady();
-
-    };
-
-
-  reader.readAsText(file);
+speechSynthesis.speak(
+utterance
+);
 
 }
 
 
-/* =========================
-   DÉMARRAGE
-========================= */
+function speakLast(){
+
+const botMessages=
+chat.querySelectorAll(".msg.bot");
+
+if(!botMessages.length){
+
+return;
+}
+
+const last=
+botMessages[botMessages.length-1];
+
+speak(
+last.innerText
+);
+
+}
+
+
+/* ARRÊT VOCAL */
+
+function stopVoice(){
+
+if("speechSynthesis" in window){
+
+speechSynthesis.cancel();
+
+}
+
+if(recognition){
+
+try{
+recognition.stop();
+}catch{}
+
+}
+
+listening=false;
+
+voiceButton.classList.remove(
+"recording"
+);
+
+}
+
+
+/* RECONNAISSANCE VOCALE */
+
+function setupVoice(){
+
+const SpeechRecognition=
+window.SpeechRecognition||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+voiceButton.title=
+"Reconnaissance vocale non disponible";
+
+return;
+}
+
+recognition=
+new SpeechRecognition();
+
+recognition.lang="fr-FR";
+
+recognition.continuous=false;
+
+recognition.interimResults=true;
+
+
+recognition.onstart=()=>{
+
+listening=true;
+
+voiceButton.classList.add(
+"recording"
+);
+
+setWorking("ÉCOUTE VOCALE...");
+
+};
+
+
+recognition.onresult=(event)=>{
+
+let result="";
+
+for(
+let i=event.resultIndex;
+i<event.results.length;
+i++
+){
+
+result+=
+event.results[i][0].transcript;
+
+}
+
+input.value=result;
+
+};
+
+
+recognition.onerror=(event)=>{
+
+console.log(
+"Voice error:",
+event.error
+);
+
+listening=false;
+
+voiceButton.classList.remove(
+"recording"
+);
+
+setReady();
+
+};
+
+
+recognition.onend=()=>{
+
+listening=false;
+
+voiceButton.classList.remove(
+"recording"
+);
+
+setReady();
+
+};
+
+}
+
+
+function toggleVoice(){
+
+if(!recognition){
+
+addMessage(
+"bot",
+"🎙️ La reconnaissance vocale n'est pas disponible sur ce navigateur."
+);
+
+return;
+}
+
+if(listening){
+
+recognition.stop();
+
+return;
+}
+
+try{
+
+recognition.start();
+
+}catch{
+
+}
+
+}
+
+
+/* FICHIERS */
+
+async function readFile(event){
+
+const file=
+event.target.files[0];
+
+if(!file)return;
+
+setWorking(
+"LECTURE DU FICHIER..."
+);
+
+try{
+
+const isText=
+file.type.startsWith("text/")||
+/\.(txt|md|csv|json|js|html|css|py|java|php)$/i
+.test(file.name);
+
+if(isText){
+
+const content=
+await file.text();
+
+addMessage(
+"user",
+"📎 "+file.name
+);
+
+messages.push({
+role:"user",
+content:
+`Fichier : ${file.name}\n\n${content}`
+});
+
+setWorking(
+"ANALYSE DU FICHIER..."
+);
+
+const response=
+await fetch(
+"/api/chat",
+{
+method:"POST",
+headers:{
+"Content-Type":
+"application/json"
+},
+body:JSON.stringify({
+messages,
+mode:"files"
+})
+}
+);
+
+const data=
+await response.json();
+
+if(
+!response.ok||
+!data.ok
+){
+
+throw new Error(
+data.error||
+"Analyse impossible"
+);
+
+}
+
+const answer=
+data.answer||
+"Analyse terminée.";
+
+addMessage(
+"bot",
+answer
+);
+
+messages.push({
+role:"assistant",
+content:answer
+});
+
+history.push({
+time:
+new Date().toISOString(),
+question:
+"Analyse du fichier "+file.name,
+answer
+});
+
+saveHistory();
+
+}else{
+
+addMessage(
+"system",
+"📎 "+file.name+" reçu. Le fichier est prêt à être analysé."
+);
+
+const formData=
+new FormData();
+
+formData.append(
+"file",
+file
+);
+
+formData.append(
+"filename",
+file.name
+);
+
+setWorking(
+"PRÉPARATION DU FICHIER..."
+);
+
+const response=
+await fetch(
+"/api/chat",
+{
+method:"POST",
+body:formData
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+"Le fichier n'a pas pu être transmis."
+);
+
+}
+
+addMessage(
+"bot",
+"📎 Fichier reçu. Pour les PDF, DOCX, XLSX et PPTX, l'analyse complète sera activée avec le module de traitement de documents."
+);
+
+}
+
+}catch(error){
+
+addMessage(
+"bot",
+"⚠️ "+
+(
+error.message||
+"Impossible de lire ce fichier."
+)
+);
+
+}finally{
+
+event.target.value="";
+
+setReady();
+
+}
+
+}
+
+
+/* DEMANDES RAPIDES */
+
+function quickCommand(command){
+
+input.value=command;
+
+input.focus();
+
+}
+
+
+/* INITIALISATION */
+
+setupVoice();
 
 newChat();
 
@@ -1840,5 +2034,3 @@ newChat();
 
 </body>
 </html>
-
-   
