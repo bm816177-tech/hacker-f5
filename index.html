@@ -1,2035 +1,1983 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>HACKER F5 👑</title>
-
-<style>
-:root{
-  --bg:#030405;
-  --panel:#090c11;
-  --panel2:#0d1118;
-  --line:#242b35;
-  --red:#ff1744;
-  --text:#f4f7fb;
-  --muted:#8993a3;
-  --green:#22e6a7;
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  background:
-    radial-gradient(circle at 50% -15%,#3b0b18 0,#08090c 35%,#030405 75%);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  overflow-x:hidden;
-}
-
-.app{
-  width:100%;
-  max-width:820px;
-  margin:auto;
-  padding:10px 10px 130px;
-}
-
-/* HEADER */
-
-.top{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:7px 4px 15px;
-}
-
-.logo{
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  border:2px solid var(--red);
-  object-fit:cover;
-  background:#07090c;
-  box-shadow:0 0 14px #ff174455,0 0 30px #ff174422;
-}
-
-.brand b{
-  display:block;
-  font-size:22px;
-}
-
-.brand small{
-  display:block;
-  margin-top:4px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* PANEL */
-
-.panel,
-.banner{
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#0d1118,#07090d);
-  border-radius:18px;
-  box-shadow:0 0 35px #0009;
-}
-
-.panel{
-  padding:15px;
-}
-
-.panel-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-}
-
-.panel-title h2{
-  margin:0;
-  font-size:18px;
-}
-
-.live{
-  color:var(--green);
-  font-size:10px;
-  font-weight:bold;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.stat{
-  min-height:61px;
-  border:1px solid #202631;
-  border-radius:13px;
-  padding:10px;
-  background:#080b10;
-}
-
-.stat span{
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  margin-bottom:6px;
-}
-
-.stat b{
-  font-size:11px;
-}
-
-/* BANNER */
-
-.banner{
-  margin-top:11px;
-  padding:9px;
-}
-
-.banner-frame{
-  min-height:45px;
-  border:1px solid #343b47;
-  border-radius:11px;
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:8px 11px;
-}
-
-.banner-text{
-  flex:1;
-  text-align:center;
-  font-family:monospace;
-  font-size:11px;
-  letter-spacing:.6px;
-  overflow:hidden;
-  white-space:nowrap;
-}
-
-.dot{
-  width:9px;
-  height:9px;
-  flex:none;
-  border-radius:50%;
-  background:#444;
-}
-
-.dot.active{
-  background:var(--red);
-  box-shadow:0 0 12px var(--red);
-  animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{opacity:1}
-  50%{opacity:.25}
-}
-
-/* ACTIONS */
-
-.actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin:11px 0;
-}
-
-.action-btn,
-.mode-btn,
-.tool{
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#0d1117,#090c11);
-  color:#fff;
-}
-
-.action-btn{
-  border-radius:13px;
-  padding:12px 6px;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.action-btn:active,
-.mode-btn:active,
-.tool:active,
-.send:active{
-  transform:scale(.96);
-}
-
-/* MODES */
-
-.mode{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-
-.mode::-webkit-scrollbar{
-  display:none;
-}
-
-.mode-btn{
-  white-space:nowrap;
-  border-radius:13px;
-  padding:10px 13px;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.mode-btn.active{
-  border-color:#ff174488;
-  box-shadow:0 0 18px #ff17441c;
-}
-
-/* CHAT */
-
-.chat{
-  min-height:360px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:12px;
-}
-
-.msg{
-  max-width:94%;
-  padding:13px;
-  border-radius:15px;
-  white-space:pre-wrap;
-  word-break:break-word;
-  line-height:1.45;
-  font-size:14px;
-}
-
-.msg.user{
-  align-self:flex-end;
-  background:#241018;
-  border:1px solid #54202d;
-}
-
-.msg.bot{
-  align-self:flex-start;
-  background:#0c1016;
-  border:1px solid #242b35;
-}
-
-.msg.system{
-  align-self:center;
-  max-width:100%;
-  color:var(--muted);
-  font-size:11px;
-  text-align:center;
-  border:1px dashed #252b35;
-  background:#080a0d;
-}
-
-/* PROGRESSION */
-
-.progress-box{
-  min-width:260px;
-  border:1px solid #292f39;
-  background:#080b10;
-  border-radius:13px;
-  padding:12px;
-  font-family:monospace;
-  font-size:11px;
-}
-
-.progress-title{
-  margin-bottom:9px;
-}
-
-.progress-bar{
-  height:7px;
-  border-radius:20px;
-  overflow:hidden;
-  background:#181c23;
-}
-
-.progress-fill{
-  width:0%;
-  height:100%;
-  background:var(--red);
-  box-shadow:0 0 12px var(--red);
-  transition:width .5s ease;
-}
-
-.progress-status{
-  margin-top:7px;
-  color:var(--muted);
-}
-
-/* MEDIA */
-
-.media{
-  display:block;
-  width:100%;
-  max-width:100%;
-  margin-top:10px;
-  border-radius:12px;
-  background:#000;
-}
-
-.download{
-  display:inline-block;
-  margin-top:9px;
-  padding:8px 11px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  color:#fff;
-  text-decoration:none;
-  font-size:12px;
-}
-
-/* MENU */
-
-.menu{
-  position:fixed;
-  left:10px;
-  right:10px;
-  bottom:73px;
-  max-width:820px;
-  margin:auto;
-  z-index:80;
-  padding:12px;
-  border:1px solid #343b47;
-  border-radius:17px;
-  background:#090c11f5;
-  backdrop-filter:blur(18px);
-  box-shadow:0 0 30px #000;
-}
-
-.menu-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-}
-
-.menu button{
-  padding:12px 5px;
-  border:1px solid var(--line);
-  border-radius:11px;
-  background:#0d1117;
-  color:#fff;
-  font-size:11px;
-}
-
-/* COMPOSER */
-
-.composer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:70;
-  padding:8px 9px;
-  background:#050608ee;
-  backdrop-filter:blur(15px);
-  border-top:1px solid #1c222b;
-}
-
-.compose{
-  max-width:820px;
-  margin:auto;
-  display:flex;
-  align-items:flex-end;
-  gap:6px;
-}
-
-.tool{
-  width:43px;
-  height:48px;
-  flex:none;
-  border-radius:13px;
-  font-size:18px;
-}
-
-.voice.recording{
-  border-color:var(--red);
-  color:var(--red);
-  box-shadow:0 0 15px #ff174444;
-  animation:pulse 1s infinite;
-}
-
-.compose textarea{
-  flex:1;
-  resize:none;
-  min-height:48px;
-  max-height:130px;
-  border:1px solid var(--line);
-  background:#090c11;
-  color:#fff;
-  border-radius:14px;
-  padding:13px;
-  outline:none;
-  font-size:14px;
-}
-
-.send{
-  width:48px;
-  height:48px;
-  flex:none;
-  border:0;
-  border-radius:14px;
-  background:var(--red);
-  color:#fff;
-  font-size:20px;
-}
-
-/* UTILS */
-
-.hidden{
-  display:none!important;
-}
-
-.hint{
-  color:var(--muted);
-  font-size:10px;
-  text-align:center;
-  margin-top:10px;
-  line-height:1.5;
-}
-
-@media(max-width:430px){
-
-  .actions{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .brand b{
-    font-size:19px;
-  }
-
-  .logo{
-    width:54px;
-    height:54px;
-  }
-
-  .compose{
-    gap:4px;
-  }
-
-  .tool{
-    width:40px;
-  }
-
-  .send{
-    width:44px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <title>HACKER F5 👑</title>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0b0b0b;
+      --panel2: #111111;
+      --red: #ff2020;
+      --red2: #ff4b4b;
+      --green: #00ff88;
+      --text: #f5f5f5;
+      --muted: #9b9b9b;
+      --border: rgba(255, 32, 32, .25);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(255,0,0,.08), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 900px;
+      min-height: 100vh;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(5,5,5,.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+    }
+
+    .header-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid rgba(255,0,0,.45);
+      box-shadow: 0 0 18px rgba(255,0,0,.25);
+    }
+
+    .brand {
+      flex: 1;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--green);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: pulse 1.2s infinite;
+    }
+
+    /* BANNER */
+
+    .banner {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 12px;
+      background: linear-gradient(
+        90deg,
+        rgba(255,0,0,.08),
+        rgba(255,0,0,.02)
+      );
+      text-align: center;
+      font-family: monospace;
+      font-size: 11px;
+      overflow: hidden;
+    }
+
+    .banner-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 18px;
+    }
+
+    .banner-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .banner-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #333;
+      transition: .2s;
+    }
+
+    .banner-dot.active {
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+    }
+
+    .banner-dot.green {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* MAIN */
+
+    main {
+      flex: 1;
+      padding: 12px;
+      padding-bottom: 125px;
+    }
+
+    .welcome {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 25px rgba(255,0,0,.06);
+    }
+
+    .welcome-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .welcome-text {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* MODES */
+
+    .modes {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .modes::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mode {
+      flex: 0 0 auto;
+      border: 1px solid #222;
+      background: #0c0c0c;
+      color: #aaa;
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-size: 11px;
+    }
+
+    .mode.active {
+      color: white;
+      border-color: rgba(255,0,0,.6);
+      background: rgba(255,0,0,.1);
+    }
+
+    /* CHAT */
+
+    #chat {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 94%;
+      border-radius: 14px;
+      padding: 11px 13px;
+      line-height: 1.55;
+      font-size: 14px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: #1c1c1c;
+      border: 1px solid #303030;
+    }
+
+    .message.assistant {
+      align-self: flex-start;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+    }
+
+    .message.system {
+      align-self: center;
+      max-width: 100%;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* MARKDOWN */
+
+    .formatted {
+      white-space: normal;
+    }
+
+    .formatted strong {
+      color: #fff;
+    }
+
+    .formatted h1,
+    .formatted h2,
+    .formatted h3 {
+      margin: 8px 0;
+    }
+
+    .formatted ul,
+    .formatted ol {
+      padding-left: 22px;
+    }
+
+    .formatted code.inline {
+      background: #181818;
+      border: 1px solid #292929;
+      border-radius: 5px;
+      padding: 2px 5px;
+      font-family: monospace;
+    }
+
+    /* CODE BLOCK */
+
+    .code-wrapper {
+      margin: 10px 0;
+      border: 1px solid rgba(255,0,0,.3);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 9px;
+      background: #101010;
+      border-bottom: 1px solid #242424;
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .copy-code {
+      border: 1px solid #333;
+      background: #171717;
+      color: white;
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 10px;
+    }
+
+    .copy-code:active {
+      transform: scale(.96);
+    }
+
+    .code-content {
+      margin: 0;
+      padding: 12px;
+      overflow-x: auto;
+      color: #f1f1f1;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre;
+    }
+
+    /* EXECUTION */
+
+    .execution-box {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid rgba(255,0,0,.35);
+      border-radius: 14px;
+      background: #080808;
+      box-shadow: 0 0 20px rgba(255,0,0,.1);
+      font-family: monospace;
+    }
+
+    .execution-title {
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .execution-action {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 13px;
+    }
+
+    .execution-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      font-size: 12px;
+      letter-spacing: 0;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .progress-percent {
+      min-width: 38px;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .execution-status {
+      margin-top: 12px;
+      color: #aaa;
+      font-size: 11px;
+      animation: statusPulse 1.2s infinite;
+    }
+
+    .execution-complete {
+      border-color: rgba(0,255,136,.4);
+    }
+
+    .execution-complete .execution-status {
+      color: var(--green);
+      animation: none;
+    }
+
+    .execution-error {
+      border-color: rgba(255,50,50,.6);
+    }
+
+    /* COMPOSER */
+
+    .composer-area {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      padding: 9px;
+      background: rgba(5,5,5,.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid var(--border);
+    }
+
+    .composer {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .circle-btn {
+      flex: 0 0 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #2d2d2d;
+      background: #101010;
+      color: white;
+      font-size: 18px;
+    }
+
+    .circle-btn.red {
+      border-color: rgba(255,0,0,.5);
+      background: rgba(255,0,0,.1);
+    }
+
+    #input {
+      flex: 1;
+      min-height: 42px;
+      max-height: 130px;
+      resize: none;
+      border: 1px solid #282828;
+      outline: none;
+      border-radius: 13px;
+      padding: 11px 12px;
+      color: white;
+      background: #0e0e0e;
+      line-height: 1.4;
+    }
+
+    #input:focus {
+      border-color: rgba(255,0,0,.55);
+    }
+
+    /* MENUS */
+
+    .menu {
+      position: fixed;
+      bottom: 68px;
+      z-index: 40;
+      width: min(340px, calc(100vw - 20px));
+      padding: 10px;
+      background: #0a0a0a;
+      border: 1px solid rgba(255,0,0,.35);
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.65);
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .menu.show {
+      display: grid;
+    }
+
+    #plusMenu {
+      left: 10px;
+    }
+
+    #equalMenu {
+      left: 58px;
+    }
+
+    .menu-title {
+      grid-column: 1 / -1;
+      color: #888;
+      font-size: 10px;
+      padding: 4px;
+    }
+
+    .menu button {
+      border: 1px solid #272727;
+      background: #111;
+      color: white;
+      border-radius: 9px;
+      padding: 10px 7px;
+      font-size: 11px;
+    }
+
+    .menu button:active {
+      transform: scale(.97);
+    }
+
+    /* FILE */
+
+    #fileInput {
+      display: none;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes pulse {
+      0%,100% {
+        opacity: .5;
+        transform: scale(.9);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+    }
+
+    @keyframes statusPulse {
+      0%,100% {
+        opacity: .4;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @media (min-width: 700px) {
+      main {
+        padding: 20px;
+      }
+
+      .message {
+        max-width: 82%;
+      }
+
+      .composer-area {
+        padding: 12px 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-<header class="top">
+  <header>
+    <div class="header-main">
+
+      <img
+        id="logo"
+        src=""
+        alt="HACKER F5"
+      >
+
+      <div class="brand">
+        <div class="brand-title">
+          👑 HACKER F5
+        </div>
+
+        <div class="brand-subtitle">
+          ASSISTANT IA DE CYBERSÉCURITÉ RESPONSABLE
+        </div>
+
+        <div class="status">
+          <span class="status-dot"></span>
+          SYSTÈME ACTIF
+        </div>
+      </div>
+
+    </div>
+
+    <div class="banner">
+      <div class="banner-line">
+        <div class="banner-dots">
+          <span id="dot1" class="banner-dot active"></span>
+          <span id="dot2" class="banner-dot"></span>
+          <span id="dot3" class="banner-dot"></span>
+        </div>
+
+        <span id="activity">
+          HACKF5 ACTIVATE
+        </span>
+
+        <div class="banner-dots">
+          <span id="dot4" class="banner-dot"></span>
+          <span id="dot5" class="banner-dot active"></span>
+          <span id="dot6" class="banner-dot"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="welcome" id="welcome">
+      <div class="welcome-title">
+        👑 Bienvenue sur HACKER F5
+      </div>
+
+      <div class="welcome-text">
+        Ton assistant IA pour la programmation,
+        l'analyse numérique, les documents,
+        la recherche et la cybersécurité responsable.
+      </div>
+    </div>
+
+    <div class="modes">
+
+      <button class="mode active" data-mode="chat">
+        💬 Chat
+      </button>
+
+      <button class="mode" data-mode="code">
+        💻 Code
+      </button>
+
+      <button class="mode" data-mode="cyber">
+        🛡️ Cyber
+      </button>
+
+      <button class="mode" data-mode="decode">
+        🔐 Décodage
+      </button>
+
+      <button class="mode" data-mode="files">
+        📎 Fichiers
+      </button>
+
+    </div>
+
+    <div id="chat"></div>
+
+  </main>
 
-<img
-  id="logo"
-  class="logo"
-  alt="HACKER F5"
-  src=""
->
+  <!-- MENU + -->
+
+  <div
+    id="plusMenu"
+    class="menu"
+  >
 
-<div class="brand">
-<b>👑 HACKER F5</b>
-<small>Assistant IA de cybersécurité responsable</small>
-</div>
+    <div class="menu-title">
+      ⚡ CRÉATION & FICHIERS
+    </div>
 
-</header>
+    <button onclick="selectCreation('image')">
+      🖼️ Image
+    </button>
 
+    <button onclick="selectCreation('video')">
+      🎬 Vidéo
+    </button>
 
-<section class="panel">
+    <button onclick="selectCreation('music')">
+      🎵 Musique
+    </button>
 
-<div class="panel-title">
-<h2>👑 HACKER F5</h2>
-<span class="live">● EN LIGNE</span>
-</div>
-
-<div class="grid">
-
-<div class="stat">
-<span>STATUT</span>
-<b>● ACTIF</b>
-</div>
-
-<div class="stat">
-<span>MODE</span>
-<b>⚡ ACTIF</b>
-</div>
-
-<div class="stat">
-<span>IA</span>
-<b>● EN LIGNE</b>
-</div>
-
-<div class="stat">
-<span>ÉTAT</span>
-<b>● STABLE</b>
-</div>
-
-<div class="stat">
-<span>SESSION</span>
-<b>● ACTIVE</b>
-</div>
-
-<div class="stat">
-<span>SYSTÈME</span>
-<b>● OPÉRATIONNEL</b>
-</div>
-
-<div class="stat">
-<span>OUTILS</span>
-<b>● DISPONIBLES</b>
-</div>
-
-<div class="stat">
-<span>MODE ACTUEL</span>
-<b id="modeLabel">CHAT IA</b>
-</div>
-
-</div>
-</section>
-
-
-<section class="banner">
-
-<div class="banner-frame">
-
-<i id="dot1" class="dot active"></i>
-
-<div id="activity" class="banner-text">
-PRÊT...
-</div>
-
-<i id="dot2" class="dot active"></i>
-
-</div>
-
-</section>
-
-
-<div class="actions">
-
-<button class="action-btn" onclick="setMode('image')">
-🖼️ Image
-</button>
-
-<button class="action-btn" onclick="setMode('video')">
-🎬 Vidéo
-</button>
-
-<button class="action-btn" onclick="setMode('music')">
-🎵 Musique
-</button>
-
-<button class="action-btn" onclick="setMode('web')">
-🌐 Recherche
-</button>
-
-<button class="action-btn" onclick="setMode('document')">
-📄 Document
-</button>
-
-<button class="action-btn" onclick="newChat()">
-🆕 Nouveau
-</button>
-
-</div>
-
-
-<div class="mode">
-
-<button class="mode-btn active"
-data-mode="chat"
-onclick="setMode('chat')">
-💬 Chat
-</button>
-
-<button class="mode-btn"
-data-mode="code"
-onclick="setMode('code')">
-💻 Code
-</button>
-
-<button class="mode-btn"
-data-mode="cyber"
-onclick="setMode('cyber')">
-🛡️ Cyber
-</button>
-
-<button class="mode-btn"
-data-mode="decode"
-onclick="setMode('decode')">
-🔐 Décodage
-</button>
-
-<button class="mode-btn"
-data-mode="files"
-onclick="setMode('files')">
-📎 Fichiers
-</button>
-
-</div>
-
-
-<main id="chat" class="chat"></main>
-
-
-<input
-id="file"
-type="file"
-class="hidden"
-onchange="readFile(event)"
-accept=".txt,.md,.csv,.json,.js,.html,.css,.py,.java,.php,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
->
-
-
-<div class="hint">
-/image · /video · /music · /pdf · /docx · /xlsx · /pptx · /txt · /md · /csv
-</div>
-
-</div>
-
-
-<!-- MENU + -->
-
-<div id="plusMenu" class="menu hidden">
-
-<div class="menu-grid">
-
-<button onclick="setMode('image');closeMenus()">
-🖼️ Image
-</button>
-
-<button onclick="setMode('video');closeMenus()">
-🎬 Vidéo
-</button>
-
-<button onclick="setMode('music');closeMenus()">
-🎵 Musique
-</button>
-
-<button onclick="setMode('document');closeMenus()">
-📄 Document
-</button>
-
-<button onclick="document.getElementById('file').click();closeMenus()">
-📎 Fichier
-</button>
-
-<button onclick="newChat();closeMenus()">
-🆕 Nouveau
-</button>
-
-</div>
-
-</div>
-
-
-<!-- MENU = -->
-
-<div id="equalMenu" class="menu hidden">
-
-<div class="menu-grid">
-
-<button onclick="setMode('code');closeMenus()">
-💻 Code
-</button>
-
-<button onclick="setMode('cyber');closeMenus()">
-🛡️ Cyber
-</button>
-
-<button onclick="setMode('decode');closeMenus()">
-🔐 Décodage
-</button>
-
-<button onclick="setMode('web');closeMenus()">
-🌐 Recherche
-</button>
-
-<button onclick="speakLast();closeMenus()">
-🔊 Lire
-</button>
-
-<button onclick="stopVoice();closeMenus()">
-⏹️ Stop vocal
-</button>
-
-</div>
+    <button onclick="selectCreation('pdf')">
+      📄 PDF
+    </button>
+
+    <button onclick="selectCreation('docx')">
+      📝 DOCX
+    </button>
+
+    <button onclick="selectCreation('xlsx')">
+      📊 XLSX
+    </button>
+
+    <button onclick="selectCreation('pptx')">
+      📽️ PPTX
+    </button>
+
+    <button onclick="selectCreation('txt')">
+      📋 TXT
+    </button>
+
+    <button onclick="selectCreation('md')">
+      🗒️ Markdown
+    </button>
+
+    <button onclick="selectCreation('csv')">
+      📑 CSV
+    </button>
+
+    <button onclick="document.getElementById('fileInput').click()">
+      📎 Fichier
+    </button>
+
+    <button onclick="newChat()">
+      🆕 Nouveau
+    </button>
+
+  </div>
+
+  <!-- MENU = -->
+
+  <div
+    id="equalMenu"
+    class="menu"
+  >
+
+    <div class="menu-title">
+      ⚙️ OUTILS HACKER F5
+    </div>
+
+    <button onclick="setMode('code')">
+      💻 Code
+    </button>
+
+    <button onclick="setMode('cyber')">
+      🛡️ Cyber
+    </button>
+
+    <button onclick="setMode('decode')">
+      🔐 Décodage
+    </button>
+
+    <button onclick="setMode('web')">
+      🌐 Recherche Web
+    </button>
+
+    <button onclick="speakLast()">
+      🔊 Lire
+    </button>
+
+    <button onclick="stopVoice()">
+      🛑 Stop vocal
+    </button>
+
+  </div>
+
+  <input
+    id="fileInput"
+    type="file"
+    multiple
+  >
+
+  <div class="composer-area">
+
+    <div class="composer">
+
+      <button
+        class="circle-btn"
+        onclick="togglePlus()"
+      >
+        +
+      </button>
+
+      <button
+        class="circle-btn"
+        onclick="toggleEqual()"
+      >
+        =
+      </button>
+
+      <button
+        class="circle-btn"
+        onclick="startVoice()"
+      >
+        🎙️
+      </button>
+
+      <textarea
+        id="input"
+        rows="1"
+        placeholder="Écris à HACKER F5..."
+      ></textarea>
+
+      <button
+        class="circle-btn red"
+        onclick="send()"
+      >
+        ➤
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
-
-
-<!-- COMPOSER -->
-
-<div class="composer">
-
-<div class="compose">
-
-<button
-class="tool"
-title="Ajouter"
-onclick="togglePlus()">
-+
-</button>
-
-<button
-class="tool"
-title="Options"
-onclick="toggleEqual()">
-=
-</button>
-
-<button
-id="voiceButton"
-class="tool voice"
-title="Vocal"
-onclick="toggleVoice()">
-🎙️
-</button>
-
-<textarea
-id="input"
-placeholder="Écris à HACKER F5..."
-onkeydown="key(event)"
-></textarea>
-
-<button
-class="send"
-onclick="send()">
-➤
-</button>
-
-</div>
-
-</div>
-
 
 <script>
+  const chat =
+    document.getElementById("chat");
+
+  const input =
+    document.getElementById("input");
+
+  const fileInput =
+    document.getElementById("fileInput");
+
+  const activity =
+    document.getElementById("activity");
+
+  const welcome =
+    document.getElementById("welcome");
+
+  let messages = [];
+
+  let currentMode = "chat";
+
+  let currentConversationId = null;
+
+  let bannerTextTimer = null;
+
+  let bannerDotTimer = null;
+
+  let lastAssistantText = "";
+
+  /* -------------------------
+     ESCAPE
+  ------------------------- */
+
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /* -------------------------
+     MARKDOWN SIMPLE
+  ------------------------- */
+
+  function renderMarkdown(text) {
+
+    let source = esc(text);
+
+    const blocks = [];
+
+    source = source.replace(
+      /```([\w-]*)\n?([\s\S]*?)```/g,
+      function(_, language, code) {
+
+        const id =
+          "code_" +
+          Date.now() +
+          "_" +
+          blocks.length;
+
+        blocks.push({
+          id,
+          language:
+            language || "code",
+          code
+        });
+
+        return `@@CODE_${blocks.length - 1}@@`;
+      }
+    );
+
+    source = source
+      .replace(
+        /^### (.*)$/gm,
+        "<h3>$1</h3>"
+      )
+      .replace(
+        /^## (.*)$/gm,
+        "<h2>$1</h2>"
+      )
+      .replace(
+        /^# (.*)$/gm,
+        "<h1>$1</h1>"
+      )
+      .replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      )
+      .replace(
+        /`([^`\n]+)`/g,
+        '<code class="inline">$1</code>'
+      )
+      .replace(
+        /^[-•] (.*)$/gm,
+        "• $1"
+      )
+      .replace(
+        /\n/g,
+        "<br>"
+      );
 
-const chat=document.getElementById("chat");
-const input=document.getElementById("input");
-const activity=document.getElementById("activity");
-const modeLabel=document.getElementById("modeLabel");
-const voiceButton=document.getElementById("voiceButton");
+    blocks.forEach(
+      (block, index) => {
 
-let messages=[];
-let currentMode="chat";
-let recognition=null;
-let listening=false;
+        const html = `
+          <div class="code-wrapper">
 
-let history=[];
+            <div class="code-head">
 
-try{
-history=JSON.parse(
-localStorage.getItem("hacker_f5_history")||"[]"
-);
-}catch{
-history=[];
-}
+              <span>
+                💻 ${esc(block.language)}
+              </span>
 
+              <button
+                class="copy-code"
+                onclick="copyCode('${block.id}')"
+                data-code-id="${block.id}"
+              >
+                📋 Copier
+              </button>
 
-/* LOGO */
+            </div>
 
-const savedLogo=localStorage.getItem("hacker_f5_logo");
+            <pre
+              id="${block.id}"
+              class="code-content"
+            >${block.code}</pre>
 
-if(savedLogo){
-document.getElementById("logo").src=savedLogo;
-}
+          </div>
+        `;
 
+        source = source.replace(
+          `@@CODE_${index}@@`,
+          html
+        );
+      }
+    );
 
-/* SECURITE HTML */
+    return source;
+  }
 
-function esc(value){
+  /* -------------------------
+     MESSAGE
+  ------------------------- */
 
-return String(value).replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m])
-);
+  function addMessage(
+    role,
+    text
+  ) {
 
-}
+    const box =
+      document.createElement("div");
 
+    box.className =
+      "message " + role;
 
-/* MESSAGES */
+    if (role === "assistant") {
 
-function addMessage(role,text,extra=""){
+      box.innerHTML =
+        `<div class="formatted">
+          ${renderMarkdown(text)}
+        </div>`;
 
-const element=document.createElement("div");
+      lastAssistantText = text;
 
-element.className="msg "+role;
+    } else {
 
-element.innerHTML=esc(text)+extra;
+      box.textContent = text;
+    }
 
-chat.appendChild(element);
+    chat.appendChild(box);
 
-chat.scrollTop=chat.scrollHeight;
+    chat.scrollTop =
+      chat.scrollHeight;
 
-return element;
-}
+    return box;
+  }
 
+  /* -------------------------
+     COPY CODE
+  ------------------------- */
 
-/* HUD */
+  async function copyCode(id) {
 
-function setWorking(text){
+    const element =
+      document.getElementById(id);
 
-activity.textContent=text;
+    if (!element) return;
 
-document.getElementById("dot1")
-.classList.add("active");
+    try {
 
-document.getElementById("dot2")
-.classList.add("active");
-}
+      await navigator.clipboard.writeText(
+        element.textContent
+      );
 
-function setReady(){
+      const button =
+        document.querySelector(
+          `[data-code-id="${id}"]`
+        );
 
-activity.textContent="PRÊT...";
-}
+      if (button) {
 
+        const old =
+          button.textContent;
 
-/* MENUS */
+        button.textContent =
+          "✅ Copié";
 
-function closeMenus(){
+        setTimeout(() => {
+          button.textContent = old;
+        }, 1400);
+      }
 
-document.getElementById("plusMenu")
-.classList.add("hidden");
+    } catch {
 
-document.getElementById("equalMenu")
-.classList.add("hidden");
+      addMessage(
+        "system",
+        "Impossible de copier automatiquement ce code."
+      );
+    }
+  }
 
-}
+  /* -------------------------
+     BANNER
+  ------------------------- */
 
-function togglePlus(){
+  function setWorking(text) {
 
-const menu=document.getElementById("plusMenu");
+    clearInterval(bannerTextTimer);
+    clearInterval(bannerDotTimer);
 
-document.getElementById("equalMenu")
-.classList.add("hidden");
+    activity.textContent = "";
 
-menu.classList.toggle("hidden");
+    let index = 0;
 
-}
+    bannerTextTimer =
+      setInterval(() => {
 
-function toggleEqual(){
+        if (index < text.length) {
 
-const menu=document.getElementById("equalMenu");
+          activity.textContent +=
+            text[index];
 
-document.getElementById("plusMenu")
-.classList.add("hidden");
+          index++;
 
-menu.classList.toggle("hidden");
+        } else {
 
-}
+          clearInterval(
+            bannerTextTimer
+          );
+        }
 
+      }, 25);
 
-/* MODES */
+    const dots = [
+      document.getElementById("dot1"),
+      document.getElementById("dot2"),
+      document.getElementById("dot3"),
+      document.getElementById("dot4"),
+      document.getElementById("dot5"),
+      document.getElementById("dot6")
+    ];
 
-function setMode(mode){
+    let step = 0;
 
-currentMode=mode;
+    bannerDotTimer =
+      setInterval(() => {
 
-modeLabel.textContent=mode.toUpperCase();
+        dots.forEach(dot => {
+          dot.className =
+            "banner-dot";
+        });
 
-document.querySelectorAll(".mode-btn")
-.forEach(button=>{
-button.classList.toggle(
-"active",
-button.dataset.mode===mode
-);
-});
+        dots[step % dots.length]
+          .classList.add("active");
 
-if(mode==="files"){
+        dots[
+          (step + 1) % dots.length
+        ].classList.add("green");
 
-document.getElementById("file").click();
-return;
+        step++;
 
-}
+      }, 280);
+  }
 
-if(mode==="image")
-input.placeholder="Décris l'image à générer...";
+  function setReady() {
 
-else if(mode==="video")
-input.placeholder="Décris la vidéo à générer...";
+    clearInterval(bannerTextTimer);
+    clearInterval(bannerDotTimer);
 
-else if(mode==="music")
-input.placeholder="Décris la musique ou chanson...";
+    activity.textContent =
+      "HACKF5 ACTIVATE";
 
-else if(mode==="web")
-input.placeholder="Que veux-tu rechercher ?";
+    const dots = document.querySelectorAll(
+      ".banner-dot"
+    );
 
-else if(mode==="document")
-input.placeholder="Décris le document à créer...";
+    dots.forEach(dot => {
+      dot.className =
+        "banner-dot";
+    });
 
-else
-input.placeholder="Écris à HACKER F5...";
+    document
+      .getElementById("dot1")
+      .classList.add("active");
 
-input.focus();
+    document
+      .getElementById("dot5")
+      .classList.add("active");
+  }
 
-}
+  /* -------------------------
+     EXECUTION
+  ------------------------- */
 
+  function progressMessage(
+    action,
+    status
+  ) {
 
-/* NOUVELLE CONVERSATION */
+    const box =
+      document.createElement("div");
 
-function newChat(){
+    box.className =
+      "message assistant";
 
-messages=[];
-chat.innerHTML="";
+    box.innerHTML = `
+      <div class="execution-box">
 
-addMessage(
-"bot",
-"Lab HACKF5 ACTIVATE 🇦🇱 HACKF5 ✍️(by - king 👑 Franck)"
-);
+        <div class="execution-title">
+          👑 HACKER F5
+        </div>
 
-addMessage(
-"system",
-"HACKER F5 est prêt. Comment puis-je t'aider ?"
-);
+                <div class="execution-action">
+          ACTION : ${esc(action)}
+        </div>
 
-setReady();
+        <div class="execution-progress">
 
-}
+          <span class="progress-bar">
+            ░░░░░░░░░░░░░░░░
+          </span>
 
+          <span class="progress-percent">
+            0%
+          </span>
 
-/* HISTORIQUE */
+        </div>
 
-function saveHistory(){
+        <div class="execution-status">
+          ${esc(status)}
+        </div>
 
-try{
+      </div>
+    `;
 
-localStorage.setItem(
-"hacker_f5_history",
-JSON.stringify(history.slice(-50))
-);
+    chat.appendChild(box);
 
-}catch{}
+    chat.scrollTop =
+      chat.scrollHeight;
 
-}
+    const bar =
+      box.querySelector(
+        ".progress-bar"
+      );
 
+    const percent =
+      box.querySelector(
+        ".progress-percent"
+      );
 
-/* CLAVIER */
+    const statusBox =
+      box.querySelector(
+        ".execution-status"
+      );
 
-function key(event){
+    let progress = 0;
 
-if(
-event.key==="Enter" &&
-!event.shiftKey
-){
+    const timer =
+      setInterval(() => {
 
-event.preventDefault();
-send();
+        if (progress < 90) {
 
-}
+          progress +=
+            Math.floor(
+              Math.random() * 6
+            ) + 1;
 
-}
+          if (progress > 90) {
+            progress = 90;
+          }
 
+          const total = 16;
 
-/* PROGRESSION */
+          const filled =
+            Math.floor(
+              progress / 100 * total
+            );
 
-function progressMessage(title){
+          bar.textContent =
+            "█".repeat(filled) +
+            "░".repeat(
+              total - filled
+            );
 
-const box=document.createElement("div");
+          percent.textContent =
+            progress + "%";
 
-box.className="msg bot";
+          chat.scrollTop =
+            chat.scrollHeight;
+        }
 
-box.innerHTML=`
-<div class="progress-box">
+      }, 450);
 
-<div class="progress-title">
-👑 ${esc(title)}
-</div>
+    return {
 
-<div class="progress-bar">
-<div class="progress-fill"></div>
-</div>
+      complete(message) {
 
-<div class="progress-status">
-Initialisation...
-</div>
+        clearInterval(timer);
 
-</div>
-`;
+        bar.textContent =
+          "████████████████";
 
-chat.appendChild(box);
+        percent.textContent =
+          "100%";
 
-chat.scrollTop=chat.scrollHeight;
+        statusBox.textContent =
+          message ||
+          "Traitement terminé.";
 
-return{
-box,
-fill:box.querySelector(".progress-fill"),
-status:box.querySelector(".progress-status")
-};
+        box
+          .querySelector(".execution-box")
+          .classList.add(
+            "execution-complete"
+          );
 
-}
+        chat.scrollTop =
+          chat.scrollHeight;
+      },
 
+      error(message) {
 
-function updateProgress(progress,value,status){
+        clearInterval(timer);
 
-progress.fill.style.width=value+"%";
-progress.status.textContent=status;
+        statusBox.textContent =
+          message ||
+          "Une erreur est survenue.";
 
-}
+        box
+          .querySelector(".execution-box")
+          .classList.add(
+            "execution-error"
+          );
 
+        chat.scrollTop =
+          chat.scrollHeight;
+      }
+    };
+  }
 
-/* ENVOI */
+  /* -------------------------
+     MENUS
+  ------------------------- */
 
-async function send(){
+  function closeMenus() {
 
-const text=input.value.trim();
+    document
+      .getElementById("plusMenu")
+      .classList.remove("show");
 
-if(!text)return;
+    document
+      .getElementById("equalMenu")
+      .classList.remove("show");
+  }
 
-input.value="";
+  function togglePlus() {
 
-closeMenus();
+    const menu =
+      document.getElementById(
+        "plusMenu"
+      );
 
-addMessage("user",text);
+    document
+      .getElementById("equalMenu")
+      .classList.remove("show");
 
-messages.push({
-role:"user",
-content:text
-});
+    menu.classList.toggle("show");
+  }
 
+  function toggleEqual() {
 
-let command=null;
+    const menu =
+      document.getElementById(
+        "equalMenu"
+      );
 
-if(/^\/image\s+/i.test(text))
-command="image";
+    document
+      .getElementById("plusMenu")
+      .classList.remove("show");
 
-else if(/^\/video\s+/i.test(text))
-command="video";
+    menu.classList.toggle("show");
+  }
 
-else if(/^\/music\s+/i.test(text))
-command="music";
+  /* -------------------------
+     MODE
+  ------------------------- */
 
-else if(/^\/(pdf|docx|xlsx|pptx|txt|md|csv)\s+/i.test(text))
-command=text.match(/^\/(\w+)/i)[1].toLowerCase();
+  function setMode(mode) {
 
+    currentMode = mode;
 
-try{
+    document
+      .querySelectorAll(".mode")
+      .forEach(button => {
 
-if(command==="image"){
+        button.classList.toggle(
+          "active",
+          button.dataset.mode === mode
+        );
+      });
 
-await generateImage(
-text.replace(/^\/image\s+/i,"")
-);
+    const names = {
+      chat: "Chat IA",
+      code: "Analyse du code",
+      cyber: "Cybersécurité",
+      decode: "Décodage",
+      files: "Analyse de fichiers",
+      web: "Recherche Web"
+    };
 
-return;
-}
+    input.placeholder =
+      names[mode] ||
+      "Écris à HACKER F5...";
 
+    closeMenus();
+  }
 
-if(command==="video"){
+  document
+    .querySelectorAll(".mode")
+    .forEach(button => {
 
-await generateVideo(
-text.replace(/^\/video\s+/i,"")
-);
+      button.addEventListener(
+        "click",
+        () => setMode(
+          button.dataset.mode
+        )
+      );
+    });
 
-return;
-}
+  /* -------------------------
+     CREATION
+  ------------------------- */
 
+  function selectCreation(type) {
 
-if(command==="music"){
+    closeMenus();
 
-await generateMusic(
-text.replace(/^\/music\s+/i,"")
-);
+    currentMode = type;
 
-return;
-}
+    const names = {
+      image:
+        "Décris l'image à générer...",
+      video:
+        "Décris la vidéo à générer...",
+      music:
+        "Décris la musique ou chanson à générer...",
+      pdf:
+        "Décris le document PDF...",
+      docx:
+        "Décris le document DOCX...",
+      xlsx:
+        "Décris le tableau XLSX...",
+      pptx:
+        "Décris la présentation PPTX...",
+      txt:
+        "Écris le contenu du fichier TXT...",
+      md:
+        "Écris le contenu Markdown...",
+      csv:
+        "Décris les données CSV..."
+    };
 
+    input.placeholder =
+      names[type] ||
+      "Écris à HACKER F5...";
 
-if([
-"pdf",
-"docx",
-"xlsx",
-"pptx",
-"txt",
-"md",
-"csv"
-].includes(command)){
+    input.focus();
+  }
 
-await generateDoc(
-command,
-text.replace(/^\/\w+\s+/i,"")
-);
+  /* -------------------------
+     NOUVEAU CHAT
+  ------------------------- */
 
-return;
-}
+  function newChat() {
 
+    messages = [];
 
-if(currentMode==="web"){
+    currentConversationId =
+      null;
 
-await webSearch(text);
+    lastAssistantText = "";
 
-return;
-}
+    chat.innerHTML = "";
 
+    welcome.style.display =
+      "block";
 
-/* MISTRAL */
+    setMode("chat");
 
-setWorking(
-currentMode==="code"
-?"ANALYSE DU CODE..."
-:
-currentMode==="cyber"
-?"ANALYSE CYBERSÉCURITÉ..."
-:
-currentMode==="decode"
-?"ANALYSE / DÉCODAGE..."
-:
-"ANALYSE EN COURS..."
-);
+    addMessage(
+      "system",
+      "🆕 Nouvelle conversation activée."
+    );
 
+    closeMenus();
+  }
 
-const response=await fetch(
-"/api/chat",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-messages,
-mode:currentMode
-})
-}
-);
+  /* -------------------------
+     API CHAT
+  ------------------------- */
 
+  async function askMistral(
+    execution
+  ) {
 
-const data=await response.json();
+    const response =
+      await fetch(
+        "/api/chat",
+        {
+          method: "POST",
 
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-if(!response.ok||!data.ok){
+          body: JSON.stringify({
 
-throw new Error(
-data.error||"Erreur serveur"
-);
+            messages,
 
-}
+            conversationId:
+              currentConversationId,
 
+            mode:
+              currentMode
 
-const answer=data.answer||"Réponse vide.";
+          })
+        }
+      );
 
-addMessage("bot",answer);
+    let data;
 
-messages.push({
-role:"assistant",
-content:answer
-});
+    try {
 
-history.push({
-time:new Date().toISOString(),
-question:text,
-answer
-});
+      data =
+        await response.json();
 
-saveHistory();
+    } catch {
 
+      throw new Error(
+        "Réponse serveur invalide."
+      );
+    }
 
-/* LECTURE VOCALE OPTIONNELLE */
+    if (
+      !response.ok ||
+      !data.ok
+    ) {
 
-if(localStorage.getItem("hacker_f5_auto_voice")==="true"){
-speak(answer);
-}
+      throw new Error(
+        data?.error ||
+        "Erreur du serveur."
+      );
+    }
 
-}
+    if (
+      data.conversationId
+    ) {
 
-catch(error){
+      currentConversationId =
+        data.conversationId;
+    }
 
-addMessage(
-"bot",
-"⚠️ "+(
-error.message||
-"Une erreur est survenue."
-)
-);
+    const answer =
+      data.answer ||
+      "Aucune réponse reçue.";
 
-}
+    messages.push({
+      role: "assistant",
+      content: answer
+    });
 
-finally{
+    execution.complete(
+      "Réponse reçue avec succès."
+    );
 
-setReady();
+    addMessage(
+      "assistant",
+      answer
+    );
 
-}
+    setReady();
 
-}
+    return answer;
+  }
 
+  /* -------------------------
+     ACTION
+  ------------------------- */
 
-/* IMAGE */
+  function getActionInfo() {
 
-async function generateImage(prompt){
+    const info = {
 
-if(!prompt){
+      chat: {
+        action:
+          "TRAITEMENT DE LA DEMANDE",
+        status:
+          "Analyse de la demande..."
+      },
 
-addMessage(
-"bot",
-"Décris l'image que tu veux générer."
-);
+      web: {
+        action:
+          "RECHERCHE WEB",
+        status:
+          "Recherche des informations..."
+      },
 
-return;
-}
+      image: {
+        action:
+          "GÉNÉRATION IMAGE",
+        status:
+          "Traitement de l'image..."
+      },
 
-setWorking("GÉNÉRATION DE L'IMAGE...");
+      video: {
+        action:
+          "GÉNÉRATION VIDÉO",
+        status:
+          "Génération de la vidéo..."
+      },
 
-const progress=
-progressMessage("GÉNÉRATION IMAGE");
+      music: {
+        action:
+          "GÉNÉRATION MUSIQUE",
+        status:
+          "Création de la musique..."
+      },
 
-updateProgress(
-progress,
-20,
-"Préparation..."
-);
+      code: {
+        action:
+          "ANALYSE DU CODE",
+        status:
+          "Analyse du code en cours..."
+      },
 
-const response=await fetch(
-"/api/generate-image",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({prompt})
-}
-);
+      cyber: {
+        action:
+          "ANALYSE CYBERSÉCURITÉ",
+        status:
+          "Analyse de sécurité..."
+      },
 
-updateProgress(
-progress,
-70,
-"Traitement..."
-);
+      decode: {
+        action:
+          "DÉCODAGE",
+        status:
+          "Analyse des données..."
+      },
 
-const data=await response.json();
+      files: {
+        action:
+          "ANALYSE DE FICHIER",
+        status:
+          "Lecture du fichier..."
+      },
 
-if(!response.ok||!data.ok){
+      pdf: {
+        action:
+          "GÉNÉRATION PDF",
+        status:
+          "Préparation du document..."
+      },
 
-throw new Error(
-data.error||
-"Génération image impossible"
-);
+      docx: {
+        action:
+          "GÉNÉRATION DOCX",
+        status:
+          "Préparation du document..."
+      },
 
-}
+      xlsx: {
+        action:
+          "GÉNÉRATION XLSX",
+        status:
+          "Préparation du tableau..."
+      },
 
-updateProgress(
-progress,
-100,
-"Terminé."
-);
+      pptx: {
+        action:
+          "GÉNÉRATION PPTX",
+        status:
+          "Préparation de la présentation..."
+      },
 
-if(data.image){
+      txt: {
+        action:
+          "GÉNÉRATION TXT",
+        status:
+          "Préparation du fichier..."
+      },
 
-addMessage(
-"bot",
-"🖼️ Image générée.",
-`
-<img
-class="media"
-src="${esc(data.image)}"
-alt="Image générée"
->
-<a
-class="download"
-href="${esc(data.image)}"
-target="_blank"
-rel="noopener">
-📥 Ouvrir / télécharger
-</a>
-`
-);
+      md: {
+        action:
+          "GÉNÉRATION MARKDOWN",
+        status:
+          "Préparation du fichier..."
+      },
 
-}else{
+      csv: {
+        action:
+          "GÉNÉRATION CSV",
+        status:
+          "Préparation des données..."
+      }
+    };
 
-throw new Error(
-"Aucune image retournée."
-);
+    return (
+      info[currentMode] ||
+      info.chat
+    );
+  }
 
-}
+  /* -------------------------
+     SEND
+  ------------------------- */
 
-}
+  async function send() {
 
+    const text =
+      input.value.trim();
 
-/* VIDEO */
+    if (!text) return;
 
-async function generateVideo(prompt){
+    closeMenus();
 
-if(!prompt){
+    welcome.style.display =
+      "none";
 
-addMessage(
-"bot",
-"Décris la vidéo que tu veux générer."
-);
+    input.value = "";
 
-return;
-}
+    addMessage(
+      "user",
+      text
+    );
 
-setWorking("GÉNÉRATION DE LA VIDÉO...");
+    messages.push({
+      role: "user",
+      content: text
+    });
 
-const progress=
-progressMessage("GÉNÉRATION VIDÉO");
+    const info =
+      getActionInfo();
 
-updateProgress(
-progress,
-15,
-"Initialisation..."
-);
+    setWorking(
+      info.action
+    );
 
-const response=await fetch(
-"/api/generate-video",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({prompt})
-}
-);
+    const execution =
+      progressMessage(
+        info.action,
+        info.status
+      );
 
-updateProgress(
-progress,
-75,
-"Traitement..."
-);
+    try {
 
-const data=await response.json();
+      /*
+       * Les fonctions de génération
+       * seront branchées aux API
+       * correspondantes.
+       */
 
-if(!response.ok||!data.ok){
+      if (
+        [
+          "image",
+          "video",
+          "music",
+          "pdf",
+          "docx",
+          "xlsx",
+          "pptx",
+          "txt",
+          "md",
+          "csv"
+        ].includes(currentMode)
+      ) {
 
-throw new Error(
-data.error||
-"Génération vidéo impossible"
-);
+        /*
+         * Pour éviter de prétendre
+         * qu'une génération existe
+         * avant que son API soit branchée.
+         */
 
-}
+        execution.complete(
+          "Demande préparée."
+        );
 
-updateProgress(
-progress,
-100,
-"Vidéo prête."
-);
+        addMessage(
+          "system",
+          "⚙️ Cette fonction est prête dans l'interface. Son service de génération doit être connecté."
+        );
 
-if(data.video){
+        setReady();
 
-addMessage(
-"bot",
-"🎬 Vidéo générée.",
-`
-<video
-class="media"
-controls
-src="${esc(data.video)}">
-</video>
+        return;
+      }
 
-<a
-class="download"
-href="${esc(data.video)}"
-target="_blank"
-rel="noopener">
-📥 Ouvrir
-</a>
-`
-);
+      await askMistral(
+        execution
+      );
 
-}else{
+    } catch (error) {
 
-addMessage(
-"bot",
-"🎬 La demande vidéo a été envoyée."
-);
+      execution.error(
+        error?.message ||
+        "Erreur pendant le traitement."
+      );
 
-}
+      addMessage(
+        "system",
+        "⚠️ " +
+        (
+          error?.message ||
+          "Une erreur est survenue."
+        )
+      );
 
-}
+      setReady();
+    }
+  }
 
+  /* -------------------------
+     ENTER
+  ------------------------- */
 
-/* MUSIQUE */
+  input.addEventListener(
+    "keydown",
+    event => {
 
-async function generateMusic(prompt){
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
 
-if(!prompt){
+        event.preventDefault();
 
-addMessage(
-"bot",
-"Décris la musique ou la chanson."
-);
+        send();
+      }
+    }
+  );
 
-return;
-}
+  /* -------------------------
+     FICHIERS
+  ------------------------- */
 
-setWorking("CRÉATION DE LA MUSIQUE...");
+  fileInput.addEventListener(
+    "change",
+    async event => {
 
-const progress=
-progressMessage("CRÉATION MUSICALE");
+      const files =
+        Array.from(
+          event.target.files || []
+        );
 
-updateProgress(
-progress,
-20,
-"Préparation..."
-);
+      if (!files.length) {
+        return;
+      }
 
-const response=await fetch(
-"/api/generate-music",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({prompt})
-}
-);
+      for (const file of files) {
 
-updateProgress(
-progress,
-75,
-"Création audio..."
-);
+        addMessage(
+          "system",
+          `📎 Fichier sélectionné : ${file.name}`
+        );
 
-const data=await response.json();
+        /*
+         * Formats texte directement
+         * lisibles dans le navigateur.
+         */
 
-if(!response.ok||!data.ok){
+        const isText =
+          file.type.startsWith("text/") ||
+          /\.(txt|md|csv|json|js|css|html|xml)$/i.test(
+            file.name
+          );
 
-throw new Error(
-data.error||
-"Génération musicale impossible"
-);
+        if (isText) {
 
-}
+          try {
 
-updateProgress(
-progress,
-100,
-"Terminé."
-);
+            const content =
+              await file.text();
 
-if(data.audio){
+            const limited =
+              content.slice(
+                0,
+                30000
+              );
 
-addMessage(
-"bot",
-"🎵 Musique générée.",
-`
-<audio
-class="media"
-controls
-src="${esc(data.audio)}">
-</audio>
+            messages.push({
+              role: "user",
+              content:
+                `Analyse le fichier "${file.name}".\n\n${limited}`
+            });
 
-<a
-class="download"
-href="${esc(data.audio)}"
-target="_blank"
-rel="noopener">
-📥 Ouvrir
-</a>
-`
-);
+            currentMode =
+              "files";
 
-}else{
+            const info =
+              getActionInfo();
 
-addMessage(
-"bot",
-"🎵 La création musicale a été lancée."
-);
+            setWorking(
+              info.action
+            );
 
-}
+            const execution =
+              progressMessage(
+                info.action,
+                info.status
+              );
 
-}
+            await askMistral(
+              execution
+            );
 
+          } catch (error) {
 
-/* DOCUMENTS */
+            addMessage(
+              "system",
+              "⚠️ Impossible de lire ce fichier."
+            );
+          }
 
-async function generateDoc(format,content){
+        } else {
 
-if(!content){
+          addMessage(
+            "system",
+            "📎 Le fichier est sélectionné. L'analyse des PDF/DOCX/XLSX/PPTX sera reliée à la route serveur de fichiers."
+          );
+        }
+      }
 
-addMessage(
-"bot",
-"Indique le contenu du document."
-);
+      fileInput.value = "";
+    }
+  );
 
-return;
-}
+  /* -------------------------
+     VOIX
+  ------------------------- */
 
-setWorking("GÉNÉRATION DU DOCUMENT...");
+  let recognition =
+    null;
 
-const progress=
-progressMessage(
-"GÉNÉRATION "+
-format.toUpperCase()
-);
+  function startVoice() {
 
-updateProgress(
-progress,
-25,
-"Préparation..."
-);
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
 
-const response=await fetch(
-"/api/generate-document",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-format,
-title:"HACKER F5",
-content
-})
-}
-);
+    if (!SpeechRecognition) {
 
-if(!response.ok){
+      addMessage(
+        "system",
+        "🎙️ La reconnaissance vocale n'est pas disponible sur ce navigateur."
+      );
 
-let errorData={};
+      return;
+    }
 
-try{
-errorData=await response.json();
-}catch{}
+    recognition =
+      new SpeechRecognition();
 
-throw new Error(
-errorData.error||
-"Impossible de créer le document."
-);
+    recognition.lang =
+      "fr-FR";
 
-}
+    recognition.interimResults =
+      false;
 
-updateProgress(
-progress,
-90,
-"Préparation du téléchargement..."
-);
+    recognition.continuous =
+      false;
 
-const blob=await response.blob();
+    setWorking(
+      "ÉCOUTE VOCALE"
+    );
 
-const url=URL.createObjectURL(blob);
+    recognition.onresult =
+      event => {
 
-const link=document.createElement("a");
+        const result =
+          event.results[0][0]
+            .transcript;
 
-link.href=url;
-link.download="hacker-f5."+format;
+        input.value =
+          result;
 
-document.body.appendChild(link);
-link.click();
-link.remove();
+        setReady();
 
-URL.recreateObjectURL(blob);
+        send();
+      };
 
-link.href=url;
-link.download="hacker-f5."+format;
+    recognition.onerror =
+      () => {
 
-document.body.appendChild(link);
-link.click();
-link.remove();
+        setReady();
 
-URL.revokeObjectURL(url);
+        addMessage(
+          "system",
+          "⚠️ La reconnaissance vocale a échoué."
+        );
+      };
 
-setReady();
+    recognition.onend =
+      () => {
 
-}
+        setReady();
+      };
 
+    recognition.start();
+  }
 
-/* RECHERCHE WEB */
+  function speakLast() {
 
-async function webSearch(query){
+    if (!lastAssistantText) {
 
-if(!query){
+      addMessage(
+        "system",
+        "🔊 Aucune réponse à lire."
+      );
 
-addMessage(
-"bot",
-"Indique ce que tu veux rechercher."
-);
+      return;
+    }
 
-return;
-}
+    stopVoice();
 
-setWorking("RECHERCHE WEB EN COURS...");
+    const utterance =
+      new SpeechSynthesisUtterance(
+        lastAssistantText
+      );
 
-const progress=
-progressMessage("RECHERCHE WEB");
+    utterance.lang =
+      "fr-FR";
 
-updateProgress(
-progress,
-20,
-"Préparation de la recherche..."
-);
+    setWorking(
+      "LECTURE VOCALE"
+    );
 
-const response=await fetch(
-"/api/web-search",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({query})
-}
-);
+    speechSynthesis.speak(
+      utterance
+    );
 
-updateProgress(
-progress,
-70,
-"Analyse des résultats..."
-);
+    utterance.onend =
+      setReady;
+  }
 
-const data=await response.json();
+  function stopVoice() {
 
-if(!response.ok||!data.ok){
+    if (
+      "speechSynthesis" in window
+    ) {
 
-throw new Error(
-data.error||
-"Recherche web impossible"
-);
+      speechSynthesis.cancel();
+    }
 
-}
+    setReady();
+  }
 
-updateProgress(
-progress,
-100,
-"Recherche terminée."
-);
+  /* -------------------------
+     INITIALISATION
+  ------------------------- */
 
-addMessage(
-"bot",
-data.answer||
-"Aucun résultat disponible."
-);
+  setReady();
 
-}
-
-
-/* LECTURE VOCALE */
-
-function speak(text){
-
-if(!("speechSynthesis" in window)){
-
-return;
-}
-
-speechSynthesis.cancel();
-
-const utterance=
-new SpeechSynthesisUtterance(text);
-
-utterance.lang="fr-FR";
-utterance.rate=.95;
-utterance.pitch=1;
-
-speechSynthesis.speak(
-utterance
-);
-
-}
-
-
-function speakLast(){
-
-const botMessages=
-chat.querySelectorAll(".msg.bot");
-
-if(!botMessages.length){
-
-return;
-}
-
-const last=
-botMessages[botMessages.length-1];
-
-speak(
-last.innerText
-);
-
-}
-
-
-/* ARRÊT VOCAL */
-
-function stopVoice(){
-
-if("speechSynthesis" in window){
-
-speechSynthesis.cancel();
-
-}
-
-if(recognition){
-
-try{
-recognition.stop();
-}catch{}
-
-}
-
-listening=false;
-
-voiceButton.classList.remove(
-"recording"
-);
-
-}
-
-
-/* RECONNAISSANCE VOCALE */
-
-function setupVoice(){
-
-const SpeechRecognition=
-window.SpeechRecognition||
-window.webkitSpeechRecognition;
-
-if(!SpeechRecognition){
-
-voiceButton.title=
-"Reconnaissance vocale non disponible";
-
-return;
-}
-
-recognition=
-new SpeechRecognition();
-
-recognition.lang="fr-FR";
-
-recognition.continuous=false;
-
-recognition.interimResults=true;
-
-
-recognition.onstart=()=>{
-
-listening=true;
-
-voiceButton.classList.add(
-"recording"
-);
-
-setWorking("ÉCOUTE VOCALE...");
-
-};
-
-
-recognition.onresult=(event)=>{
-
-let result="";
-
-for(
-let i=event.resultIndex;
-i<event.results.length;
-i++
-){
-
-result+=
-event.results[i][0].transcript;
-
-}
-
-input.value=result;
-
-};
-
-
-recognition.onerror=(event)=>{
-
-console.log(
-"Voice error:",
-event.error
-);
-
-listening=false;
-
-voiceButton.classList.remove(
-"recording"
-);
-
-setReady();
-
-};
-
-
-recognition.onend=()=>{
-
-listening=false;
-
-voiceButton.classList.remove(
-"recording"
-);
-
-setReady();
-
-};
-
-}
-
-
-function toggleVoice(){
-
-if(!recognition){
-
-addMessage(
-"bot",
-"🎙️ La reconnaissance vocale n'est pas disponible sur ce navigateur."
-);
-
-return;
-}
-
-if(listening){
-
-recognition.stop();
-
-return;
-}
-
-try{
-
-recognition.start();
-
-}catch{
-
-}
-
-}
-
-
-/* FICHIERS */
-
-async function readFile(event){
-
-const file=
-event.target.files[0];
-
-if(!file)return;
-
-setWorking(
-"LECTURE DU FICHIER..."
-);
-
-try{
-
-const isText=
-file.type.startsWith("text/")||
-/\.(txt|md|csv|json|js|html|css|py|java|php)$/i
-.test(file.name);
-
-if(isText){
-
-const content=
-await file.text();
-
-addMessage(
-"user",
-"📎 "+file.name
-);
-
-messages.push({
-role:"user",
-content:
-`Fichier : ${file.name}\n\n${content}`
-});
-
-setWorking(
-"ANALYSE DU FICHIER..."
-);
-
-const response=
-await fetch(
-"/api/chat",
-{
-method:"POST",
-headers:{
-"Content-Type":
-"application/json"
-},
-body:JSON.stringify({
-messages,
-mode:"files"
-})
-}
-);
-
-const data=
-await response.json();
-
-if(
-!response.ok||
-!data.ok
-){
-
-throw new Error(
-data.error||
-"Analyse impossible"
-);
-
-}
-
-const answer=
-data.answer||
-"Analyse terminée.";
-
-addMessage(
-"bot",
-answer
-);
-
-messages.push({
-role:"assistant",
-content:answer
-});
-
-history.push({
-time:
-new Date().toISOString(),
-question:
-"Analyse du fichier "+file.name,
-answer
-});
-
-saveHistory();
-
-}else{
-
-addMessage(
-"system",
-"📎 "+file.name+" reçu. Le fichier est prêt à être analysé."
-);
-
-const formData=
-new FormData();
-
-formData.append(
-"file",
-file
-);
-
-formData.append(
-"filename",
-file.name
-);
-
-setWorking(
-"PRÉPARATION DU FICHIER..."
-);
-
-const response=
-await fetch(
-"/api/chat",
-{
-method:"POST",
-body:formData
-}
-);
-
-if(!response.ok){
-
-throw new Error(
-"Le fichier n'a pas pu être transmis."
-);
-
-}
-
-addMessage(
-"bot",
-"📎 Fichier reçu. Pour les PDF, DOCX, XLSX et PPTX, l'analyse complète sera activée avec le module de traitement de documents."
-);
-
-}
-
-}catch(error){
-
-addMessage(
-"bot",
-"⚠️ "+
-(
-error.message||
-"Impossible de lire ce fichier."
-)
-);
-
-}finally{
-
-event.target.value="";
-
-setReady();
-
-}
-
-}
-
-
-/* DEMANDES RAPIDES */
-
-function quickCommand(command){
-
-input.value=command;
-
-input.focus();
-
-}
-
-
-/* INITIALISATION */
-
-setupVoice();
-
-newChat();
-
+  addMessage(
+    "assistant",
+    "Lab HACKF5 ACTIVATE 🇦🇱\n\n👑 HACKF5 ✍️\n(by - king 👑 Franck)\n\n⚡ Je suis prêt."
+  );
 </script>
 
 </body>
