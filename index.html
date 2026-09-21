@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d0f">
+<title>HACKER F5 — AI Workstation</title>
+
+<style>
+:root{
+  --bg:#080a0c;
+  --panel:#101316;
+  --panel2:#15191d;
+  --line:#252b31;
+  --text:#eef1f3;
+  --muted:#8c969f;
+  --accent:#e52b35;
+  --ok:#51c878;
+  --shadow:0 18px 50px rgba(0,0,0,.35);
+  --radius:18px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  color:inherit;
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 14px;
+  border-bottom:1px solid var(--line);
+  background:rgba(8,10,12,.94);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(14px);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.brand-mark{
+  width:38px;
+  height:38px;
+  border:1px solid #3a4148;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:#0d1013;
+  position:relative;
+  overflow:hidden;
+}
+
+.brand-mark svg{
+  width:26px;
+  height:26px;
+}
+
+.brand-mark:after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    linear-gradient(
+      100deg,
+      transparent 42%,
+      rgba(229,43,53,.28) 50%,
+      transparent 58%
+    );
+  transform:translateX(-65%);
+  animation:sweep 3.5s linear infinite;
+}
+
+@keyframes sweep{
+  to{
+    transform:translateX(65%);
+  }
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:1.4px;
+}
+
+.top-actions{
+  display:flex;
+  gap:7px;
+}
+
+.icon-btn,
+.mode-btn{
+  border:1px solid var(--line);
+  background:#0d1013;
+  border-radius:10px;
+  min-width:38px;
+  height:38px;
+  cursor:pointer;
+}
+
+.icon-btn:hover,
+.mode-btn:hover{
+  border-color:#414a53;
+  background:#15191d;
+}
+
+.workspace{
+  width:min(1180px,100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:235px minmax(0,1fr);
+  gap:14px;
+  padding:14px;
+  flex:1;
+}
+
+.sidebar{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:12px;
+  box-shadow:var(--shadow);
+  height:calc(100vh - 92px);
+  position:sticky;
+  top:78px;
+}
+
+.side-title{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:1.2px;
+  margin:4px 8px 10px;
+  text-transform:uppercase;
+}
+
+.module{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 10px;
+  border:1px solid transparent;
+  background:transparent;
+  border-radius:11px;
+  text-align:left;
+  cursor:pointer;
+  margin-bottom:4px;
+}
+
+.module:hover,
+.module.active{
+  background:#171b1f;
+  border-color:#2a3036;
+}
+
+.module.active .dot{
+  background:var(--accent);
+  box-shadow:0 0 12px rgba(229,43,53,.55);
+}
+
+.dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#59626a;
+  flex:none;
+}
+
+.module span{
+  font-size:13px;
+}
+
+.side-footer{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  border-top:1px solid var(--line);
+  padding-top:11px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
+}
+
+.main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.lab{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.lab-head{
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.lab-title{
+  font-size:12px;
+  font-weight:750;
+  letter-spacing:.4px;
+}
+
+.lab-sub{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.live{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.live i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--ok);
+  display:block;
+}
+
+.ai-monitor{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:18px;
+  padding:18px;
+  align-items:center;
+}
+
+.core-wrap{
+  height:150px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.core{
+  width:118px;
+  height:118px;
+  position:relative;
+  display:grid;
+  place-items:center;
+}
+
+.core-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid #343b42;
+}
+
+.r1{
+  inset:0;
+}
+
+.r2{
+  inset:10px;
+  border-style:dashed;
+}
+
+.r3{
+  inset:25px;
+  border-color:#444c54;
+}
+
+.core-center{
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  border:1px solid #454d55;
+  background:#0b0e10;
+  display:grid;
+  place-items:center;
+  position:relative;
+  z-index:2;
+  box-shadow:inset 0 0 25px rgba(229,43,53,.08);
+}
+
+.core-center svg{
+  width:38px;
+  height:38px;
+}
+
+.core-scan{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1px;
+  height:54px;
+  background:
+    linear-gradient(
+      transparent,
+      var(--accent),
+      transparent
+    );
+  transform-origin:0 0;
+  opacity:.35;
+  transform:rotate(0deg);
+}
+
+.core-dot{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#77818a;
+  top:3px;
+  left:57px;
+}
+
+.processing .r1{
+  animation:rotate 5s linear infinite;
+}
+
+.processing .r2{
+  animation:rotateR 3.2s linear infinite;
+}
+
+.processing .r3{
+  animation:pulse 1.2s ease-in-out infinite;
+}
+
+.processing .core-scan{
+  animation:scan 1.1s linear infinite;
+}
+
+.processing .core-center{
+  box-shadow:
+    0 0 28px rgba(229,43,53,.18),
+    inset 0 0 25px rgba(229,43,53,.12);
+}
+
+@keyframes rotate{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes rotateR{
+  to{
+    transform:rotate(-360deg);
+  }
+}
+
+@keyframes pulse{
+  50%{
+    transform:scale(1.05);
+    opacity:.65;
+  }
+}
+
+@keyframes scan{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.monitor-info{
+  min-width:0;
+}
+
+.process-main{
+  font-size:16px;
+  font-weight:750;
+  margin-bottom:4px;
+}
+
+.process-detail{
+  font-size:12px;
+  color:var(--muted);
+  min-height:18px;
+}
+
+.steps{
+  display:flex;
+  gap:5px;
+  margin-top:16px;
+}
+
+.step{
+  flex:1;
+  height:5px;
+  border-radius:4px;
+  background:#252b30;
+  overflow:hidden;
+}
+
+.step.done{
+  background:#4c5961;
+}
+
+.step.current{
+  background:var(--accent);
+  box-shadow:0 0 12px rgba(229,43,53,.28);
+}
+
+.step-labels{
+  display:flex;
+  justify-content:space-between;
+  color:#6f7981;
+  font-size:9px;
+  margin-top:6px;
+  }
+.content{min-height:310px;max-height:calc(100vh - 350px);overflow:auto;padding:16px;scroll-behavior:smooth}
+.empty{height:100%;min-height:280px;display:grid;place-items:center;text-align:center;color:var(--muted)}
+.empty-box{max-width:430px}
+.empty-logo{width:58px;height:58px;margin:auto auto 12px;border:1px solid #353c43;border-radius:15px;display:grid;place-items:center;background:#0d1012}
+.empty h1{font-size:20px;margin:0 0 7px;color:#e9edef}.empty p{font-size:12px;line-height:1.6;margin:0}
+.message{display:flex;margin:0 0 13px}.message.user{justify-content:flex-end}
+.bubble{max-width:min(820px,90%);padding:11px 13px;border-radius:15px;border:1px solid var(--line);background:#14181c;font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.user .bubble{background:#191d21;border-color:#30373d}
+.meta{font-size:9px;color:#69737b;margin:0 4px 5px}
+.message-wrap{max-width:min(820px,90%)}.user .message-wrap{display:flex;flex-direction:column;align-items:flex-end}
+.typing{display:flex;gap:5px;align-items:center;color:var(--muted);font-size:11px}
+.typing b{width:5px;height:5px;border-radius:50%;background:#89939b;animation:blink 1s infinite}.typing b:nth-child(2){animation-delay:.15s}.typing b:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:.25;transform:translateY(-2px)}}
+.activity{border-top:1px solid var(--line);background:#0c0f11;padding:9px 13px;display:flex;gap:8px;align-items:center;min-height:35px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:#87919a}
+.activity strong{color:#b8c0c6;font-weight:500}
+.composer{padding:12px;border-top:1px solid var(--line);background:#101316}
+.composer-box{display:flex;gap:8px;align-items:flex-end;border:1px solid #30373d;background:#0c0f11;border-radius:15px;padding:8px}
+textarea{flex:1;resize:none;min-height:42px;max-height:150px;border:0;outline:0;background:transparent;color:var(--text);padding:9px;font-size:13px}
+textarea::placeholder{color:#626c74}
+.attach,.send{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:#15191d;cursor:pointer;display:grid;place-items:center}
+.send{background:#e52b35;border-color:#e52b35;color:white}.send:disabled{opacity:.45;cursor:not-allowed}
+.tools{display:flex;gap:6px;margin-top:8px;overflow:auto}.tool{white-space:nowrap;border:1px solid var(--line);background:#111519;color:#929ca4;border-radius:9px;padding:7px 9px;font-size:10px;cursor:pointer}.tool.active{color:#eee;border-color:#444d55}
+input[type=file]{display:none}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#171b1f;border:1px solid #394149;padding:9px 12px;border-radius:10px;font-size:11px;transition:.2s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.history{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:40}
+.history.open{display:block}.history-card{position:absolute;right:12px;top:76px;width:min(350px,calc(100% - 24px));max-height:70vh;overflow:auto;background:#111519;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
+.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.history-item{padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer}.history-item small{display:block;color:var(--muted);margin-top:3px}
+@media(max-width:760px){
+ .workspace{display:block;padding:8px}.sidebar{display:none}.ai-monitor{grid-template-columns:110px 1fr;padding:13px;gap:12px}.core-wrap{height:120px}.core{transform:scale(.86)}.content{max-height:none;min-height:48vh}.lab-head{padding:10px 12px}.brand small{display:none}.topbar{height:58px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-label="HACKER F5">
+      <svg viewBox="0 0 64 64" fill="none"><path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13l18-6Z" stroke="#e52b35" stroke-width="3"/><path d="M22 23h20M22 31h13M22 39h20" stroke="#e9edef" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div>HACKER F5<small>AI WORKSTATION</small></div>
+  </div>
+  <div class="top-actions">
+    <button class="icon-btn" id="newBtn" title="Nouvelle conversation">＋</button>
+    <button class="icon-btn" id="historyBtn" title="Historique">◷</button>
+  </div>
+</header>
+
+<div class="workspace">
+  <aside class="sidebar">
+    <div class="side-title">Modules</div>
+    <button class="module active" data-mode="CHAT"><i class="dot"></i><span>Assistant IA</span></button>
+    <button class="module" data-mode="CODE"><i class="dot"></i><span>Code</span></button>
+    <button class="module" data-mode="CYBER"><i class="dot"></i><span>Cyber défense</span></button>
+    <button class="module" data-mode="SEARCH"><i class="dot"></i><span>Recherche</span></button>
+    <button class="module" data-mode="FILES"><i class="dot"></i><span>Fichiers</span></button>
+
+    <div class="side-status">
+      <span class="status-light"></span>
+      <div>
+        <strong>Système opérationnel</strong>
+        <small>Interface locale • prête</small>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="lab-head">
+      <div>
+        <span class="eyebrow">AI CONTROL ROOM</span>
+        <h2 id="modeTitle">Assistant IA</h2>
+        <p id="modeDescription">Interface de conversation avec HACKER F5.</p>
+      </div>
+      <div class="connection">
+        <span class="connection-dot"></span>
+        <span id="connectionText">READY</span>
+      </div>
+    </section>
+
+    <section class="ai-monitor">
+      <div class="core-wrap">
+        <div class="core" id="core">
+          <div class="core-ring ring-a"></div>
+          <div class="core-ring ring-b"></div>
+          <div class="core-shield">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 10 78 20v25c0 19-11 34-28 44C33 79 22 64 22 45V20l28-10Z" stroke="currentColor" stroke-width="4"/>
+              <path d="M36 40h28M36 51h19M36 62h28" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="core-scan"></span>
+        </div>
+      </div>
+
+      <div class="monitor-info">
+        <div class="monitor-title">
+          <span>HACKER F5 CORE</span>
+          <span class="monitor-state" id="monitorState">STANDBY</span>
+        </div>
+
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="step-labels">
+          <span>Requête</span>
+          <span>Analyse</span>
+          <span>Traitement</span>
+          <span>Génération</span>
+          <span>Prêt</span>
+        </div>
+
+        <div class="monitor-log" id="monitorLog">
+          <div><span>10:00:01</span> Système prêt.</div>
+          <div><span>10:00:02</span> Interface chargée.</div>
+          <div><span>10:00:03</span> En attente d'une requête.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chat-panel">
+      <div class="chat-head">
+        <div>
+          <strong>Conversation</strong>
+          <span id="conversationLabel">Nouvelle session</span>
+        </div>
+        <button class="small-btn" id="clearBtn">Effacer</button>
+      </div>
+
+      <div class="content" id="content">
+        <div class="empty" id="emptyState">
+          <div class="empty-box">
+            <div class="empty-logo">
+              <svg viewBox="0 0 64 64" width="38" height="38" fill="none">
+                <path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13l18-6Z" stroke="#e52b35" stroke-width="2.5"/>
+                <path d="M22 23h20M22 31h13M22 39h20" stroke="#e9edef" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h1>HACKER F5</h1>
+            <p>Assistant IA professionnel. Décris ta demande et le système traitera la requête.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity" id="activity">
+        <strong>F5 CORE</strong>
+        <span id="activityText">En attente d'une requête.</span>
+      </div>
+
+      <div class="composer">
+        <div class="composer-box">
+          <button class="attach" id="attachBtn" title="Joindre un fichier">＋</button>
+          <input type="file" id="fileInput">
+          <textarea id="messageInput" placeholder="Écrire une demande à HACKER F5..." rows="1"></textarea>
+          <button class="send" id="sendBtn" title="Envoyer">➤</button>
+        </div>
+
+        <div class="tools">
+          <button class="tool active" data-tool="chat">IA</button>
+          <button class="tool" data-tool="code">Code</button>
+          <button class="tool" data-tool="cyber">Cyber</button>
+          <button class="tool" data-tool="search">Recherche</button>
+          <button class="tool" data-tool="file">Fichier</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+  </div>
+</div>
+
+<div class="history" id="historyPanel">
+  <div class="history-card">
+    <div class="history-head">
+      <strong>Historique local</strong>
+      <button class="icon-btn" id="closeHistory">×</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const state={
+  conversationId:null,
+  messages:[],
+  mode:"CHAT",
+  processing:false,
+  lastAssistantText:""
+};
+
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+
+function toast(t){
+  const el=$("#toast");
+  el.textContent=t;
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2200);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+function setActivity(type,text){
+  $("#activityType").textContent=type;
+  $("#activityText").textContent=text;
+}
+
+function setProcess(stage,main,detail){
+  const labels=[
+    "Requête",
+    "Analyse",
+    "Traitement",
+    "Génération",
+    "Prêt"
+  ];
+
+  const index=labels.indexOf(stage);
+
+  $$("#steps .step").forEach((x,i)=>{
+    x.className=
+      "step "+
+      (i<index?"done":i===index?"current":"");
+  });
+
+  $("#processMain").textContent=main;
+  $("#processDetail").textContent=detail;
+}
+
+function setProcessing(on){
+  state.processing=on;
+
+  $("#aiCore").classList.toggle("processing",on);
+  $("#sendBtn").disabled=on;
+
+  $("#liveText").textContent=on?"TRAITEMENT":"PRÊT";
+  $("#liveDot").style.background=
+    on?"#e52b35":"#51c878";
+}
+
+function addMessage(role,text){
+  $("#empty")?.remove();
+
+  const wrap=document.createElement("div");
+  wrap.className="message "+role;
+
+  const inner=document.createElement("div");
+  inner.className="message-wrap";
+
+  const meta=document.createElement("div");
+  meta.className="meta";
+  meta.textContent=
+    role==="user"?"VOUS":"HACKER F5";
+
+  const bubble=document.createElement("div");
+  bubble.className="bubble";
+  bubble.innerHTML=escapeHtml(text);
+
+  inner.append(meta,bubble);
+  wrap.append(inner);
+
+  $("#content").append(wrap);
+  $("#content").scrollTop=$("#content").scrollHeight;
+}
+
+function addTyping(){
+  $("#typing")?.remove();
+
+  const wrap=document.createElement("div");
+  wrap.className="message";
+  wrap.id="typing";
+
+  wrap.innerHTML=
+    '<div class="message-wrap">'+
+      '<div class="meta">HACKER F5</div>'+
+      '<div class="bubble">'+
+        '<div class="typing">'+
+          'Traitement en cours '+
+          '<b></b><b></b><b></b>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+  $("#content").append(wrap);
+  $("#content").scrollTop=$("#content").scrollHeight;
+}
+
+function saveHistory(){
+  const title=
+    state.messages
+      .find(x=>x.role==="user")
+      ?.content
+      ?.slice(0,55)
+    ||"Nouvelle conversation";
+
+  const data=
+    JSON.parse(
+      localStorage.getItem("hackerF5History")||"[]"
+    ).filter(
+      x=>x.id!==state.conversationId
+    );
+
+  data.unshift({
+    id:state.conversationId||Date.now().toString(),
+    title,
+    messages:state.messages.slice(-30),
+    updated:Date.now()
+  });
+
+  localStorage.setItem(
+    "hackerF5History",
+    JSON.stringify(data.slice(0,30))
+  );
+}
+
+function renderHistory(){
+  const list=$("#historyList");
+
+  const data=
+    JSON.parse(
+      localStorage.getItem("hackerF5History")||"[]"
+    );
+
+  list.innerHTML=data.length
+    ?data.map(x=>
+      `<div class="history-item" data-id="${x.id}">
+        ${escapeHtml(x.title)}
+        <small>
+          ${new Date(x.updated).toLocaleString()}
+        </small>
+      </div>`
+    ).join("")
+    :"<div style='color:#7d878f;font-size:12px;padding:8px'>Aucune conversation locale.</div>";
+
+  list
+    .querySelectorAll(".history-item")
+    .forEach(el=>{
+      el.onclick=()=>loadHistory(el.dataset.id);
+    });
+}
+
+function loadHistory(id){
+  const item=
+    JSON.parse(
+      localStorage.getItem("hackerF5History")||"[]"
+    ).find(x=>x.id===id);
+
+  if(!item)return;
+
+  state.conversationId=item.id;
+  state.messages=item.messages||[];
+
+  $("#content").innerHTML="";
+
+  state.messages.forEach(m=>{
+    addMessage(m.role,m.content);
+  });
+
+  $("#historyPanel").classList.remove("open");
+
+  setActivity(
+    "HISTORIQUE",
+    "Conversation locale chargée."
+  );
+}
+
+function newConversation(){
+  state.conversationId=null;
+  state.messages=[];
+  state.lastAssistantText="";
+
+  $("#content").innerHTML=
+    '<div class="empty" id="empty">'+
+      '<div class="empty-box">'+
+        '<div class="empty-logo">'+
+          '<svg viewBox="0 0 64 64" width="34" fill="none">'+
+            '<path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13L32 7Z" stroke="#e52b35" stroke-width="3"/>'+
+            '<path d="M22 23h20M22 31h13M22 39h20" stroke="#eef1f3" stroke-width="3" stroke-linecap="round"/>'+
+          '</svg>'+
+        '</div>'+
+        '<h1>HACKER F5</h1>'+
+        '<p>Nouvelle conversation prête.</p>'+
+      '</div>'+
+    '</div>';
+
+  setProcess(
+    "Prêt",
+    "Système en attente",
+    "Entrez une commande pour lancer un traitement."
+  );
+
+  setActivity(
+    "LOCAL",
+    "Nouvelle conversation."
+  );
+}
+
+function setMode(mode){
+  state.mode=mode;
+
+  const names={
+    CHAT:"Assistant IA",
+    CODE:"Code",
+    CYBER:"Cyber défense",
+    RESEARCH:"Recherche",
+    FILES:"Fichiers"
+  };
+
+  $("#modeLabel").textContent=
+    names[mode]||mode;
+
+  $$(".module,.tool").forEach(x=>{
+    x.classList.toggle(
+      "active",
+      x.dataset.mode===mode
+    );
+  });
+
+  setActivity(
+    "MODE",
+    "Module "+(names[mode]||mode)+" sélectionné."
+  );
+  }
+async function sendMessage(){
+  const input=$("#input"),text=input.value.trim();
+  if(!text||state.processing)return;
+
+  state.messages.push({
+    role:"user",
+    content:text
+  });
+
+  addMessage("user",text);
+
+  input.value="";
+  input.style.height="42px";
+
+  setProcessing(true);
+  setProcess(
+    "Requête",
+    "Requête reçue",
+    "Préparation de la demande."
+  );
+
+  setActivity(
+    "CLIENT",
+    "Requête ajoutée à la conversation."
+  );
+
+  addTyping();
+
+  await new Promise(r=>setTimeout(r,180));
+
+  setProcess(
+    "Analyse",
+    "Analyse de la requête",
+    "Transmission au service IA."
+  );
+
+  try{
+    setProcess(
+      "Traitement",
+      "Traitement IA",
+      "Attente de la réponse du serveur."
+    );
+
+    const res=await fetch("/api/chat",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        messages:state.messages,
+        conversationId:state.conversationId,
+        mode:state.mode
+      })
+    });
+
+    const raw=await res.text();
+
+    let data;
+
+    try{
+      data=JSON.parse(raw);
+    }catch{
+      throw new Error(
+        raw.slice(0,300)||
+        "Réponse serveur invalide"
+      );
+    }
+
+    if(!res.ok||!data.ok){
+      throw new Error(
+        typeof data.error==="string"
+          ?data.error
+          :JSON.stringify(
+              data.error||
+              "Erreur serveur"
+            )
+      );
+    }
+
+    $("#typing")?.remove();
+
+    setProcess(
+      "Génération",
+      "Réponse reçue",
+      "Affichage de la réponse."
+    );
+
+    setActivity(
+      "SERVER",
+      "Réponse reçue depuis /api/chat."
+    );
+
+    const answer=
+      data.answer||
+      data.message||
+      "Aucune réponse reçue.";
+
+    state.conversationId=
+      data.conversationId||
+      state.conversationId;
+
+    state.messages.push({
+      role:"assistant",
+      content:answer
+    });
+
+    state.lastAssistantText=answer;
+
+    addMessage(
+      "assistant",
+      answer
+    );
+
+    setProcess(
+      "Prêt",
+      "Système prêt",
+      "La réponse est disponible."
+    );
+
+    saveHistory();
+
+  }catch(err){
+
+    $("#typing")?.remove();
+
+    const msg=
+      err?.message||
+      "Erreur inconnue";
+
+    const errorText=
+      "⚠️ Erreur HACKER F5 : "+msg;
+
+    state.messages.push({
+      role:"assistant",
+      content:errorText
+    });
+
+    addMessage(
+      "assistant",
+      errorText
+    );
+
+    setProcess(
+      "Prêt",
+      "Erreur de traitement",
+      "Vérifiez le serveur /api/chat."
+    );
+
+    setActivity(
+      "ERREUR",
+      msg
+    );
+
+  }finally{
+    setProcessing(false);
+  }
+}
+
+$("#sendBtn").onclick=sendMessage;
+
+$("#newBtn").onclick=newConversation;
+
+$("#historyBtn").onclick=()=>{
+  $("#historyPanel").classList.add("open");
+  renderHistory();
+};
+
+$("#closeHistory").onclick=()=>{
+  $("#historyPanel").classList.remove("open");
+};
+
+$("#historyPanel").onclick=e=>{
+  if(e.target.id==="historyPanel"){
+    e.currentTarget.classList.remove("open");
+  }
+};
+
+$("#input").addEventListener(
+  "input",
+  e=>{
+    e.target.style.height="42px";
+    e.target.style.height=
+      Math.min(
+        e.target.scrollHeight,
+        150
+      )+"px";
+  }
+);
+
+$("#input").addEventListener(
+  "keydown",
+  e=>{
+    if(e.key==="Enter"&&!e.shiftKey){
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+);
+
+$$("[data-mode]").forEach(
+  b=>{
+    b.onclick=()=>{
+      setMode(b.dataset.mode);
+    };
+  }
+);
+
+$("#fileInput").onchange=e=>{
+  const f=e.target.files[0];
+
+  if(f){
+    state.messages.push({
+      role:"user",
+      content:
+        "Fichier sélectionné : "+
+        f.name
+    });
+
+    addMessage(
+      "user",
+      "Fichier sélectionné : "+
+      f.name
+    );
+
+    setActivity(
+      "FICHIER",
+      f.name+
+      " sélectionné localement."
+    );
+
+    toast(
+      "Fichier sélectionné"
+    );
+  }
+};
+
+setProcess(
+  "Prêt",
+  "Système en attente",
+  "Entrez une commande pour lancer un traitement."
+);
+$("#sendBtn").onclick=sendMessage;
+$("#newBtn").onclick=newConversation;
+$("#historyBtn").onclick=()=>{
+  $("#historyPanel").classList.add("open");
+  renderHistory();
+};
+$("#closeHistory").onclick=()=>{
+  $("#historyPanel").classList.remove("open");
+};
+$("#historyPanel").onclick=e=>{
+  if(e.target.id==="historyPanel"){
+    e.currentTarget.classList.remove("open");
+  }
+};
+$("#input").addEventListener("input",e=>{
+  e.target.style.height="42px";
+  e.target.style.height=
+    Math.min(e.target.scrollHeight,150)+"px";
+});
+$("#input").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+$$("[data-mode]").forEach(
+  b=>b.onclick=()=>setMode(b.dataset.mode)
+);
+$("#fileInput").onchange=e=>{
+  const f=e.target.files[0];
+  if(f){
+    state.messages.push({
+      role:"user",
+      content:"Fichier sélectionné : "+f.name
+    });
+    addMessage(
+      "user",
+      "Fichier sélectionné : "+f.name
+    );
+    setActivity(
+      "FICHIER",
+      f.name+" sélectionné localement."
+    );
+    toast("Fichier sélectionné");
+  }
+};
+
+setProcess(
+  "Prêt",
+  "Système en attente",
+  "Entrez une commande pour lancer un traitement."
+);
+</script>
+</body>
+</html>
