@@ -3,21 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0d0f">
+<meta name="theme-color" content="#0a0f15">
+
 <title>HACKER F5 — AI Workstation</title>
 
 <style>
 :root{
-  --bg:#080a0c;
-  --panel:#101316;
-  --panel2:#15191d;
-  --line:#252b31;
-  --text:#eef1f3;
-  --muted:#8c969f;
-  --accent:#e52b35;
-  --ok:#51c878;
-  --shadow:0 18px 50px rgba(0,0,0,.35);
-  --radius:18px;
+  --bg:#080d12;
+  --panel:#0e151c;
+  --panel2:#121b24;
+  --line:#263541;
+  --text:#e9f0f5;
+  --muted:#82909c;
+
+  --red:#ef4049;
+  --cyan:#2bc8e8;
+  --green:#45d58a;
+  --blue:#4e8cff;
+  --orange:#e5a545;
+
+  --shadow:0 18px 50px rgba(0,0,0,.38);
+  --radius:16px;
 }
 
 *{
@@ -28,9 +34,16 @@ html,
 body{
   margin:0;
   min-height:100%;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   background:var(--bg);
   color:var(--text);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
 
 body{
@@ -44,1140 +57,3599 @@ textarea{
 }
 
 button{
-  color:inherit;
+  cursor:pointer;
 }
 
 .app{
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
+
+  background:
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(43,200,232,.06),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 8% 40%,
+      rgba(239,64,73,.05),
+      transparent 25%
+    );
 }
+
+/* =========================
+   TOP BAR
+========================= */
 
 .topbar{
   height:64px;
+
+  border-bottom:1px solid var(--line);
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 14px;
-  border-bottom:1px solid var(--line);
-  background:rgba(8,10,12,.94);
+
+  padding:0 16px;
+
+  background:rgba(8,13,18,.94);
+
   position:sticky;
   top:0;
   z-index:20;
-  backdrop-filter:blur(14px);
+
+  backdrop-filter:blur(12px);
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:800;
-  letter-spacing:.5px;
+
+  font-weight:900;
+  letter-spacing:.08em;
 }
 
-.brand-mark{
-  width:38px;
-  height:38px;
-  border:1px solid #3a4148;
+.logo{
+  width:36px;
+  height:36px;
+
+  border:1px solid #455563;
   border-radius:11px;
+
   display:grid;
   place-items:center;
-  background:#0d1013;
-  position:relative;
-  overflow:hidden;
+
+  background:#101820;
+
+  box-shadow:
+    0 0 18px rgba(43,200,232,.08);
 }
 
-.brand-mark svg{
-  width:26px;
-  height:26px;
-}
-
-.brand-mark:after{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background:
-    linear-gradient(
-      100deg,
-      transparent 42%,
-      rgba(229,43,53,.28) 50%,
-      transparent 58%
-    );
-  transform:translateX(-65%);
-  animation:sweep 3.5s linear infinite;
-}
-
-@keyframes sweep{
-  to{
-    transform:translateX(65%);
-  }
-}
-
-.brand small{
-  display:block;
-  color:var(--muted);
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:1.4px;
+.logo svg{
+  width:23px;
 }
 
 .top-actions{
   display:flex;
-  gap:7px;
+  gap:8px;
 }
 
-.icon-btn,
-.mode-btn{
+.iconbtn{
   border:1px solid var(--line);
-  background:#0d1013;
-  border-radius:10px;
-  min-width:38px;
-  height:38px;
-  cursor:pointer;
+
+  background:#111921;
+
+  color:#dce6ec;
+
+  border-radius:11px;
+
+  padding:9px 11px;
+
+  transition:
+    transform .15s ease,
+    background .15s ease,
+    border-color .15s ease;
 }
 
-.icon-btn:hover,
-.mode-btn:hover{
-  border-color:#414a53;
-  background:#15191d;
+.iconbtn:hover{
+  background:#18232d;
+  border-color:#3b4e5d;
 }
+
+.iconbtn:active{
+  transform:scale(.96);
+}
+
+/* =========================
+   WORKSPACE
+========================= */
 
 .workspace{
-  width:min(1180px,100%);
-  margin:auto;
   display:grid;
-  grid-template-columns:235px minmax(0,1fr);
+
+  grid-template-columns:
+    230px
+    minmax(0,1fr);
+
   gap:14px;
+
+  max-width:1500px;
+
+  margin:auto;
+
   padding:14px;
-  flex:1;
 }
 
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
   padding:12px;
-  box-shadow:var(--shadow);
-  height:calc(100vh - 92px);
+
+  height:
+    calc(100vh - 92px);
+
   position:sticky;
   top:78px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #101820,
+      #0c131a
+    );
+
+  border:1px solid var(--line);
+
+  border-radius:var(--radius);
+
+  box-shadow:var(--shadow);
 }
 
 .side-title{
   font-size:11px;
+
   color:var(--muted);
-  letter-spacing:1.2px;
-  margin:4px 8px 10px;
-  text-transform:uppercase;
+
+  letter-spacing:.14em;
+
+  margin:
+    8px
+    8px
+    10px;
 }
 
-.module{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:11px 10px;
+.nav{
+  display:grid;
+  gap:7px;
+}
+
+.nav button{
   border:1px solid transparent;
+
   background:transparent;
-  border-radius:11px;
+
+  color:#c8d3da;
+
   text-align:left;
-  cursor:pointer;
-  margin-bottom:4px;
+
+  padding:11px;
+
+  border-radius:10px;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    color .15s ease;
 }
 
-.module:hover,
-.module.active{
-  background:#171b1f;
-  border-color:#2a3036;
+.nav button:hover{
+  background:#151f28;
+  border-color:#2a3945;
+  color:white;
 }
 
-.module.active .dot{
-  background:var(--accent);
-  box-shadow:0 0 12px rgba(229,43,53,.55);
+.nav button.active{
+  background:#151f28;
+  border-color:#2a3945;
+  color:white;
+}
+
+.status{
+  margin-top:auto;
+
+  border-top:1px solid var(--line);
+
+  padding:
+    13px
+    7px
+    5px;
+}
+
+.statusline{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  color:#c9d4da;
+
+  font-size:12px;
 }
 
 .dot{
-  width:7px;
-  height:7px;
+  width:8px;
+  height:8px;
+
   border-radius:50%;
-  background:#59626a;
-  flex:none;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 10px rgba(69,213,138,.5);
 }
 
-.module span{
-  font-size:13px;
-}
-
-.side-footer{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  border-top:1px solid var(--line);
-  padding-top:11px;
-  color:var(--muted);
-  font-size:10px;
-  line-height:1.5;
-}
+/* =========================
+   MAIN
+========================= */
 
 .main{
   min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+
+  display:grid;
+
+  gap:14px;
 }
 
-.lab{
-  background:var(--panel);
+.card{
+  background:
+    linear-gradient(
+      180deg,
+      #101820,
+      #0c131a
+    );
+
   border:1px solid var(--line);
+
   border-radius:var(--radius);
-  overflow:hidden;
+
   box-shadow:var(--shadow);
+
+  padding:14px;
 }
 
-.lab-head{
-  padding:12px 14px;
-  border-bottom:1px solid var(--line);
+/* =========================
+   HERO
+========================= */
+
+.hero{
   display:flex;
-  align-items:center;
+
   justify-content:space-between;
+
+  gap:15px;
+
+  align-items:center;
 }
 
-.lab-title{
+.eyebrow{
+  font-size:10px;
+
+  color:var(--cyan);
+
+  letter-spacing:.16em;
+
+  font-weight:800;
+}
+
+h1{
+  font-size:22px;
+
+  margin:
+    5px
+    0;
+}
+
+.sub{
+  color:var(--muted);
+
   font-size:12px;
-  font-weight:750;
-  letter-spacing:.4px;
 }
 
-.lab-sub{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:2px;
-}
-
-.live{
+.badges{
   display:flex;
-  align-items:center;
+
   gap:7px;
+
+  flex-wrap:wrap;
+}
+
+.badge{
   font-size:10px;
-  color:var(--muted);
+
+  border:1px solid var(--line);
+
+  padding:
+    6px
+    8px;
+
+  border-radius:999px;
+
+  color:#c9d4da;
 }
 
-.live i{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--ok);
-  display:block;
+.badge.red{
+  border-color:#653036;
+  color:#ff8990;
 }
 
-.ai-monitor{
+.badge.blue{
+  border-color:#2d4b7d;
+  color:#83abff;
+}
+
+.badge.orange{
+  border-color:#654d28;
+  color:#f1c46c;
+}
+
+/* =========================
+   MONITOR
+========================= */
+
+.monitor{
   display:grid;
-  grid-template-columns:180px 1fr;
-  gap:18px;
-  padding:18px;
-  align-items:center;
+
+  grid-template-columns:
+    310px
+    minmax(0,1fr);
+
+  gap:14px;
 }
 
-.core-wrap{
-  height:150px;
+/* =========================
+   AI CORE
+========================= */
+
+.core-panel{
+  min-height:330px;
+
   display:grid;
+
   place-items:center;
+
   position:relative;
+
+  overflow:hidden;
 }
 
 .core{
-  width:118px;
-  height:118px;
+  width:205px;
+  height:205px;
+
   position:relative;
+
   display:grid;
+
   place-items:center;
 }
 
-.core-ring{
-  position:absolute;
-  border-radius:50%;
-  border:1px solid #343b42;
-}
+/* Anneaux */
 
-.r1{
+.ring{
+  position:absolute;
+
+  border:1px solid
+    rgba(43,200,232,.45);
+
+  border-radius:50%;
+
   inset:0;
 }
 
+.r1{
+  animation:
+    spin
+    8s
+    linear
+    infinite;
+}
+
 .r2{
-  inset:10px;
-  border-style:dashed;
+  inset:17px;
+
+  border-color:
+    rgba(78,140,255,.42);
+
+  animation:
+    spinReverse
+    6s
+    linear
+    infinite;
 }
 
 .r3{
-  inset:25px;
-  border-color:#444c54;
+  inset:35px;
+
+  border-color:
+    rgba(239,64,73,.38);
+
+  border-style:dashed;
+
+  animation:
+    spin
+    4s
+    linear
+    infinite;
 }
 
-.core-center{
-  width:58px;
-  height:58px;
-  border-radius:16px;
-  border:1px solid #454d55;
-  background:#0b0e10;
+/* Mode traitement */
+
+.core.processing .r1{
+  border-color:
+    rgba(239,64,73,.75);
+
+  animation-duration:2.8s;
+}
+
+.core.processing .r2{
+  border-color:
+    rgba(229,165,69,.7);
+
+  animation-duration:2s;
+}
+
+.core.processing .r3{
+  border-color:
+    rgba(239,64,73,.8);
+
+  animation-duration:1.3s;
+}
+
+/* Bouclier */
+
+.shield{
+  width:78px;
+  height:90px;
+
+  border:
+    2px solid
+    var(--cyan);
+
+  clip-path:
+    polygon(
+      50% 0,
+      92% 18%,
+      86% 72%,
+      50% 100%,
+      14% 72%,
+      8% 18%
+    );
+
   display:grid;
+
   place-items:center;
-  position:relative;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(43,200,232,.18),
+      rgba(43,200,232,.02) 65%
+    );
+
+  box-shadow:
+    0 0 28px
+    rgba(43,200,232,.16);
+
   z-index:2;
-  box-shadow:inset 0 0 25px rgba(229,43,53,.08);
 }
 
-.core-center svg{
-  width:38px;
-  height:38px;
+.core.processing .shield{
+  border-color:var(--red);
+
+  box-shadow:
+    0 0 35px
+    rgba(239,64,73,.28);
+
+  animation:
+    pulse
+    .9s
+    ease-in-out
+    infinite;
 }
 
-.core-scan{
+.shield span{
+  font-size:21px;
+
+  font-weight:900;
+}
+
+/* =========================
+   SCAN
+========================= */
+
+.scan{
   position:absolute;
-  left:50%;
-  top:50%;
-  width:1px;
-  height:54px;
+
+  left:10%;
+  right:10%;
+
+  height:2px;
+
   background:
     linear-gradient(
+      90deg,
       transparent,
-      var(--accent),
+      var(--cyan),
       transparent
     );
-  transform-origin:0 0;
-  opacity:.35;
-  transform:rotate(0deg);
+
+  opacity:.55;
+
+  animation:
+    scan
+    2.5s
+    ease-in-out
+    infinite;
+
+  z-index:4;
 }
 
-.core-dot{
+.core.processing .scan{
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--red),
+      transparent
+    );
+
+  animation-duration:1.1s;
+}
+
+/* =========================
+   CORE STATUS
+========================= */
+
+.core-label{
+  text-align:center;
+
   position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:#77818a;
-  top:3px;
-  left:57px;
+
+  bottom:18px;
+
+  left:0;
+  right:0;
 }
 
-.processing .r1{
-  animation:rotate 5s linear infinite;
+.core-label strong{
+  display:block;
+
+  font-size:13px;
 }
 
-.processing .r2{
-  animation:rotateR 3.2s linear infinite;
+.core-label span{
+  font-size:10px;
+
+  color:var(--muted);
 }
 
-.processing .r3{
-  animation:pulse 1.2s ease-in-out infinite;
+/* =========================
+   METRICS
+========================= */
+
+.metrics{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:8px;
+
+  margin-bottom:12px;
 }
 
-.processing .core-scan{
-  animation:scan 1.1s linear infinite;
+.metric{
+  border:1px solid var(--line);
+
+  background:#0b1117;
+
+  border-radius:11px;
+
+  padding:10px;
 }
 
-.processing .core-center{
-  box-shadow:
-    0 0 28px rgba(229,43,53,.18),
-    inset 0 0 25px rgba(229,43,53,.12);
+.metric b{
+  font-size:15px;
 }
 
-@keyframes rotate{
+.metric small{
+  display:block;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+  margin-top:3px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-wrap{
+  margin:
+    8px
+    0
+    12px;
+}
+
+.progress-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  font-size:11px;
+
+  color:#bdc9d0;
+
+  margin-bottom:7px;
+}
+
+.progress{
+  height:7px;
+
+  border-radius:99px;
+
+  background:#202a32;
+
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+
+  width:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--blue),
+      var(--cyan)
+    );
+
+  transition:
+    width .25s ease;
+}
+
+/* =========================
+   PROCESS STEPS
+========================= */
+
+.steps{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:7px;
+}
+
+.step{
+  border:1px solid var(--line);
+
+  padding:8px;
+
+  border-radius:9px;
+
+  font-size:9px;
+
+  color:var(--muted);
+
+  background:#0b1117;
+}
+
+.step.on{
+  color:white;
+
+  border-color:#31516a;
+}
+
+.step.done{
+  color:var(--green);
+
+  border-color:#27563e;
+}
+
+/* =========================
+   ACTIVITY LOG
+========================= */
+
+.log{
+  height:126px;
+
+  overflow:auto;
+
+  background:#080d12;
+
+  border:1px solid var(--line);
+
+  border-radius:10px;
+
+  padding:9px;
+
+  font:
+    10px
+    ui-monospace,
+    SFMono-Regular,
+    monospace;
+
+  color:#aab8c2;
+
+  line-height:1.65;
+}
+
+.log .ok{
+  color:var(--green);
+}
+
+.log .warn{
+  color:var(--orange);
+}
+
+.log .run{
+  color:var(--cyan);
+}
+  <style>
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+  min-height:400px;
+
+  display:grid;
+
+  grid-template-rows:
+    auto
+    1fr
+    auto;
+
+  gap:10px;
+}
+
+.chat-head{
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+}
+
+.chat-head b{
+  font-size:14px;
+}
+
+.chat-actions{
+  display:flex;
+
+  gap:6px;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+
+.messages{
+  min-height:250px;
+
+  max-height:430px;
+
+  overflow:auto;
+
+  padding:4px;
+}
+
+.msg{
+  max-width:86%;
+
+  padding:
+    10px
+    12px;
+
+  border-radius:13px;
+
+  margin:
+    7px
+    0;
+
+  font-size:13px;
+
+  line-height:1.45;
+
+  white-space:pre-wrap;
+
+  word-break:break-word;
+}
+
+.msg.ai{
+  background:#121c24;
+
+  border:
+    1px solid
+    #293944;
+
+  margin-right:auto;
+}
+
+.msg.user{
+  background:#172a38;
+
+  border:
+    1px solid
+    #2b4b5e;
+
+  margin-left:auto;
+}
+
+.msg .meta{
+  font-size:9px;
+
+  color:var(--muted);
+
+  margin-bottom:4px;
+
+  font-weight:700;
+
+  letter-spacing:.04em;
+}
+
+/* =========================
+   COMPOSER
+========================= */
+
+.composer{
+  border:
+    1px solid
+    var(--line);
+
+  background:#0b1117;
+
+  border-radius:13px;
+
+  padding:8px;
+}
+
+textarea{
+  width:100%;
+
+  border:0;
+
+  outline:0;
+
+  resize:none;
+
+  background:transparent;
+
+  color:white;
+
+  min-height:48px;
+
+  max-height:130px;
+
+  padding:4px;
+}
+
+textarea::placeholder{
+  color:#63717c;
+}
+
+.compose-row{
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:8px;
+
+  align-items:center;
+}
+
+.tools{
+  display:flex;
+
+  gap:6px;
+
+  overflow:auto;
+
+  min-width:0;
+
+  scrollbar-width:none;
+}
+
+.tools::-webkit-scrollbar{
+  display:none;
+}
+
+.tool{
+  border:
+    1px solid
+    var(--line);
+
+  background:#111921;
+
+  color:#dce6ec;
+
+  border-radius:11px;
+
+  padding:
+    7px
+    9px;
+
+  font-size:10px;
+
+  white-space:nowrap;
+
+  transition:
+    background .15s ease,
+    border-color .15s ease,
+    transform .15s ease;
+}
+
+.tool:hover{
+  background:#18232d;
+
+  border-color:#3a4d5b;
+}
+
+.tool:active{
+  transform:scale(.96);
+}
+
+.tool.selected{
+  border-color:#39718a;
+
+  background:#122832;
+
+  color:#8ce6f7;
+}
+
+.send{
+  border:0;
+
+  background:var(--red);
+
+  color:white;
+
+  border-radius:10px;
+
+  padding:
+    10px
+    15px;
+
+  font-weight:800;
+
+  transition:
+    transform .15s ease,
+    filter .15s ease;
+}
+
+.send:hover{
+  filter:brightness(1.08);
+}
+
+.send:active{
+  transform:scale(.96);
+}
+
+.file-input{
+  display:none;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history{
+  position:fixed;
+
+  right:12px;
+
+  top:72px;
+
+  width:min(
+    330px,
+    calc(100vw - 24px)
+  );
+
+  background:#101820;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:14px;
+
+  padding:12px;
+
+  box-shadow:var(--shadow);
+
+  z-index:50;
+
+  display:none;
+}
+
+.history.open{
+  display:block;
+}
+
+.history-list{
+  max-height:330px;
+
+  overflow:auto;
+}
+
+.history-item{
+  padding:9px;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  font-size:11px;
+
+  cursor:pointer;
+
+  transition:
+    background .15s ease;
+}
+
+.history-item:hover{
+  background:#16212a;
+}
+
+.history-empty{
+  color:var(--muted);
+
+  font-size:11px;
+
+  padding:8px 2px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+
+  left:50%;
+
+  bottom:20px;
+
+  transform:
+    translateX(-50%)
+    translateY(20px);
+
+  opacity:0;
+
+  background:#17222b;
+
+  border:
+    1px solid
+    #344957;
+
+  color:#e9f0f5;
+
+  border-radius:10px;
+
+  padding:
+    9px
+    13px;
+
+  font-size:11px;
+
+  z-index:80;
+
+  transition:
+    .25s;
+}
+
+.toast.show{
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes spin{
+  from{
+    transform:rotate(0deg);
+  }
+
   to{
     transform:rotate(360deg);
   }
 }
 
-@keyframes rotateR{
+@keyframes spinReverse{
+  from{
+    transform:rotate(0deg);
+  }
+
   to{
     transform:rotate(-360deg);
   }
 }
 
+@keyframes scan{
+  0%,
+  100%{
+    top:20%;
+
+    opacity:.15;
+  }
+
+  50%{
+    top:80%;
+
+    opacity:.8;
+  }
+}
+
 @keyframes pulse{
+  0%{
+    transform:scale(1);
+  }
+
   50%{
     transform:scale(1.05);
-    opacity:.65;
+  }
+
+  100%{
+    transform:scale(1);
   }
 }
 
-@keyframes scan{
-  to{
-    transform:rotate(360deg);
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media(max-width:900px){
+
+  .workspace{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .monitor{
+    grid-template-columns:1fr;
+  }
+
+  .core-panel{
+    min-height:290px;
+  }
+
+  .topbar{
+    padding:
+      0
+      10px;
+  }
+
+  .brand{
+    font-size:12px;
+  }
+
+  .hero{
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .steps{
+    grid-template-columns:
+      repeat(2,1fr);
   }
 }
 
-.monitor-info{
-  min-width:0;
-}
+/* =========================
+   SMALL PHONES
+========================= */
 
-.process-main{
-  font-size:16px;
-  font-weight:750;
-  margin-bottom:4px;
-}
+@media(max-width:520px){
 
-.process-detail{
-  font-size:12px;
-  color:var(--muted);
-  min-height:18px;
-}
-
-.steps{
-  display:flex;
-  gap:5px;
-  margin-top:16px;
-}
-
-.step{
-  flex:1;
-  height:5px;
-  border-radius:4px;
-  background:#252b30;
-  overflow:hidden;
-}
-
-.step.done{
-  background:#4c5961;
-}
-
-.step.current{
-  background:var(--accent);
-  box-shadow:0 0 12px rgba(229,43,53,.28);
-}
-
-.step-labels{
-  display:flex;
-  justify-content:space-between;
-  color:#6f7981;
-  font-size:9px;
-  margin-top:6px;
+  .workspace{
+    padding:8px;
   }
-.content{min-height:310px;max-height:calc(100vh - 350px);overflow:auto;padding:16px;scroll-behavior:smooth}
-.empty{height:100%;min-height:280px;display:grid;place-items:center;text-align:center;color:var(--muted)}
-.empty-box{max-width:430px}
-.empty-logo{width:58px;height:58px;margin:auto auto 12px;border:1px solid #353c43;border-radius:15px;display:grid;place-items:center;background:#0d1012}
-.empty h1{font-size:20px;margin:0 0 7px;color:#e9edef}.empty p{font-size:12px;line-height:1.6;margin:0}
-.message{display:flex;margin:0 0 13px}.message.user{justify-content:flex-end}
-.bubble{max-width:min(820px,90%);padding:11px 13px;border-radius:15px;border:1px solid var(--line);background:#14181c;font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
-.user .bubble{background:#191d21;border-color:#30373d}
-.meta{font-size:9px;color:#69737b;margin:0 4px 5px}
-.message-wrap{max-width:min(820px,90%)}.user .message-wrap{display:flex;flex-direction:column;align-items:flex-end}
-.typing{display:flex;gap:5px;align-items:center;color:var(--muted);font-size:11px}
-.typing b{width:5px;height:5px;border-radius:50%;background:#89939b;animation:blink 1s infinite}.typing b:nth-child(2){animation-delay:.15s}.typing b:nth-child(3){animation-delay:.3s}
-@keyframes blink{50%{opacity:.25;transform:translateY(-2px)}}
-.activity{border-top:1px solid var(--line);background:#0c0f11;padding:9px 13px;display:flex;gap:8px;align-items:center;min-height:35px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;color:#87919a}
-.activity strong{color:#b8c0c6;font-weight:500}
-.composer{padding:12px;border-top:1px solid var(--line);background:#101316}
-.composer-box{display:flex;gap:8px;align-items:flex-end;border:1px solid #30373d;background:#0c0f11;border-radius:15px;padding:8px}
-textarea{flex:1;resize:none;min-height:42px;max-height:150px;border:0;outline:0;background:transparent;color:var(--text);padding:9px;font-size:13px}
-textarea::placeholder{color:#626c74}
-.attach,.send{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:#15191d;cursor:pointer;display:grid;place-items:center}
-.send{background:#e52b35;border-color:#e52b35;color:white}.send:disabled{opacity:.45;cursor:not-allowed}
-.tools{display:flex;gap:6px;margin-top:8px;overflow:auto}.tool{white-space:nowrap;border:1px solid var(--line);background:#111519;color:#929ca4;border-radius:9px;padding:7px 9px;font-size:10px;cursor:pointer}.tool.active{color:#eee;border-color:#444d55}
-input[type=file]{display:none}
-.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#171b1f;border:1px solid #394149;padding:9px 12px;border-radius:10px;font-size:11px;transition:.2s;z-index:50}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.history{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:40}
-.history.open{display:block}.history-card{position:absolute;right:12px;top:76px;width:min(350px,calc(100% - 24px));max-height:70vh;overflow:auto;background:#111519;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
-.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.history-item{padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer}.history-item small{display:block;color:var(--muted);margin-top:3px}
-@media(max-width:760px){
- .workspace{display:block;padding:8px}.sidebar{display:none}.ai-monitor{grid-template-columns:110px 1fr;padding:13px;gap:12px}.core-wrap{height:120px}.core{transform:scale(.86)}.content{max-height:none;min-height:48vh}.lab-head{padding:10px 12px}.brand small{display:none}.topbar{height:58px}
+
+  .card{
+    border-radius:13px;
+
+    padding:11px;
+  }
+
+  .metrics{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .metric{
+    padding:8px;
+  }
+
+  .metric b{
+    font-size:13px;
+  }
+
+  .chat{
+    min-height:450px;
+  }
+
+  .tools{
+    max-width:
+      calc(100vw - 100px);
+  }
+
+  .core{
+    width:185px;
+
+    height:185px;
+  }
+
+  .messages{
+    max-height:none;
+  }
 }
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+
+    animation-duration:.001ms !important;
+
+    animation-iteration-count:1 !important;
+
+    scroll-behavior:auto !important;
+
+    transition:none !important;
+  }
+}
 </style>
+
 </head>
+
 <body>
+
 <div class="app">
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
 <header class="topbar">
+
   <div class="brand">
-    <div class="brand-mark" aria-label="HACKER F5">
-      <svg viewBox="0 0 64 64" fill="none"><path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13l18-6Z" stroke="#e52b35" stroke-width="3"/><path d="M22 23h20M22 31h13M22 39h20" stroke="#e9edef" stroke-width="3" stroke-linecap="round"/></svg>
+
+    <div
+      class="logo"
+      aria-label="HACKER F5"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+
+        <path
+          d="M12 2 20 5v6c0 5.3-3.3 9-8 11-4.7-2-8-5.7-8-11V5l8-3Z"
+        />
+
+        <path
+          d="m8 12 2.4 2.4L16.5 8"
+        />
+
+      </svg>
+
     </div>
-    <div>HACKER F5<small>AI WORKSTATION</small></div>
+
+    HACKER F5
+
   </div>
+
+
   <div class="top-actions">
-    <button class="icon-btn" id="newBtn" title="Nouvelle conversation">＋</button>
-    <button class="icon-btn" id="historyBtn" title="Historique">◷</button>
+
+    <button
+      class="iconbtn"
+      id="historyBtn"
+      aria-label="Historique"
+    >
+      🕘
+    </button>
+
+    <button
+      class="iconbtn"
+      id="newBtn"
+      aria-label="Nouvelle conversation"
+    >
+      ＋
+    </button>
+
   </div>
+
 </header>
 
+
+<!-- =========================
+     WORKSPACE
+========================= -->
+
 <div class="workspace">
-  <aside class="sidebar">
-    <div class="side-title">Modules</div>
-    <button class="module active" data-mode="CHAT"><i class="dot"></i><span>Assistant IA</span></button>
-    <button class="module" data-mode="CODE"><i class="dot"></i><span>Code</span></button>
-    <button class="module" data-mode="CYBER"><i class="dot"></i><span>Cyber défense</span></button>
-    <button class="module" data-mode="SEARCH"><i class="dot"></i><span>Recherche</span></button>
-    <button class="module" data-mode="FILES"><i class="dot"></i><span>Fichiers</span></button>
 
-    <div class="side-status">
-      <span class="status-light"></span>
-      <div>
-        <strong>Système opérationnel</strong>
-        <small>Interface locale • prête</small>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+  <div class="side-title">
+    MODULES
+  </div>
+
+
+  <div
+    class="nav"
+    id="nav"
+  >
+
+    <button
+      class="active"
+      data-mode="CHAT"
+    >
+      💬 Assistant IA
+    </button>
+
+
+    <button
+      data-mode="CODE"
+    >
+      ⌘ Code
+    </button>
+
+
+    <button
+      data-mode="CYBER"
+    >
+      🛡️ Cyber défense
+    </button>
+
+
+    <button
+      data-mode="SEARCH"
+    >
+      ⌕ Recherche
+    </button>
+
+
+    <button
+      data-mode="FILES"
+    >
+      📁 Fichiers
+    </button>
+
+
+    <button
+      data-mode="IMAGE"
+    >
+      🖼️ Générer une image
+    </button>
+
+
+    <button
+      data-mode="VIDEO"
+    >
+      🎬 Générer une vidéo
+    </button>
+
+
+    <button
+      data-mode="MUSIC"
+    >
+      🎵 Générer une musique
+    </button>
+
+
+    <button
+      data-mode="PDF"
+    >
+      📄 Générer un PDF
+    </button>
+
+
+    <button
+      data-mode="PPT"
+    >
+      📊 Générer un PowerPoint
+    </button>
+
+  </div>
+
+
+  <div class="status">
+
+    <div class="statusline">
+
+      <span class="dot"></span>
+
+      Système opérationnel
+
+    </div>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="card hero">
+
+  <div>
+
+    <div class="eyebrow">
+      AI CONTROL ROOM
+    </div>
+
+
+    <h1>
+      HACKER F5 — Workstation
+    </h1>
+
+
+    <div
+      class="sub"
+      id="modeText"
+    >
+      Assistant IA prêt.
+    </div>
+
+  </div>
+
+
+  <div class="badges">
+
+    <span class="badge blue">
+      MISTRAL
+    </span>
+
+    <span class="badge red">
+      F5 CORE
+    </span>
+
+    <span class="badge orange">
+      TOOLS
+    </span>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     MONITOR
+========================= -->
+
+<section class="monitor">
+
+
+<!-- AI CORE -->
+
+<div class="card core-panel">
+
+  <div
+    class="core"
+    id="aiCore"
+  >
+
+    <div class="ring r1"></div>
+
+    <div class="ring r2"></div>
+
+    <div class="ring r3"></div>
+
+
+    <div class="shield">
+
+      <span>
+        F5
+      </span>
+
+    </div>
+
+
+    <span class="scan"></span>
+
+  </div>
+
+
+  <div class="core-label">
+
+    <strong id="coreStatus">
+      CORE READY
+    </strong>
+
+    <span id="coreSub">
+      en attente d'une commande
+    </span>
+
+  </div>
+
+</div>
+
+
+<!-- PROCESS MONITOR -->
+
+<div class="card">
+
+  <div class="metrics">
+
+    <div class="metric">
+
+      <b id="metricMode">
+        CHAT
+      </b>
+
+      <small>
+        MODE
+      </small>
+
+    </div>
+
+
+    <div class="metric">
+
+      <b id="metricState">
+        READY
+      </b>
+
+      <small>
+        ÉTAT
+      </small>
+
+    </div>
+
+
+    <div class="metric">
+
+      <b id="metricStep">
+        0/4
+      </b>
+
+      <small>
+        ÉTAPES
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <div class="progress-wrap">
+
+    <div class="progress-head">
+
+      <span id="progressLabel">
+        Prêt
+      </span>
+
+      <span id="progressPct">
+        0%
+      </span>
+
+    </div>
+
+
+    <div class="progress">
+
+      <div
+        class="bar"
+        id="progressBar"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div class="steps">
+
+    <div
+      class="step"
+      id="s1"
+    >
+      01 · Analyse
+    </div>
+
+
+    <div
+      class="step"
+      id="s2"
+    >
+      02 · Traitement
+    </div>
+
+
+    <div
+      class="step"
+      id="s3"
+    >
+      03 · Génération
+    </div>
+
+
+    <div
+      class="step"
+      id="s4"
+    >
+      04 · Réponse
+    </div>
+
+  </div>
+
+
+  <div style="height:10px"></div>
+
+
+  <div
+    class="log"
+    id="log"
+    aria-live="polite"
+  >
+
+    <div class="ok">
+      [READY] HACKER F5 initialisé.
+    </div>
+
+    <div>
+      [INFO] Journal d’activité actif.
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+<!-- =========================
+     PARTIE 3 — CHAT / HISTORIQUE / FICHIERS
+========================= -->
+
+<section class="chat-panel">
+
+  <div class="chat-head">
+    <div>
+      <div class="chat-title">HACKER F5 AI</div>
+      <div class="chat-subtitle" id="modeLabel">
+        Mode : CHAT
       </div>
     </div>
-  </aside>
 
-  <main class="main">
-    <section class="lab-head">
-      <div>
-        <span class="eyebrow">AI CONTROL ROOM</span>
-        <h2 id="modeTitle">Assistant IA</h2>
-        <p id="modeDescription">Interface de conversation avec HACKER F5.</p>
-      </div>
-      <div class="connection">
-        <span class="connection-dot"></span>
-        <span id="connectionText">READY</span>
-      </div>
-    </section>
+    <div class="chat-actions">
+      <button class="small-btn" id="newChatBtn" title="Nouvelle conversation">
+        ＋
+      </button>
 
-    <section class="ai-monitor">
-      <div class="core-wrap">
-        <div class="core" id="core">
-          <div class="core-ring ring-a"></div>
-          <div class="core-ring ring-b"></div>
-          <div class="core-shield">
-            <svg viewBox="0 0 100 100" fill="none">
-              <path d="M50 10 78 20v25c0 19-11 34-28 44C33 79 22 64 22 45V20l28-10Z" stroke="currentColor" stroke-width="4"/>
-              <path d="M36 40h28M36 51h19M36 62h28" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="core-scan"></span>
-        </div>
-      </div>
+      <button class="small-btn" id="clearChatBtn" title="Effacer la conversation">
+        🗑
+      </button>
 
-      <div class="monitor-info">
-        <div class="monitor-title">
-          <span>HACKER F5 CORE</span>
-          <span class="monitor-state" id="monitorState">STANDBY</span>
-        </div>
-
-        <div class="progress">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <div class="step-labels">
-          <span>Requête</span>
-          <span>Analyse</span>
-          <span>Traitement</span>
-          <span>Génération</span>
-          <span>Prêt</span>
-        </div>
-
-        <div class="monitor-log" id="monitorLog">
-          <div><span>10:00:01</span> Système prêt.</div>
-          <div><span>10:00:02</span> Interface chargée.</div>
-          <div><span>10:00:03</span> En attente d'une requête.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="chat-panel">
-      <div class="chat-head">
-        <div>
-          <strong>Conversation</strong>
-          <span id="conversationLabel">Nouvelle session</span>
-        </div>
-        <button class="small-btn" id="clearBtn">Effacer</button>
-      </div>
-
-      <div class="content" id="content">
-        <div class="empty" id="emptyState">
-          <div class="empty-box">
-            <div class="empty-logo">
-              <svg viewBox="0 0 64 64" width="38" height="38" fill="none">
-                <path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13l18-6Z" stroke="#e52b35" stroke-width="2.5"/>
-                <path d="M22 23h20M22 31h13M22 39h20" stroke="#e9edef" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h1>HACKER F5</h1>
-            <p>Assistant IA professionnel. Décris ta demande et le système traitera la requête.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="activity" id="activity">
-        <strong>F5 CORE</strong>
-        <span id="activityText">En attente d'une requête.</span>
-      </div>
-
-      <div class="composer">
-        <div class="composer-box">
-          <button class="attach" id="attachBtn" title="Joindre un fichier">＋</button>
-          <input type="file" id="fileInput">
-          <textarea id="messageInput" placeholder="Écrire une demande à HACKER F5..." rows="1"></textarea>
-          <button class="send" id="sendBtn" title="Envoyer">➤</button>
-        </div>
-
-        <div class="tools">
-          <button class="tool active" data-tool="chat">IA</button>
-          <button class="tool" data-tool="code">Code</button>
-          <button class="tool" data-tool="cyber">Cyber</button>
-          <button class="tool" data-tool="search">Recherche</button>
-          <button class="tool" data-tool="file">Fichier</button>
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
-  </div>
-</div>
-
-<div class="history" id="historyPanel">
-  <div class="history-card">
-    <div class="history-head">
-      <strong>Historique local</strong>
-      <button class="icon-btn" id="closeHistory">×</button>
+      <button class="small-btn" id="historyBtn" title="Historique">
+        🕘
+      </button>
     </div>
-    <div id="historyList"></div>
   </div>
+
+
+  <!-- ZONE DES MESSAGES -->
+
+  <div class="messages" id="messages">
+
+    <div class="message ai-message">
+
+      <div class="avatar ai-avatar">
+        F5
+      </div>
+
+      <div class="message-content">
+
+        <div class="message-name">
+          HACKER F5
+          <span class="online-dot"></span>
+        </div>
+
+        <div class="bubble">
+          Bonjour 👋<br><br>
+
+          Je suis <strong>HACKER F5</strong>, ton espace IA.
+          Tu peux discuter avec moi, coder, analyser des fichiers
+          et sélectionner un mode de génération.
+        </div>
+
+        <div class="message-time">
+          Maintenant
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- INDICATEUR DE TRAITEMENT -->
+
+  <div class="typing-area" id="typingArea">
+
+    <div class="typing-ai-icon">
+      F5
+    </div>
+
+    <div class="typing-content">
+
+      <div class="typing-title">
+        HACKER F5 travaille...
+      </div>
+
+      <div class="typing-animation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BARRE DE PROGRESSION -->
+
+  <div class="generation-progress" id="generationProgress">
+
+    <div class="progress-top">
+
+      <span id="progressText">
+        Préparation...
+      </span>
+
+      <span id="progressPercent">
+        0%
+      </span>
+
+    </div>
+
+    <div class="progress-track">
+
+      <div
+        class="progress-fill"
+        id="progressFill"
+        style="width:0%">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MODE ACTUEL -->
+
+  <div class="selected-mode" id="selectedMode">
+
+    <span class="mode-indicator"></span>
+
+    <span id="selectedModeText">
+      CHAT
+    </span>
+
+  </div>
+
+
+  <!-- COMPOSITEUR -->
+
+  <div class="composer">
+
+    <button
+      class="composer-btn"
+      id="fileBtn"
+      title="Ajouter un fichier">
+
+      📎
+
+    </button>
+
+
+    <input
+      type="file"
+      id="fileInput"
+      multiple
+      hidden
+    />
+
+
+    <textarea
+      id="messageInput"
+      rows="1"
+      placeholder="Écris ton message à HACKER F5..."
+      autocomplete="off">
+    </textarea>
+
+
+    <button
+      class="composer-btn voice-btn"
+      id="voiceBtn"
+      title="Voix">
+
+      🎙
+
+    </button>
+
+
+    <button
+      class="send-btn"
+      id="sendBtn"
+      title="Envoyer">
+
+      ➤
+
+    </button>
+
+  </div>
+
+
+  <!-- MODES IA -->
+
+  <div class="generation-modes">
+
+    <button
+      class="mode-btn active"
+      data-mode="chat">
+
+      <span>💬</span>
+      <small>CHAT</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="code">
+
+      <span>💻</span>
+      <small>CODE</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="cyber">
+
+      <span>🛡️</span>
+      <small>CYBER</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="image">
+
+      <span>🖼️</span>
+      <small>IMAGE</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="video">
+
+      <span>🎬</span>
+      <small>VIDEO</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="music">
+
+      <span>🎵</span>
+      <small>MUSIC</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="pdf">
+
+      <span>📄</span>
+      <small>PDF</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="ppt">
+
+      <span>📊</span>
+      <small>PPT</small>
+
+    </button>
+
+
+    <button
+      class="mode-btn"
+      data-mode="search">
+
+      <span>🔎</span>
+      <small>SEARCH</small>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     PANNEAU HISTORIQUE
+========================= -->
+
+<aside
+  class="history-panel"
+  id="historyPanel">
+
+  <div class="history-header">
+
+    <div>
+      <div class="history-title">
+        Historique
+      </div>
+
+      <div class="history-subtitle">
+        Conversations locales
+      </div>
+    </div>
+
+    <button
+      class="small-btn"
+      id="closeHistoryBtn">
+
+      ✕
+
+    </button>
+
+  </div>
+
+
+  <button
+    class="new-history-btn"
+    id="historyNewBtn">
+
+    ＋ Nouvelle conversation
+
+  </button>
+
+
+  <div
+    class="history-list"
+    id="historyList">
+
+    <div class="history-empty">
+
+      <div class="history-empty-icon">
+        🕘
+      </div>
+
+      <div>
+        Aucune conversation enregistrée.
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
+
+
+<!-- =========================
+     NOTIFICATION
+========================= -->
+
+<div
+  class="toast"
+  id="toast">
+
+  <span id="toastIcon">
+    ✓
+  </span>
+
+  <span id="toastText">
+    Opération effectuée
+  </span>
+
 </div>
 
-<div class="toast" id="toast"></div>
+
+<!-- FICHIERS SÉLECTIONNÉS -->
+
+<div
+  class="files-preview"
+  id="filesPreview">
+
+               </div>
+               <!-- =========================
+     PARTIE 4 — JAVASCRIPT
+========================= -->
 
 <script>
-const state={
-  conversationId:null,
-  messages:[],
-  mode:"CHAT",
-  processing:false,
-  lastAssistantText:""
+
+const state = {
+
+  mode: "chat",
+
+  messages: [],
+
+  conversations: [],
+
+  conversationId: null,
+
+  selectedFiles: [],
+
+  processing: false
+
 };
 
-const $=s=>document.querySelector(s);
-const $$=s=>document.querySelectorAll(s);
 
-function toast(t){
-  const el=$("#toast");
-  el.textContent=t;
-  el.classList.add("show");
-  setTimeout(()=>el.classList.remove("show"),2200);
+/* =========================
+   ELEMENTS
+========================= */
+
+const messagesEl =
+  document.getElementById("messages");
+
+const messageInput =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const typingArea =
+  document.getElementById("typingArea");
+
+const progressBox =
+  document.getElementById("generationProgress");
+
+const progressFill =
+  document.getElementById("progressFill");
+
+const progressText =
+  document.getElementById("progressText");
+
+const progressPercent =
+  document.getElementById("progressPercent");
+
+const modeLabel =
+  document.getElementById("modeLabel");
+
+const selectedModeText =
+  document.getElementById("selectedModeText");
+
+const selectedMode =
+  document.getElementById("selectedMode");
+
+const fileInput =
+  document.getElementById("fileInput");
+
+const filesPreview =
+  document.getElementById("filesPreview");
+
+const historyPanel =
+  document.getElementById("historyPanel");
+
+const historyList =
+  document.getElementById("historyList");
+
+const toast =
+  document.getElementById("toast");
+
+const toastText =
+  document.getElementById("toastText");
+
+
+/* =========================
+   UTILITAIRES
+========================= */
+
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
 }
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g,m=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[m]));
+
+function showToast(message, icon = "✓") {
+
+  const iconEl =
+    document.getElementById("toastIcon");
+
+  iconEl.textContent = icon;
+
+  toastText.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  }, 2500);
+
 }
 
-function setActivity(type,text){
-  $("#activityType").textContent=type;
-  $("#activityText").textContent=text;
+
+/* =========================
+   ID CONVERSATION
+========================= */
+
+function createConversationId() {
+
+  return "f5_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2, 8);
+
 }
 
-function setProcess(stage,main,detail){
-  const labels=[
-    "Requête",
-    "Analyse",
-    "Traitement",
-    "Génération",
-    "Prêt"
-  ];
 
-  const index=labels.indexOf(stage);
+/* =========================
+   LOCAL STORAGE
+========================= */
 
-  $$("#steps .step").forEach((x,i)=>{
-    x.className=
-      "step "+
-      (i<index?"done":i===index?"current":"");
-  });
-
-  $("#processMain").textContent=main;
-  $("#processDetail").textContent=detail;
-}
-
-function setProcessing(on){
-  state.processing=on;
-
-  $("#aiCore").classList.toggle("processing",on);
-  $("#sendBtn").disabled=on;
-
-  $("#liveText").textContent=on?"TRAITEMENT":"PRÊT";
-  $("#liveDot").style.background=
-    on?"#e52b35":"#51c878";
-}
-
-function addMessage(role,text){
-  $("#empty")?.remove();
-
-  const wrap=document.createElement("div");
-  wrap.className="message "+role;
-
-  const inner=document.createElement("div");
-  inner.className="message-wrap";
-
-  const meta=document.createElement("div");
-  meta.className="meta";
-  meta.textContent=
-    role==="user"?"VOUS":"HACKER F5";
-
-  const bubble=document.createElement("div");
-  bubble.className="bubble";
-  bubble.innerHTML=escapeHtml(text);
-
-  inner.append(meta,bubble);
-  wrap.append(inner);
-
-  $("#content").append(wrap);
-  $("#content").scrollTop=$("#content").scrollHeight;
-}
-
-function addTyping(){
-  $("#typing")?.remove();
-
-  const wrap=document.createElement("div");
-  wrap.className="message";
-  wrap.id="typing";
-
-  wrap.innerHTML=
-    '<div class="message-wrap">'+
-      '<div class="meta">HACKER F5</div>'+
-      '<div class="bubble">'+
-        '<div class="typing">'+
-          'Traitement en cours '+
-          '<b></b><b></b><b></b>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
-
-  $("#content").append(wrap);
-  $("#content").scrollTop=$("#content").scrollHeight;
-}
-
-function saveHistory(){
-  const title=
-    state.messages
-      .find(x=>x.role==="user")
-      ?.content
-      ?.slice(0,55)
-    ||"Nouvelle conversation";
-
-  const data=
-    JSON.parse(
-      localStorage.getItem("hackerF5History")||"[]"
-    ).filter(
-      x=>x.id!==state.conversationId
-    );
-
-  data.unshift({
-    id:state.conversationId||Date.now().toString(),
-    title,
-    messages:state.messages.slice(-30),
-    updated:Date.now()
-  });
+function saveHistory() {
 
   localStorage.setItem(
-    "hackerF5History",
-    JSON.stringify(data.slice(0,30))
+    "hackerF5_history",
+    JSON.stringify(state.conversations)
   );
+
 }
 
-function renderHistory(){
-  const list=$("#historyList");
 
-  const data=
-    JSON.parse(
-      localStorage.getItem("hackerF5History")||"[]"
+function loadHistory() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        "hackerF5_history"
+      );
+
+    if (!saved) return;
+
+    state.conversations =
+      JSON.parse(saved);
+
+  } catch (error) {
+
+    console.error(
+      "Erreur historique:",
+      error
     );
 
-  list.innerHTML=data.length
-    ?data.map(x=>
-      `<div class="history-item" data-id="${x.id}">
-        ${escapeHtml(x.title)}
-        <small>
-          ${new Date(x.updated).toLocaleString()}
-        </small>
-      </div>`
-    ).join("")
-    :"<div style='color:#7d878f;font-size:12px;padding:8px'>Aucune conversation locale.</div>";
+    state.conversations = [];
 
-  list
-    .querySelectorAll(".history-item")
-    .forEach(el=>{
-      el.onclick=()=>loadHistory(el.dataset.id);
-    });
+  }
+
 }
 
-function loadHistory(id){
-  const item=
-    JSON.parse(
-      localStorage.getItem("hackerF5History")||"[]"
-    ).find(x=>x.id===id);
 
-  if(!item)return;
+/* =========================
+   SAUVEGARDE CONVERSATION
+========================= */
 
-  state.conversationId=item.id;
-  state.messages=item.messages||[];
+function saveCurrentConversation() {
 
-  $("#content").innerHTML="";
+  if (!state.conversationId) return;
 
-  state.messages.forEach(m=>{
-    addMessage(m.role,m.content);
-  });
+  const firstUserMessage =
+    state.messages.find(
+      message => message.role === "user"
+    );
 
-  $("#historyPanel").classList.remove("open");
+  const title =
+    firstUserMessage
+      ? firstUserMessage.content.substring(0, 45)
+      : "Nouvelle conversation";
 
-  setActivity(
-    "HISTORIQUE",
-    "Conversation locale chargée."
-  );
-}
 
-function newConversation(){
-  state.conversationId=null;
-  state.messages=[];
-  state.lastAssistantText="";
+  const conversation = {
 
-  $("#content").innerHTML=
-    '<div class="empty" id="empty">'+
-      '<div class="empty-box">'+
-        '<div class="empty-logo">'+
-          '<svg viewBox="0 0 64 64" width="34" fill="none">'+
-            '<path d="M32 7 50 13v16c0 12-7 22-18 28C21 51 14 41 14 29V13L32 7Z" stroke="#e52b35" stroke-width="3"/>'+
-            '<path d="M22 23h20M22 31h13M22 39h20" stroke="#eef1f3" stroke-width="3" stroke-linecap="round"/>'+
-          '</svg>'+
-        '</div>'+
-        '<h1>HACKER F5</h1>'+
-        '<p>Nouvelle conversation prête.</p>'+
-      '</div>'+
-    '</div>';
+    id: state.conversationId,
 
-  setProcess(
-    "Prêt",
-    "Système en attente",
-    "Entrez une commande pour lancer un traitement."
-  );
+    title: title,
 
-  setActivity(
-    "LOCAL",
-    "Nouvelle conversation."
-  );
-}
+    mode: state.mode,
 
-function setMode(mode){
-  state.mode=mode;
+    messages: state.messages,
 
-  const names={
-    CHAT:"Assistant IA",
-    CODE:"Code",
-    CYBER:"Cyber défense",
-    RESEARCH:"Recherche",
-    FILES:"Fichiers"
+    updatedAt: Date.now()
+
   };
 
-  $("#modeLabel").textContent=
-    names[mode]||mode;
 
-  $$(".module,.tool").forEach(x=>{
-    x.classList.toggle(
-      "active",
-      x.dataset.mode===mode
+  const index =
+    state.conversations.findIndex(
+      item =>
+        item.id === state.conversationId
     );
-  });
 
-  setActivity(
-    "MODE",
-    "Module "+(names[mode]||mode)+" sélectionné."
-  );
+
+  if (index >= 0) {
+
+    state.conversations[index] =
+      conversation;
+
+  } else {
+
+    state.conversations.unshift(
+      conversation
+    );
+
   }
-async function sendMessage(){
-  const input=$("#input"),text=input.value.trim();
-  if(!text||state.processing)return;
 
-  state.messages.push({
-    role:"user",
-    content:text
-  });
 
-  addMessage("user",text);
+  state.conversations =
+    state.conversations
+      .sort(
+        (a, b) =>
+          b.updatedAt - a.updatedAt
+      )
+      .slice(0, 50);
 
-  input.value="";
-  input.style.height="42px";
 
-  setProcessing(true);
-  setProcess(
-    "Requête",
-    "Requête reçue",
-    "Préparation de la demande."
-  );
+  saveHistory();
 
-  setActivity(
-    "CLIENT",
-    "Requête ajoutée à la conversation."
-  );
+  renderHistory();
 
-  addTyping();
-
-  await new Promise(r=>setTimeout(r,180));
-
-  setProcess(
-    "Analyse",
-    "Analyse de la requête",
-    "Transmission au service IA."
-  );
-
-  try{
-    setProcess(
-      "Traitement",
-      "Traitement IA",
-      "Attente de la réponse du serveur."
-    );
-
-    const res=await fetch("/api/chat",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        messages:state.messages,
-        conversationId:state.conversationId,
-        mode:state.mode
-      })
-    });
-
-    const raw=await res.text();
-
-    let data;
-
-    try{
-      data=JSON.parse(raw);
-    }catch{
-      throw new Error(
-        raw.slice(0,300)||
-        "Réponse serveur invalide"
-      );
-    }
-
-    if(!res.ok||!data.ok){
-      throw new Error(
-        typeof data.error==="string"
-          ?data.error
-          :JSON.stringify(
-              data.error||
-              "Erreur serveur"
-            )
-      );
-    }
-
-    $("#typing")?.remove();
-
-    setProcess(
-      "Génération",
-      "Réponse reçue",
-      "Affichage de la réponse."
-    );
-
-    setActivity(
-      "SERVER",
-      "Réponse reçue depuis /api/chat."
-    );
-
-    const answer=
-      data.answer||
-      data.message||
-      "Aucune réponse reçue.";
-
-    state.conversationId=
-      data.conversationId||
-      state.conversationId;
-
-    state.messages.push({
-      role:"assistant",
-      content:answer
-    });
-
-    state.lastAssistantText=answer;
-
-    addMessage(
-      "assistant",
-      answer
-    );
-
-    setProcess(
-      "Prêt",
-      "Système prêt",
-      "La réponse est disponible."
-    );
-
-    saveHistory();
-
-  }catch(err){
-
-    $("#typing")?.remove();
-
-    const msg=
-      err?.message||
-      "Erreur inconnue";
-
-    const errorText=
-      "⚠️ Erreur HACKER F5 : "+msg;
-
-    state.messages.push({
-      role:"assistant",
-      content:errorText
-    });
-
-    addMessage(
-      "assistant",
-      errorText
-    );
-
-    setProcess(
-      "Prêt",
-      "Erreur de traitement",
-      "Vérifiez le serveur /api/chat."
-    );
-
-    setActivity(
-      "ERREUR",
-      msg
-    );
-
-  }finally{
-    setProcessing(false);
-  }
 }
 
-$("#sendBtn").onclick=sendMessage;
 
-$("#newBtn").onclick=newConversation;
+/* =========================
+   NOUVELLE CONVERSATION
+========================= */
 
-$("#historyBtn").onclick=()=>{
-  $("#historyPanel").classList.add("open");
-  renderHistory();
-};
+function newConversation() {
 
-$("#closeHistory").onclick=()=>{
-  $("#historyPanel").classList.remove("open");
-};
+  state.conversationId =
+    createConversationId();
 
-$("#historyPanel").onclick=e=>{
-  if(e.target.id==="historyPanel"){
-    e.currentTarget.classList.remove("open");
+  state.messages = [];
+
+  state.mode = "chat";
+
+  messagesEl.innerHTML = "";
+
+  setMode("chat");
+
+  addAIMessage(
+    "Nouvelle conversation prête. Que veux-tu faire ?"
+  );
+
+  showToast(
+    "Nouvelle conversation",
+    "＋"
+  );
+
+}
+
+
+/* =========================
+   EFFACER CONVERSATION
+========================= */
+
+function clearConversation() {
+
+  state.messages = [];
+
+  messagesEl.innerHTML = "";
+
+  addAIMessage(
+    "Conversation effacée. HACKER F5 est prêt."
+  );
+
+  saveCurrentConversation();
+
+  showToast(
+    "Conversation effacée",
+    "🗑"
+  );
+
+}
+
+
+/* =========================
+   AFFICHAGE MESSAGE UTILISATEUR
+========================= */
+
+function addUserMessage(text) {
+
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.className =
+    "message user-message";
+
+
+  wrapper.innerHTML = `
+
+    <div class="avatar user-avatar">
+      U
+    </div>
+
+    <div class="message-content">
+
+      <div class="message-name">
+        TOI
+      </div>
+
+      <div class="bubble">
+        ${escapeHTML(text)}
+      </div>
+
+      <div class="message-time">
+        Maintenant
+      </div>
+
+    </div>
+
+  `;
+
+
+  messagesEl.appendChild(wrapper);
+
+  messagesEl.scrollTop =
+    messagesEl.scrollHeight;
+
+}
+
+
+/* =========================
+   AFFICHAGE MESSAGE IA
+========================= */
+
+function addAIMessage(text) {
+
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.className =
+    "message ai-message";
+
+
+  wrapper.innerHTML = `
+
+    <div class="avatar ai-avatar">
+      F5
+    </div>
+
+    <div class="message-content">
+
+      <div class="message-name">
+        HACKER F5
+        <span class="online-dot"></span>
+      </div>
+
+      <div class="bubble">
+        ${escapeHTML(text)}
+      </div>
+
+      <div class="message-time">
+        Maintenant
+      </div>
+
+    </div>
+
+  `;
+
+
+  messagesEl.appendChild(wrapper);
+
+  messagesEl.scrollTop =
+    messagesEl.scrollHeight;
+
+}
+
+
+/* =========================
+   MODE IA
+========================= */
+
+function setMode(mode) {
+
+  state.mode = mode;
+
+
+  document
+    .querySelectorAll(".mode-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.mode === mode
+      );
+
+    });
+
+
+  const names = {
+
+    chat: "CHAT",
+
+    code: "CODE",
+
+    cyber: "CYBER DEFENSE",
+
+    image: "IMAGE",
+
+    video: "VIDEO",
+
+    music: "MUSIC",
+
+    pdf: "PDF",
+
+    ppt: "POWERPOINT",
+
+    search: "SEARCH"
+
+  };
+
+
+  const name =
+    names[mode] || mode.toUpperCase();
+
+
+  modeLabel.textContent =
+    "Mode : " + name;
+
+  selectedModeText.textContent =
+    name;
+
+
+  const placeholders = {
+
+    chat:
+      "Écris ton message à HACKER F5...",
+
+    code:
+      "Décris le code que tu veux créer...",
+
+    cyber:
+      "Décris ton problème de cybersécurité défensive...",
+
+    image:
+      "Décris l'image que tu veux générer...",
+
+    video:
+      "Décris la vidéo que tu veux créer...",
+
+    music:
+      "Décris la musique que tu veux créer...",
+
+    pdf:
+      "Décris le document PDF que tu veux créer...",
+
+    ppt:
+      "Décris la présentation PowerPoint que tu veux créer...",
+
+    search:
+      "Que veux-tu rechercher ?"
+
+  };
+
+
+  messageInput.placeholder =
+    placeholders[mode] ||
+    placeholders.chat;
+
+
+  if (mode !== "chat") {
+
+    showToast(
+      "Mode " + name + " sélectionné",
+      "●"
+    );
+
   }
-};
 
-$("#input").addEventListener(
-  "input",
-  e=>{
-    e.target.style.height="42px";
-    e.target.style.height=
-      Math.min(
-        e.target.scrollHeight,
-        150
-      )+"px";
-  }
-);
+}
 
-$("#input").addEventListener(
-  "keydown",
-  e=>{
-    if(e.key==="Enter"&&!e.shiftKey){
-      e.preventDefault();
-      sendMessage();
+
+/* =========================
+   ANIMATION TRAITEMENT
+========================= */
+
+function startProcessing() {
+
+  state.processing = true;
+
+  typingArea.classList.add("show");
+
+  progressBox.classList.add("show");
+
+  sendBtn.disabled = true;
+
+  messageInput.disabled = true;
+
+
+  let progress = 0;
+
+
+  progressFill.style.width =
+    "0%";
+
+  progressPercent.textContent =
+    "0%";
+
+  progressText.textContent =
+    "Initialisation...";
+
+
+  const steps = [
+
+    {
+      value: 15,
+      text: "Connexion au noyau F5..."
+    },
+
+    {
+      value: 30,
+      text: "Analyse de la requête..."
+    },
+
+    {
+      value: 50,
+      text: "Traitement IA..."
+    },
+
+    {
+      value: 70,
+      text: "Préparation de la réponse..."
+    },
+
+    {
+      value: 85,
+      text: "Vérification..."
+    },
+
+    {
+      value: 100,
+      text: "Terminé"
     }
+
+  ];
+
+
+  let stepIndex = 0;
+
+
+  const timer =
+    setInterval(() => {
+
+      if (stepIndex >= steps.length) {
+
+        clearInterval(timer);
+
+        return;
+
+      }
+
+
+      const step =
+        steps[stepIndex];
+
+
+      progress =
+        step.value;
+
+
+      progressFill.style.width =
+        progress + "%";
+
+      progressPercent.textContent =
+        progress + "%";
+
+      progressText.textContent =
+        step.text;
+
+
+      stepIndex++;
+
+    }, 350);
+
+
+  return timer;
+
+}
+
+
+/* =========================
+   FIN TRAITEMENT
+========================= */
+
+function stopProcessing(timer) {
+
+  if (timer) {
+
+    clearInterval(timer);
+
+  }
+
+
+  state.processing = false;
+
+  typingArea.classList.remove("show");
+
+  sendBtn.disabled = false;
+
+  messageInput.disabled = false;
+
+  messageInput.focus();
+
+
+  setTimeout(() => {
+
+    progressBox.classList.remove("show");
+
+  }, 700);
+
+}
+
+
+/* =========================
+   FICHIERS
+========================= */
+
+fileInput.addEventListener(
+  "change",
+  () => {
+
+    state.selectedFiles =
+      Array.from(fileInput.files);
+
+
+    renderSelectedFiles();
+
+
+    if (state.selectedFiles.length) {
+
+      showToast(
+        state.selectedFiles.length +
+        " fichier(s) sélectionné(s)",
+        "📎"
+      );
+
+    }
+
   }
 );
 
-$$("[data-mode]").forEach(
-  b=>{
-    b.onclick=()=>{
-      setMode(b.dataset.mode);
-    };
+
+function renderSelectedFiles() {
+
+  filesPreview.innerHTML = "";
+
+
+  state.selectedFiles.forEach(
+    (file, index) => {
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "file-chip";
+
+
+      item.innerHTML = `
+
+        <span>📄</span>
+
+        <span>
+          ${escapeHTML(file.name)}
+        </span>
+
+        <button
+          type="button"
+          data-index="${index}">
+          ×
+        </button>
+
+      `;
+
+
+      item
+        .querySelector("button")
+        .addEventListener(
+          "click",
+          () => {
+
+            state.selectedFiles.splice(
+              index,
+              1
+            );
+
+            renderSelectedFiles();
+
+          }
+        );
+
+
+      filesPreview.appendChild(item);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   HISTORIQUE
+========================= */
+
+function renderHistory() {
+
+  historyList.innerHTML = "";
+
+
+  if (!state.conversations.length) {
+
+    historyList.innerHTML = `
+
+      <div class="history-empty">
+
+        <div class="history-empty-icon">
+          🕘
+        </div>
+
+        <div>
+          Aucune conversation enregistrée.
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
   }
-);
 
-$("#fileInput").onchange=e=>{
-  const f=e.target.files[0];
 
-  if(f){
+  state.conversations.forEach(
+    conversation => {
+
+      const item =
+        document.createElement("button");
+
+      item.className =
+        "history-item";
+
+
+      item.innerHTML = `
+
+        <div class="history-item-icon">
+          💬
+        </div>
+
+        <div class="history-item-info">
+
+          <strong>
+            ${escapeHTML(
+              conversation.title
+            )}
+          </strong>
+
+          <small>
+            ${conversation.mode.toUpperCase()}
+          </small>
+
+        </div>
+
+      `;
+
+
+      item.addEventListener(
+        "click",
+        () => {
+
+          loadConversation(
+            conversation.id
+          );
+
+        }
+      );
+
+
+      historyList.appendChild(item);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   CHARGER CONVERSATION
+========================= */
+
+function loadConversation(id) {
+
+  const conversation =
+    state.conversations.find(
+      item => item.id === id
+    );
+
+
+  if (!conversation) return;
+
+
+  state.conversationId =
+    conversation.id;
+
+  state.messages =
+    conversation.messages || [];
+
+
+  setMode(
+    conversation.mode || "chat"
+  );
+
+
+  messagesEl.innerHTML = "";
+
+
+  state.messages.forEach(
+    message => {
+
+      if (message.role === "user") {
+
+        addUserMessage(
+          message.content
+        );
+
+      }
+
+      if (message.role === "assistant") {
+
+        addAIMessage(
+          message.content
+        );
+
+      }
+
+    }
+  );
+
+
+  historyPanel.classList.remove(
+    "show"
+  );
+
+
+  showToast(
+    "Conversation chargée",
+    "🕘"
+  );
+
+}
+
+
+/* =========================
+   ENVOYER MESSAGE
+========================= */
+
+async function sendMessage() {
+
+  if (state.processing) return;
+
+
+  const text =
+    messageInput.value.trim();
+
+
+  if (!text) {
+
+    showToast(
+      "Écris d'abord un message",
+      "!"
+    );
+
+    return;
+
+  }
+
+
+  if (!state.conversationId) {
+
+    state.conversationId =
+      createConversationId();
+
+  }
+
+
+  addUserMessage(text);
+
+
+  state.messages.push({
+
+    role: "user",
+
+    content: text
+
+  });
+
+
+  messageInput.value = "";
+
+  messageInput.style.height =
+    "auto";
+
+
+  saveCurrentConversation();
+
+
+  const timer =
+    startProcessing();
+
+
+  try {
+
+    /*
+      La Partie 5 connectera ici
+      le frontend à /api/chat.
+    */
+
+
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          2200
+        )
+    );
+
+
+    addAIMessage(
+      "Traitement terminé. La connexion avec le moteur IA sera branchée dans la Partie 5."
+    );
+
+
     state.messages.push({
-      role:"user",
+
+      role: "assistant",
+
       content:
-        "Fichier sélectionné : "+
-        f.name
+        "Traitement terminé. La connexion avec le moteur IA sera branchée dans la Partie 5."
+
     });
 
-    addMessage(
-      "user",
-      "Fichier sélectionné : "+
-      f.name
+
+    saveCurrentConversation();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    addAIMessage(
+      "⚠️ Une erreur est survenue pendant le traitement."
     );
 
-    setActivity(
-      "FICHIER",
-      f.name+
-      " sélectionné localement."
-    );
+  } finally {
 
-    toast(
-      "Fichier sélectionné"
-    );
+    stopProcessing(timer);
+
   }
-};
 
-setProcess(
-  "Prêt",
-  "Système en attente",
-  "Entrez une commande pour lancer un traitement."
+}
+
+
+/* =========================
+   EVENEMENTS DES MODES
+========================= */
+
+document
+  .querySelectorAll(".mode-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        setMode(
+          button.dataset.mode
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================
+   BOUTONS CHAT
+========================= */
+
+sendBtn.addEventListener(
+  "click",
+  sendMessage
 );
-$("#sendBtn").onclick=sendMessage;
-$("#newBtn").onclick=newConversation;
-$("#historyBtn").onclick=()=>{
-  $("#historyPanel").classList.add("open");
-  renderHistory();
-};
-$("#closeHistory").onclick=()=>{
-  $("#historyPanel").classList.remove("open");
-};
-$("#historyPanel").onclick=e=>{
-  if(e.target.id==="historyPanel"){
-    e.currentTarget.classList.remove("open");
-  }
-};
-$("#input").addEventListener("input",e=>{
-  e.target.style.height="42px";
-  e.target.style.height=
-    Math.min(e.target.scrollHeight,150)+"px";
-});
-$("#input").addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey){
-    e.preventDefault();
-    sendMessage();
-  }
-});
-$$("[data-mode]").forEach(
-  b=>b.onclick=()=>setMode(b.dataset.mode)
-);
-$("#fileInput").onchange=e=>{
-  const f=e.target.files[0];
-  if(f){
-    state.messages.push({
-      role:"user",
-      content:"Fichier sélectionné : "+f.name
-    });
-    addMessage(
-      "user",
-      "Fichier sélectionné : "+f.name
-    );
-    setActivity(
-      "FICHIER",
-      f.name+" sélectionné localement."
-    );
-    toast("Fichier sélectionné");
-  }
-};
 
-setProcess(
-  "Prêt",
-  "Système en attente",
-  "Entrez une commande pour lancer un traitement."
+
+messageInput.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
 );
+
+
+/* =========================
+   AUTO-AGRANDISSEMENT
+========================= */
+
+messageInput.addEventListener(
+  "input",
+  () => {
+
+    messageInput.style.height =
+      "auto";
+
+    messageInput.style.height =
+      Math.min(
+        messageInput.scrollHeight,
+        140
+      ) + "px";
+
+  }
+);
+
+
+/* =========================
+   FICHIER
+========================= */
+
+document
+  .getElementById("fileBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      fileInput.click();
+
+    }
+  );
+
+
+/* =========================
+   NOUVELLE CONVERSATION
+========================= */
+
+document
+  .getElementById("newChatBtn")
+  .addEventListener(
+    "click",
+    newConversation
+  );
+
+
+document
+  .getElementById("historyNewBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      newConversation();
+
+      historyPanel.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* =========================
+   EFFACER
+========================= */
+
+document
+  .getElementById("clearChatBtn")
+  .addEventListener(
+    "click",
+    clearConversation
+  );
+
+
+/* =========================
+   HISTORIQUE
+========================= */
+
+document
+  .getElementById("historyBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      historyPanel.classList.add(
+        "show"
+      );
+
+      renderHistory();
+
+    }
+  );
+
+
+document
+  .getElementById("closeHistoryBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      historyPanel.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+/* =========================
+   VOIX
+========================= */
+
+document
+  .getElementById("voiceBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "Fonction voix prête pour intégration",
+        "🎙"
+      );
+
+    }
+  );
+
+
+/* =========================
+   INITIALISATION
+========================= */
+
+loadHistory();
+
+renderHistory();
+
+state.conversationId =
+  createConversationId();
+
 </script>
+<!-- =========================
+     PARTIE 5 — CONNEXION API + FIN
+========================= -->
+
+<script>
+
+/* =========================
+   CONNEXION AU BACKEND
+========================= */
+
+async function sendToHackerF5(text) {
+
+  const response = await fetch("/api/chat", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+
+      message: text,
+
+      mode: state.mode,
+
+      messages: state.messages,
+
+      conversationId: state.conversationId
+
+    })
+
+  });
+
+
+  let data;
+
+  try {
+
+    data = await response.json();
+
+  } catch (error) {
+
+    throw new Error(
+      "Le serveur a envoyé une réponse invalide."
+    );
+
+  }
+
+
+  if (!response.ok) {
+
+    let errorMessage =
+      "Erreur du serveur HACKER F5.";
+
+
+    if (typeof data.error === "string") {
+
+      errorMessage = data.error;
+
+    }
+
+    else if (data.error) {
+
+      errorMessage =
+        JSON.stringify(data.error);
+
+    }
+
+
+    throw new Error(errorMessage);
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =========================
+   EXTRACTION DE LA RÉPONSE
+========================= */
+
+function extractAIResponse(data) {
+
+  if (!data) {
+
+    return "Le serveur n'a renvoyé aucune réponse.";
+
+  }
+
+
+  if (typeof data === "string") {
+
+    return data;
+
+  }
+
+
+  if (typeof data.reply === "string") {
+
+    return data.reply;
+
+  }
+
+
+  if (typeof data.response === "string") {
+
+    return data.response;
+
+  }
+
+
+  if (typeof data.message === "string") {
+
+    return data.message;
+
+  }
+
+
+  if (typeof data.content === "string") {
+
+    return data.content;
+
+  }
+
+
+  /*
+   * Certains systèmes peuvent retourner
+   * une structure plus complexe.
+   */
+
+  if (data.output) {
+
+    if (typeof data.output === "string") {
+
+      return data.output;
+
+    }
+
+    if (Array.isArray(data.output)) {
+
+      return data.output
+        .map(item => {
+
+          if (typeof item === "string") {
+            return item;
+          }
+
+          if (item && item.text) {
+            return item.text;
+          }
+
+          return "";
+
+        })
+        .filter(Boolean)
+        .join("\n");
+
+    }
+
+  }
+
+
+  return JSON.stringify(
+    data,
+    null,
+    2
+  );
+
+}
+
+
+/* =========================
+   NOUVELLE VERSION SENDMESSAGE
+========================= */
+
+async function sendMessageReal() {
+
+  if (state.processing) return;
+
+
+  const text =
+    messageInput.value.trim();
+
+
+  if (!text) {
+
+    showToast(
+      "Écris d'abord un message",
+      "!"
+    );
+
+    return;
+
+  }
+
+
+  if (!state.conversationId) {
+
+    state.conversationId =
+      createConversationId();
+
+  }
+
+
+  addUserMessage(text);
+
+
+  state.messages.push({
+
+    role: "user",
+
+    content: text
+
+  });
+
+
+  messageInput.value = "";
+
+  messageInput.style.height =
+    "auto";
+
+
+  saveCurrentConversation();
+
+
+  const timer =
+    startProcessing();
+
+
+  try {
+
+    /*
+     * Envoi réel vers /api/chat
+     */
+
+    const data =
+      await sendToHackerF5(text);
+
+
+    const answer =
+      extractAIResponse(data);
+
+
+    addAIMessage(answer);
+
+
+    state.messages.push({
+
+      role: "assistant",
+
+      content: answer
+
+    });
+
+
+    saveCurrentConversation();
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "HACKER F5 API ERROR:",
+      error
+    );
+
+
+    addAIMessage(
+      "⚠️ Erreur HACKER F5 : " +
+      error.message
+    );
+
+
+    showToast(
+      "Erreur de connexion API",
+      "!"
+    );
+
+  }
+
+  finally {
+
+    stopProcessing(timer);
+
+  }
+
+}
+
+
+/* =========================
+   REMPLACEMENT DU BOUTON
+========================= */
+
+sendBtn.onclick =
+  sendMessageReal;
+
+
+/* =========================
+   REMPLACEMENT DE ENTER
+========================= */
+
+messageInput.onkeydown =
+  function(event) {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendMessageReal();
+
+    }
+
+  };
+
+
+/* =========================
+   INITIALISATION FINALE
+========================= */
+
+if (!state.conversationId) {
+
+  state.conversationId =
+    createConversationId();
+
+}
+
+
+setMode("chat");
+
+
+/* =========================
+   JOURNAL CONSOLE
+========================= */
+
+console.log(
+  "%c HACKER F5 ",
+  "font-weight:bold;color:#ef4049;font-size:18px"
+);
+
+console.log(
+  "Interface AI Workstation initialisée."
+);
+
+console.log(
+  "API : /api/chat"
+);
+
+console.log(
+  "Mode actuel :",
+  state.mode
+);
+
+</script>
+
 </body>
 </html>
