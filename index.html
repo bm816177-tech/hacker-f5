@@ -4320,7 +4320,1144 @@
           border: 1px solid rgba(32,223,139,.25);  
           padding: 4px 6px;  
           border-radius: 4px;  
-        }  
+        } 
+                            .monitor-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 7px;
+          margin-top: 14px;
+        }
+
+        .metric-card {
+          padding: 10px;
+          border: 1px solid rgba(255,255,255,.06);
+          border-radius: 9px;
+          background: rgba(255,255,255,.025);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .metric-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,40,40,.5),
+            transparent
+          );
+          opacity: .7;
+        }
+
+        .metric-card label {
+          display: block;
+          color: #555;
+          font-size: 7px;
+          letter-spacing: 1px;
+          margin-bottom: 6px;
+        }
+
+        .metric-card b {
+          display: block;
+          color: #fff;
+          font-size: 15px;
+          font-weight: 900;
+        }
+
+        .metric-card small {
+          display: block;
+          margin-top: 3px;
+          color: #555;
+          font-size: 7px;
+        }
+
+        .metric-bar {
+          width: 100%;
+          height: 3px;
+          margin-top: 8px;
+          background: rgba(255,255,255,.05);
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .metric-bar span {
+          display: block;
+          width: 65%;
+          height: 100%;
+          border-radius: inherit;
+          background: linear-gradient(
+            90deg,
+            #8d0000,
+            #ff3030
+          );
+          box-shadow: 0 0 8px rgba(255,0,0,.35);
+          transition: width .4s ease;
+        }
+
+        .system-core {
+          position: relative;
+          width: 130px;
+          height: 130px;
+          margin: 18px auto;
+          display: grid;
+          place-items: center;
+        }
+
+        .system-core::before,
+        .system-core::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          border: 1px solid rgba(255,40,40,.2);
+        }
+
+        .system-core::before {
+          animation: spin 8s linear infinite;
+          border-top-color: #ff3030;
+          border-bottom-color: rgba(255,255,255,.04);
+        }
+
+        .system-core::after {
+          inset: 12px;
+          animation: spinReverse 5s linear infinite;
+          border-left-color: #ff3030;
+          border-right-color: rgba(255,255,255,.04);
+        }
+
+        .core-center {
+          width: 65px;
+          height: 65px;
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          border: 1px solid rgba(255,45,45,.4);
+          background: radial-gradient(
+            circle,
+            rgba(255,35,35,.22),
+            rgba(10,10,12,.96) 68%
+          );
+          color: #ff3535;
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: 1px;
+          box-shadow:
+            0 0 25px rgba(255,0,0,.15),
+            inset 0 0 20px rgba(255,0,0,.08);
+          animation: corePulse 2s ease-in-out infinite;
+        }
+
+        .activity-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 10px;
+          margin-bottom: 7px;
+        }
+
+        .activity-title strong {
+          color: #888;
+          font-size: 8px;
+          letter-spacing: 1px;
+        }
+
+        .activity-title span {
+          color: #444;
+          font-size: 7px;
+        }
+
+        .activity-list {
+          max-height: 180px;
+          overflow-y: auto;
+          display: grid;
+          gap: 5px;
+        }
+
+        .activity-item {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          padding: 7px;
+          border: 1px solid rgba(255,255,255,.045);
+          border-radius: 7px;
+          background: rgba(255,255,255,.015);
+        }
+
+        .activity-dot {
+          width: 5px;
+          height: 5px;
+          flex: 0 0 5px;
+          border-radius: 50%;
+          background: #ff3434;
+          box-shadow: 0 0 7px rgba(255,0,0,.5);
+        }
+
+        .activity-item div {
+          min-width: 0;
+        }
+
+        .activity-item b {
+          display: block;
+          color: #777;
+          font-size: 7px;
+        }
+
+        .activity-item small {
+          display: block;
+          margin-top: 2px;
+          color: #444;
+          font-size: 6px;
+        }
+
+        .system-info {
+          margin-top: 10px;
+          padding: 9px;
+          border: 1px solid rgba(255,255,255,.05);
+          border-radius: 8px;
+          background: rgba(255,255,255,.015);
+        }
+
+        .system-info-row {
+          display: flex;
+          justify-content: space-between;
+          gap: 8px;
+          padding: 5px 0;
+          border-bottom: 1px solid rgba(255,255,255,.035);
+        }
+
+        .system-info-row:last-child {
+          border-bottom: 0;
+        }
+
+        .system-info-row span:first-child {
+          color: #555;
+          font-size: 7px;
+        }
+
+        .system-info-row span:last-child {
+          color: #999;
+          font-size: 7px;
+          font-weight: 800;
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+          position: fixed;
+          left: 50%;
+          bottom: 22px;
+          z-index: 9999;
+          transform: translate(-50%, 20px);
+          opacity: 0;
+          pointer-events: none;
+          min-width: 220px;
+          max-width: calc(100vw - 30px);
+          padding: 10px 13px;
+          border: 1px solid rgba(255,45,45,.3);
+          border-radius: 9px;
+          background: rgba(12,12,15,.96);
+          color: #ddd;
+          box-shadow: 0 10px 40px rgba(0,0,0,.4);
+          font-size: 9px;
+          text-align: center;
+          transition: .25s ease;
+        }
+
+        .toast.show {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+
+        .toast.success {
+          border-color: rgba(30,220,130,.3);
+        }
+
+        .toast.error {
+          border-color: rgba(255,40,40,.4);
+          color: #ff7777;
+        }
+
+
+        /* =========================================================
+           HISTORY / MODAL
+        ========================================================= */
+
+        .modal-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 8000;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          padding: 15px;
+          background: rgba(0,0,0,.72);
+          backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.show {
+          display: flex;
+          animation: fadeIn .2s ease;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+
+          to {
+            opacity: 1;
+          }
+        }
+
+        .modal {
+          width: min(520px, 100%);
+          max-height: min(700px, 90vh);
+          overflow: hidden;
+          border: 1px solid rgba(255,255,255,.08);
+          border-radius: 13px;
+          background: #0d0d10;
+          box-shadow: 0 30px 100px rgba(0,0,0,.6);
+        }
+
+        .modal-header {
+          min-height: 55px;
+          padding: 10px 13px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .modal-header strong {
+          color: #eee;
+          font-size: 11px;
+          letter-spacing: 1.2px;
+        }
+
+        .modal-close {
+          width: 30px;
+          height: 30px;
+          border: 0;
+          border-radius: 7px;
+          background: rgba(255,255,255,.04);
+          color: #777;
+          cursor: pointer;
+        }
+
+        .modal-close:hover {
+          color: #fff;
+          background: rgba(255,30,30,.08);
+        }
+
+        .modal-body {
+          max-height: calc(min(700px, 90vh) - 55px);
+          overflow-y: auto;
+          padding: 12px;
+        }
+
+        .history-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          padding: 10px;
+          margin-bottom: 6px;
+          border: 1px solid rgba(255,255,255,.05);
+          border-radius: 8px;
+          background: rgba(255,255,255,.018);
+          cursor: pointer;
+          transition: .2s ease;
+        }
+
+        .history-item:hover {
+          border-color: rgba(255,45,45,.18);
+          background: rgba(255,20,20,.035);
+        }
+
+        .history-item-main {
+          min-width: 0;
+        }
+
+        .history-item-title {
+          color: #bbb;
+          font-size: 9px;
+          font-weight: 800;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .history-item-date {
+          margin-top: 3px;
+          color: #444;
+          font-size: 7px;
+        }
+
+        .history-delete {
+          width: 27px;
+          height: 27px;
+          flex: 0 0 27px;
+          border: 0;
+          border-radius: 6px;
+          background: transparent;
+          color: #555;
+          cursor: pointer;
+        }
+
+        .history-delete:hover {
+          color: #ff4444;
+          background: rgba(255,0,0,.06);
+        }
+
+        .empty-state {
+          padding: 35px 15px;
+          text-align: center;
+          color: #444;
+          font-size: 9px;
+        }
+
+
+        /* =========================================================
+           SETTINGS
+        ========================================================= */
+
+        .setting-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 11px 0;
+          border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+
+        .setting-row:last-child {
+          border-bottom: 0;
+        }
+
+        .setting-info {
+          min-width: 0;
+        }
+
+        .setting-info strong {
+          display: block;
+          color: #aaa;
+          font-size: 9px;
+        }
+
+        .setting-info small {
+          display: block;
+          margin-top: 3px;
+          color: #444;
+          font-size: 7px;
+        }
+
+        .toggle {
+          position: relative;
+          width: 38px;
+          height: 20px;
+          flex: 0 0 38px;
+        }
+
+        .toggle input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .toggle-slider {
+          position: absolute;
+          inset: 0;
+          cursor: pointer;
+          border-radius: 20px;
+          background: #222;
+          transition: .2s ease;
+        }
+
+        .toggle-slider::before {
+          content: "";
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          left: 3px;
+          top: 3px;
+          border-radius: 50%;
+          background: #777;
+          transition: .2s ease;
+        }
+
+        .toggle input:checked + .toggle-slider {
+          background: rgba(255,30,30,.35);
+        }
+
+        .toggle input:checked + .toggle-slider::before {
+          transform: translateX(18px);
+          background: #ff3636;
+          box-shadow: 0 0 9px rgba(255,0,0,.5);
+        }
+
+
+        /* =========================================================
+           NO ANIMATION MODE
+        ========================================================= */
+
+        body.no-animations *,
+        body.no-animations *::before,
+        body.no-animations *::after {
+          animation-duration: .001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: .001ms !important;
+          scroll-behavior: auto !important;
+        }
+
+        body.no-glow * {
+          box-shadow: none !important;
+          text-shadow: none !important;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 1180px) {
+          .chat-layout {
+            grid-template-columns: 210px minmax(0, 1fr);
+          }
+
+          .monitor-panel {
+            display: none;
+          }
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 760px) {
+          .chat-layout {
+            display: block;
+            min-height: auto;
+            margin-top: 8px;
+          }
+
+          .side-panel {
+            display: none;
+          }
+
+          .chat-panel {
+            min-height: calc(100vh - 170px);
+          }
+
+          .messages {
+            padding: 13px;
+          }
+
+          .welcome-message {
+            min-height: 360px;
+          }
+
+          .welcome-message h2 {
+            font-size: 19px;
+          }
+
+          .message-content {
+            max-width: 90%;
+          }
+
+          .input-zone {
+            margin-left: 8px;
+            margin-right: 8px;
+          }
+
+          .tool-mini {
+            display: none;
+          }
+
+          .chat-header-actions .icon-btn:nth-child(2) {
+            display: none;
+          }
+        }
+
+
+        /* =========================================================
+           ACCESSIBILITY
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation-duration: .001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: .001ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
+
+</style>
+                          <script>
+        /* =========================================================
+           HACKER F5 — FINAL POLISH
+           PARTIE 5/5
+        ========================================================= */
+
+        /* =========================================================
+           RESTAURATION DE LA SESSION
+        ========================================================= */
+
+        function restoreLastSession() {
+
+          const history =
+            getHistory();
+
+          if (!history.length) {
+            return;
+          }
+
+          const latest =
+            history[0];
+
+          if (
+            !latest ||
+            !Array.isArray(
+              latest.messages
+            )
+          ) {
+            return;
+          }
+
+          /*
+           * On ne recharge pas automatiquement
+           * une ancienne conversation Mistral.
+           * L'utilisateur peut la sélectionner
+           * depuis Historique.
+           */
+        }
+
+
+        restoreLastSession();
+
+
+        /* =========================================================
+           RACCOURCIS CLAVIER
+        ========================================================= */
+
+        document.addEventListener(
+          "keydown",
+          event => {
+
+            /* Ctrl + K = nouvelle conversation */
+            if (
+              event.ctrlKey &&
+              event.key.toLowerCase() === "k"
+            ) {
+
+              event.preventDefault();
+
+              newConversation();
+
+            }
+
+
+            /* Escape = fermer les modales */
+            if (
+              event.key === "Escape"
+            ) {
+
+              document
+                .querySelectorAll(".modal.show")
+                .forEach(modal => {
+
+                  modal.classList.remove(
+                    "show"
+                  );
+
+                });
+
+            }
+
+          }
+        );
+
+
+        /* =========================================================
+           ÉTAT DE CONNEXION
+        ========================================================= */
+
+        window.addEventListener(
+          "online",
+          () => {
+
+            connectionState.textContent =
+              "● CONNECTÉ";
+
+            connectionState.style.color =
+              "#20df8b";
+
+            addActivity(
+              "NETWORK",
+              "Connexion rétablie"
+            );
+
+          }
+        );
+
+
+        window.addEventListener(
+          "offline",
+          () => {
+
+            connectionState.textContent =
+              "● HORS LIGNE";
+
+            connectionState.style.color =
+              "#ff4545";
+
+            addActivity(
+              "NETWORK",
+              "Connexion perdue"
+            );
+
+            showToast(
+              "Connexion réseau perdue.",
+              "!"
+            );
+
+          }
+        );
+
+
+        /* =========================================================
+           ANIMATION CORE
+        ========================================================= */
+
+        const corePercent =
+          document.getElementById(
+            "corePercent"
+          );
+
+
+        let coreValue = 100;
+
+
+        setInterval(
+          () => {
+
+            if (
+              state.processing
+            ) {
+
+              coreValue =
+                Math.max(
+                  78,
+                  coreValue -
+                  Math.floor(
+                    Math.random() * 5
+                  )
+                );
+
+            } else {
+
+              coreValue =
+                Math.min(
+                  100,
+                  coreValue +
+                  Math.floor(
+                    Math.random() * 4
+                  )
+                );
+
+            }
+
+
+            if (corePercent) {
+
+              corePercent.textContent =
+                coreValue;
+
+            }
+
+          },
+          1200
+        );
+
+
+        /* =========================================================
+           BOUTON VOIX — SYNTHÈSE LOCALE
+        ========================================================= */
+
+        function speakLastAIMessage() {
+
+          if (
+            !state.sound
+          ) {
+
+            showToast(
+              "Active d'abord la voix.",
+              "◉"
+            );
+
+            return;
+
+          }
+
+
+          if (
+            !("speechSynthesis" in window)
+          ) {
+
+            showToast(
+              "La synthèse vocale n'est pas disponible.",
+              "!"
+            );
+
+            return;
+
+          }
+
+
+          const last =
+            [...state.messages]
+              .reverse()
+              .find(
+                item =>
+                  item.role ===
+                  "assistant"
+              );
+
+
+          if (!last) {
+
+            showToast(
+              "Aucune réponse à lire.",
+              "!"
+            );
+
+            return;
+
+          }
+
+
+          window.speechSynthesis.cancel();
+
+
+          const utterance =
+            new SpeechSynthesisUtterance(
+              last.content
+            );
+
+
+          utterance.lang =
+            "fr-FR";
+
+          utterance.rate =
+            0.95;
+
+          utterance.pitch =
+            1;
+
+
+          window.speechSynthesis.speak(
+            utterance
+          );
+
+        }
+
+
+        if (voiceToggleBtn) {
+
+          voiceToggleBtn.addEventListener(
+            "dblclick",
+            speakLastAIMessage
+          );
+
+        }
+
+
+        /* =========================================================
+           EMPÊCHER LES DOUBLES ENVOIS
+        ========================================================= */
+
+        let lastSentText = "";
+        let lastSentTime = 0;
+
+
+        const originalSend =
+          sendMessageReal;
+
+
+        /*
+         * Protection légère contre
+         * les doubles clics accidentels.
+         */
+        sendBtn.addEventListener(
+          "click",
+          () => {
+
+            const now =
+              Date.now();
+
+            const text =
+              messageInput.value.trim();
+
+
+            if (
+              text &&
+              text === lastSentText &&
+              now - lastSentTime < 700
+            ) {
+
+              return;
+
+            }
+
+
+            lastSentText =
+              text;
+
+            lastSentTime =
+              now;
+
+          }
+        );
+
+
+        /* =========================================================
+           MODE IMAGE
+        ========================================================= */
+
+        function prepareGenerationMode() {
+
+          const generationModes = [
+            "image",
+            "video",
+            "music",
+            "pdf",
+            "ppt"
+          ];
+
+
+          if (
+            generationModes.includes(
+              state.mode
+            )
+          ) {
+
+            taskName.textContent =
+              getModeLabel(
+                state.mode
+              );
+
+            taskStatus.textContent =
+              "Mode de génération sélectionné";
+
+            taskState.textContent =
+              "READY";
+
+          }
+
+        }
+
+
+        document
+          .querySelectorAll(".mode-btn")
+          .forEach(button => {
+
+            button.addEventListener(
+              "click",
+              prepareGenerationMode
+            );
+
+          });
+
+
+        /* =========================================================
+           DRAG & DROP FICHIERS
+        ========================================================= */
+
+        const chatPanel =
+          document.querySelector(
+            ".chat-panel"
+          );
+
+
+        if (chatPanel) {
+
+          chatPanel.addEventListener(
+            "dragover",
+            event => {
+
+              event.preventDefault();
+
+              chatPanel.classList.add(
+                "drag-active"
+              );
+
+            }
+          );
+
+
+          chatPanel.addEventListener(
+            "dragleave",
+            () => {
+
+              chatPanel.classList.remove(
+                "drag-active"
+              );
+
+            }
+          );
+
+
+          chatPanel.addEventListener(
+            "drop",
+            event => {
+
+              event.preventDefault();
+
+              chatPanel.classList.remove(
+                "drag-active"
+              );
+
+
+              const files =
+                Array.from(
+                  event.dataTransfer.files
+                );
+
+
+              if (!files.length) {
+                return;
+              }
+
+
+              state.files =
+                state.files.concat(
+                  files
+                );
+
+
+              renderAttachments();
+
+
+              addActivity(
+                "FILES",
+                `${files.length} fichier(s) importé(s)`
+              );
+
+
+              showToast(
+                `${files.length} fichier(s) ajouté(s).`,
+                "□"
+              );
+
+            }
+          );
+
+        }
+
+
+        /* =========================================================
+           EFFET DRAG & DROP
+        ========================================================= */
+
+        const dragStyle =
+          document.createElement(
+            "style"
+          );
+
+
+        dragStyle.textContent = `
+          .drag-active {
+            border-color:
+              rgba(255,40,40,.65)
+            !important;
+
+            box-shadow:
+              0 0 30px
+              rgba(255,0,0,.08)
+            !important;
+          }
+        `;
+
+
+        document.head.appendChild(
+          dragStyle
+        );
+
+
+        /* =========================================================
+           PROTECTION SORTIE PAGE
+        ========================================================= */
+
+        window.addEventListener(
+          "beforeunload",
+          () => {
+
+            try {
+
+              saveCurrentConversation();
+
+            } catch {
+
+              /* Rien à faire */
+
+            }
+
+          }
+        );
+
+
+        /* =========================================================
+           INITIALISATION FINALE
+        ========================================================= */
+
+        setMode("chat");
+
+
+        addActivity(
+          "HACKER F5",
+          "Interface opérationnelle"
+        );
+
+
+        console.log(
+          "================================"
+        );
+
+        console.log(
+          "HACKER F5 AI"
+        );
+
+        console.log(
+          "Frontend initialized"
+        );
+
+        console.log(
+          "API endpoint: /api/chat"
+        );
+
+        console.log(
+          "================================"
+        );
+
+      </script>
+
+
+    </div>
+    <!-- /#app -->
+
+
+  </body>
+</html>
   
        
             
