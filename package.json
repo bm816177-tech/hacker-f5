@@ -1,9 +1,12 @@
 {
-  "name": "hacker-f5-ai",
-  "version":"9999+",
+  "name": "hacker-f5",
+  "version": "9999+",
   "private": true,
   "type": "module",
+  "scripts": {
+    "start": "node api/chat.js"
+  },
   "dependencies": {
-    "@mistralai/mistralai": "^1.0.0"
+    "openai": "latest"
   }
 }
